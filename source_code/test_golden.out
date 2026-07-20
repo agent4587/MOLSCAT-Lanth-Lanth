@@ -1,0 +1,41 @@
+ ====================================================
+  STAGE D: zolotoy test na nastoyashchikh POTBLK+VSTAR
+ ====================================================
+
+  pot-Tm2: Tm2 radial strengths V^(1)_0(R), V^(1)_2(R), Tiesinga et al. NJP 23, 085007 (2021), Table 5.
+  Table 5 covers R =  7.00 to 12.00 a0 (PCHIP spline of R^6*V(R)).
+  R > 12.50 a0: asymptotic C_k/R^6 tail, C0 = -3.669868E+08 C2 =  1.730533E+05 cm^-1 a0^6.
+  R <  7.00 a0: V0 exponential wall (rate b0 =  4.4857 a0^-1), V2 held constant at  2.246815 cm^-1.
+
+  R =     8.538269 a0
+      V0(R)=   -826.02745163   V2(R)=      3.00859373
+      M_tot=1 blok, dim= 344  E_min=   -862.87504899  expected=   -862.87687150  err=  1.82E-03
+      M_tot=7 blok, dim= 208  E_max=   -774.44081532  expected=   -774.44207487  err=  1.26E-03
+
+  R =     7.500000 a0
+      V0(R)=   -339.51211156   V2(R)=      3.64703280
+      M_tot=1 blok, dim= 344  E_min=   -384.17895877  expected=   -384.19460928  err=  1.57E-02
+      M_tot=7 blok, dim= 208  E_max=   -276.97852547  expected=   -276.99442925  err=  1.59E-02
+
+  R =     8.000000 a0
+      V0(R)=   -727.59730629   V2(R)=      3.65122360
+      M_tot=1 blok, dim= 344  E_min=   -772.31548007  expected=   -772.31548007  err=  4.04E-09
+      M_tot=7 blok, dim= 208  E_max=   -664.99186299  expected=   -664.99186299  err=  2.34E-09
+
+  R =     9.000000 a0
+      V0(R)=   -784.32927135   V2(R)=      2.33905040
+      M_tot=1 blok, dim= 344  E_min=   -812.97667116  expected=   -812.97667116  err=  3.27E-09
+      M_tot=7 blok, dim= 208  E_max=   -744.22291161  expected=   -744.22291161  err=  1.43E-09
+
+  R =    10.000000 a0
+      V0(R)=   -574.30698185   V2(R)=      1.15704130
+      M_tot=1 blok, dim= 344  E_min=   -588.47778583  expected=   -588.47778583  err=  1.63E-09
+      M_tot=7 blok, dim= 208  E_max=   -554.46785628  expected=   -554.46785628  err=  4.29E-09
+
+  R =    11.000000 a0
+      V0(R)=   -375.85614024   V2(R)=      0.49635265
+      M_tot=1 blok, dim= 344  E_min=   -381.93519386  expected=   -381.93519386  err=  4.89E-09
+      M_tot=7 blok, dim= 208  E_max=   -367.34546517  expected=   -367.34546517  err=  4.85E-09
+ ====================================================
+  STAGE D: VSE PROVERKI PROIDENY (PASS)
+ ====================================================

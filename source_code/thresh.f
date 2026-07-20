@@ -1,0 +1,117 @@
+      SUBROUTINE THRESH(EINT,N,CM2RU,MONQN,NQN,NJLQN,
+     1                  EREF,JSINDX,IPRINT)
+C  Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur
+C  Distributed under the GNU General Public License, version 3
+      USE potential, ONLY: IREF, NCONST, NDGVL
+      USE basis_data, ONLY: ELEVEL, JLEVEL, NLEVEL
+C
+C  SUBROUTINE TO IMPLEMENT EXTENDED LOGIC FOR OBTAINING THE ENERGY
+C  OF THE INCOMING CHANNEL FROM EITHER IREF OR
+C  MONOMER QUANTUM NUMBERS IN ARRAY MONQN.
+C  SUBROUTINE BY JM Hutson, APRIL 2015.
+C  NOTE THAT EREF MUST BE RETURNED IN CM-1, INDEPENDENT OF EUNITS
+C
+C  ENTRY POINT ADDED BY CR Le Sueur, FEBRUARY 2016, FOR COMMON MESSAGES
+C
+      IMPLICIT DOUBLE PRECISION(A-H,O-Z)
+      LOGICAL MATCH,HDIAG,EARLY
+      DIMENSION MONQN(NQN),JSINDX(N)
+      DIMENSION EINT(N)
+      CHARACTER(8) UNAME
+      CHARACTER(2) ORDNL
+
+C  ALTERED TO USE ARRAY SIZES FROM MODULE sizes ON 23-06-17 BY CRLS
+
+!  Start of long IF block #1
+      IF (MONQN(1).NE.-99999) THEN
+!  Start of long IF block #2
+        IF (NCONST.GT.0) THEN
+          CALL THRSH9(IREF,MONQN,NQN,EREF,IPRINT)
+        ELSE
+          II=0
+          DO I=1,NLEVEL
+            MATCH=.TRUE.
+            DO IQN=1,NJLQN
+              II=II+1
+              IF (MONQN(IQN).NE.JLEVEL(II)) MATCH=.FALSE.
+            ENDDO
+            IF (MATCH) THEN
+              IF (NDGVL.EQ.0) THEN
+                EREF=ELEVEL(I)
+              ELSE
+                DO J=1,N
+                  IF (JSINDX(J).NE.I) CYCLE
+                  JREF=J
+                  EXIT
+                ENDDO
+                IF (J.GT.N) THEN
+                  WRITE(6,100) (MONQN(IQN),IQN=1,NJLQN)
+                  STOP
+                ENDIF
+                EREF=EINT(JREF)/CM2RU
+              ENDIF
+              RETURN
+            ENDIF
+          ENDDO
+          WRITE(6,100) (MONQN(IQN),IQN=1,NJLQN)
+  100     FORMAT(' *** ERROR IN THRESH: REFERENCE LEVEL NOT FOUND ',
+     1           'WITH SPECIFIED QUANTUM NUMBERS'/1X,8I6)
+          STOP
+        ENDIF
+!  End of long IF block #2
+C
+      ELSEIF (IREF.GT.0) THEN
+        IF (NCONST.NE.0 .OR. NDGVL.GT.0) THEN
+          EREF=EINT(IREF)/CM2RU
+        ELSE
+          EREF=ELEVEL(IREF)
+        ENDIF
+      ELSEIF (IREF.LT.0) THEN
+        WRITE(6,110)
+  110   FORMAT(' *** ERROR IN THRESH. NEGATIVE IREF NOT IMPLEMENTED')
+        STOP
+      ENDIF
+!  End of long IF block #1
+
+      RETURN
+C============================================================== EREFIN
+      ENTRY EREFIN(MONQN,NQN,NJLQN,UNAME,EREF,EFACT)
+C  PRINT REFERENCE ENERGY AND HOW OBTAINED
+
+!  Start of long IF block #3
+      IF (MONQN(1).NE.-99999) THEN
+        WRITE(6,400)
+  400   FORMAT(/2X,'THESE ENERGY VALUES ARE RELATIVE TO THE ',
+     1         'REFERENCE ENERGY'$)
+        WRITE(6,410) (MONQN(IQN),IQN=1,NJLQN)
+  410   FORMAT(' SPECIFIED BY MONOMER QUANTUM NUMBERS ',10(I3,1X))
+        WRITE(6,440) 'EVERY EFV SET'
+      ELSEIF (IREF.GT.0 .AND. NCONST.EQ.0 .AND. NDGVL.EQ.0) THEN
+        WRITE(6,400)
+        IF (EFACT.NE.1.D0) THEN
+          WRITE(6,420) IREF,ORDNL(IREF),EREF/EFACT,TRIM(UNAME),EREF
+  420     FORMAT(' WHICH IS THE ENERGY OF THE ',I3,A2,
+     1           ' PAIR LEVEL'//2X,'THE REFERENCE ENERGY IS ',1P,G17.10,
+     2           1X,A:,' = ',G17.10,' CM-1')
+        ELSE
+          WRITE(6,420) IREF,ORDNL(IREF),EREF/EFACT,TRIM(UNAME)
+        ENDIF
+      ELSEIF (IREF.GT.0 .AND. (NCONST.GT.0 .OR. NDGVL.GT.0)) THEN
+        WRITE(6,400)
+        WRITE(6,430) IREF,ORDNL(IREF)
+  430   FORMAT(' WHICH IS THE ENERGY OF THE ',I3,A2,' THRESHOLD.')
+        WRITE(6,440) 'EVERY SYMMETRY BLOCK AND EFV SET'
+  440   FORMAT(2X,'THE REFERENCE ENERGY WILL BE CALCULATED FOR ',A)
+      ELSEIF (EREF.NE.0.D0) THEN
+        WRITE(6,400)
+        IF (EFACT.NE.1.D0) THEN
+          WRITE(6,450) EREF/EFACT,TRIM(UNAME),EREF
+  450     FORMAT(' GIVEN BY EREF = ',1P,G17.10,1X,A:,' = ',G17.10,
+     1           ' CM-1')
+        ELSE
+          WRITE(6,450) EREF,'CM-1'
+        ENDIF
+      ENDIF
+!  End of long IF block #3
+      RETURN
+      END

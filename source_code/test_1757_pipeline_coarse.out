@@ -1,0 +1,544 @@
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 13 Jul 2026   at 17:56:42                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) =  6     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  84.467109000 ATOMIC MASS UNITS (DALTONS)
+
+  ======================================================================================================================
+  TM - TM 2F7/2 ATOMS + MAG FIELD 
+
+
+  Tm ATOM WITH J = 7/2,     MU_J   =    1.139400 MU_B
+              I = 1/2,     MU_NUC =    0.000000 MU_B
+              HYPERFINE SPLITTING =    0.743485, COUPLING CONST =    0.185871 GHZ
+
+  L UP TO    4
+  TENSOR RANKS INCLUDED: k=0 (isotropic), k=2 (rank-2, Table 5).  k=4 and i=2 (mag. dip-dip): NOT YET IMPLEMENTED (rung 4 of the ladder).
+
+  INTERACTION TYPE IS  TM - TM 2F7/2 ATOMS + MAG FIELD 
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  THE BASIS FUNCTIONS ARE LABELLED BY A SET OF   4 PAIR STATE QUANTUM NUMBERS AND A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY NON-DIAGONAL.
+
+  THE SETS OF PAIR STATE QUANTUM NUMBERS ARE:
+
+      SET       ------ PAIR STATE QUANTUM NUMBERS ------
+                    2*MJA     2*MIA     2*MJB     2*MIB
+        1              -7        -1        -7        -1
+        2              -7         1        -7        -1
+        3              -7         1        -7         1
+        4              -5        -1        -7        -1
+        5              -5        -1        -7         1
+        6              -5        -1        -5        -1
+        7              -5         1        -7        -1
+        8              -5         1        -7         1
+        9              -5         1        -5        -1
+       10              -5         1        -5         1
+       11              -3        -1        -7        -1
+       12              -3        -1        -7         1
+       13              -3        -1        -5        -1
+       14              -3        -1        -5         1
+       15              -3        -1        -3        -1
+       16              -3         1        -7        -1
+       17              -3         1        -7         1
+       18              -3         1        -5        -1
+       19              -3         1        -5         1
+       20              -3         1        -3        -1
+       21              -3         1        -3         1
+       22              -1        -1        -7        -1
+       23              -1        -1        -7         1
+       24              -1        -1        -5        -1
+       25              -1        -1        -5         1
+       26              -1        -1        -3        -1
+       27              -1        -1        -3         1
+       28              -1        -1        -1        -1
+       29              -1         1        -7        -1
+       30              -1         1        -7         1
+       31              -1         1        -5        -1
+       32              -1         1        -5         1
+       33              -1         1        -3        -1
+       34              -1         1        -3         1
+       35              -1         1        -1        -1
+       36              -1         1        -1         1
+       37               1        -1        -7        -1
+       38               1        -1        -7         1
+       39               1        -1        -5        -1
+       40               1        -1        -5         1
+       41               1        -1        -3        -1
+       42               1        -1        -3         1
+       43               1        -1        -1        -1
+       44               1        -1        -1         1
+       45               1        -1         1        -1
+       46               1         1        -7        -1
+       47               1         1        -7         1
+       48               1         1        -5        -1
+       49               1         1        -5         1
+       50               1         1        -3        -1
+       51               1         1        -3         1
+       52               1         1        -1        -1
+       53               1         1        -1         1
+       54               1         1         1        -1
+       55               1         1         1         1
+       56               3        -1        -7        -1
+       57               3        -1        -7         1
+       58               3        -1        -5        -1
+       59               3        -1        -5         1
+       60               3        -1        -3        -1
+       61               3        -1        -3         1
+       62               3        -1        -1        -1
+       63               3        -1        -1         1
+       64               3        -1         1        -1
+       65               3        -1         1         1
+       66               3        -1         3        -1
+       67               3         1        -7        -1
+       68               3         1        -7         1
+       69               3         1        -5        -1
+       70               3         1        -5         1
+       71               3         1        -3        -1
+       72               3         1        -3         1
+       73               3         1        -1        -1
+       74               3         1        -1         1
+       75               3         1         1        -1
+       76               3         1         1         1
+       77               3         1         3        -1
+       78               3         1         3         1
+       79               5        -1        -7        -1
+       80               5        -1        -7         1
+       81               5        -1        -5        -1
+       82               5        -1        -5         1
+       83               5        -1        -3        -1
+       84               5        -1        -3         1
+       85               5        -1        -1        -1
+       86               5        -1        -1         1
+       87               5        -1         1        -1
+       88               5        -1         1         1
+       89               5        -1         3        -1
+       90               5        -1         3         1
+       91               5        -1         5        -1
+       92               5         1        -7        -1
+       93               5         1        -7         1
+       94               5         1        -5        -1
+       95               5         1        -5         1
+       96               5         1        -3        -1
+       97               5         1        -3         1
+       98               5         1        -1        -1
+       99               5         1        -1         1
+      100               5         1         1        -1
+      101               5         1         1         1
+      102               5         1         3        -1
+      103               5         1         3         1
+      104               5         1         5        -1
+      105               5         1         5         1
+      106               7        -1        -7        -1
+      107               7        -1        -7         1
+      108               7        -1        -5        -1
+      109               7        -1        -5         1
+      110               7        -1        -3        -1
+      111               7        -1        -3         1
+      112               7        -1        -1        -1
+      113               7        -1        -1         1
+      114               7        -1         1        -1
+      115               7        -1         1         1
+      116               7        -1         3        -1
+      117               7        -1         3         1
+      118               7        -1         5        -1
+      119               7        -1         5         1
+      120               7        -1         7        -1
+      121               7         1        -7        -1
+      122               7         1        -7         1
+      123               7         1        -5        -1
+      124               7         1        -5         1
+      125               7         1        -3        -1
+      126               7         1        -3         1
+      127               7         1        -1        -1
+      128               7         1        -1         1
+      129               7         1         1        -1
+      130               7         1         1         1
+      131               7         1         3        -1
+      132               7         1         3         1
+      133               7         1         5        -1
+      134               7         1         5         1
+      135               7         1         7        -1
+      136               7         1         7         1
+
+  ======================================================================================================================
+
+  THIS CALCULATION USES  1 EXTERNAL FIELD VARIABLE 
+
+  OFFSET BETWEEN EFV INDICES AND COUPLING MATRIX COEFFICIENT INDICES IS  1
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  *** POTENL. ITYPE =   9 CANNOT BE PROCESSED TO DETERMINE THE POTENTIAL EXPANSION LABELS
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+
+
+  pot-Tm2: Tm2 radial strengths V^(1)_0(R), V^(1)_2(R), Tiesinga et al. NJP 23, 085007 (2021), Table 5.
+  Table 5 covers R =  7.00 to 12.00 a0 (PCHIP spline of R^6*V(R)).
+  R > 12.50 a0: asymptotic C_k/R^6 tail, C0 = -3.669868E+08 C2 =  1.730533E+05 cm^-1 a0^6.
+  R <  7.00 a0: V0 exponential wall (rate b0 =  4.4857 a0^-1), V2 held constant at  2.246815 cm^-1.
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  1.0000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  1.0000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF ANGSTROM UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+                            2                    FOR CONSTANT    TERMS IN POTENTIAL
+
+  IN TOTAL:  4 BLOCKS OF VL ARRAY ARE USED
+
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  6 AND IPROPL =  9
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 2 SEGMENTS
+
+  PROPAGATION RANGES ARE CONTROLLED BY VARIABLES RMIN, RMID AND RMAX, WITH INPUT VALUES
+  RMIN =   3.000     RMID =   21.00     RMAX =  1.5000E+04
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN =      3.00 TO RMID =     21.00
+
+  COUPLED EQUATIONS SOLVED BY DIABATIC MODIFIED LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS
+
+  PROPAGATION STEP SIZE DETERMINED USING DR =  2.000E-03
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 2 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMID =     21.00 TO RMAX =  15000.00
+
+  COUPLED EQUATIONS SOLVED BY VARIABLE-STEP AIRY PROPAGATOR.
+  PUBLICATIONS RESULTING FROM THE USE OF THIS PROPAGATOR SHOULD REFERENCE
+  M. H. ALEXANDER AND D. E. MANOLOPOULOS,  J. CHEM. PHYS. 86, 2044 (1987).
+
+  INITIAL STEP SIZE TAKEN FROM SIZE OF FINAL STEP OF PREVIOUS SEGMENT
+  STEP SIZES ADJUSTED TO MAINTAIN APPROXIMATE ACCURACY VIA PERTURBATION THEORY
+  WITH TOLHI =  1.00E-07 AND POWR =   3.0    
+
+  ======================================================================================================================
+
+  INPUT ENERGIES CONVERTED FROM K
+  TO INTERNAL WORKING UNITS OF CM-1 DUE TO INTEGER INPUT EUNITS =   2
+
+  INPUT ENERGY LIST IS
+                    6.950348E-07
+
+  CALCULATIONS WILL BE PERFORMED FOR    1 ENERGY  
+  ENERGY    1           =  6.9503480040E-07 CM-1 =  1.0000000000E-06 K       
+
+  ======================================================================================================================
+
+  CONTROL DATA FOR EXTERNAL FIELD VARIABLES.  CALCULATIONS WILL BE PERFORMED FOR   4 SETS
+
+                  MAGNETIC Z FIELD (GAUSS )
+  SET     1:          1750.000000    
+  SET     2:          1755.000000    
+  SET     3:          1760.000000    
+  SET     4:          1765.000000    
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT = -16
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   2
+
+  ======================================================================================================================
+
+  THESE ENERGY VALUES ARE RELATIVE TO THE REFERENCE ENERGY WHICH IS THE ENERGY OF THE   1ST THRESHOLD.
+  THE REFERENCE ENERGY WILL BE CALCULATED FOR EVERY SYMMETRY BLOCK AND EFV SET
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  =========================================== test_1757_pipeline coarse scan ===========================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  = -16   AND SYMMETRY BLOCK  =    2  ****************************
+  SYMMETRY BLOCK =   2 SELECTS PARITY  1
+  MTOT =-16/2
+  BASIS SET GENERATED FOR TWO IDENTICAL BOSONS
+  CONSTRUCTION OF BASIS SET TOOK                  0.00 CPU SECS.
+  CONSTRUCTION OF COUPLING (VL) ARRAY TOOK        0.00 CPU SECS.
+
+  BASIS FUNCTION LIST:
+  BASIS FN        SET   ------ PAIR STATE QUANTUM NUMBERS ------           L 
+                            2*MJA     2*MIA     2*MJB     2*MIB 
+        1           1         -7        -1        -7        -1             0
+        2           1         -7        -1        -7        -1             2
+        3           2         -7         1        -7        -1             2
+        4           3         -7         1        -7         1             2
+        5           4         -5        -1        -7        -1             2
+        6           5         -5        -1        -7         1             2
+        7           6         -5        -1        -5        -1             2
+        8           7         -5         1        -7        -1             2
+        9          11         -3        -1        -7        -1             2
+       10           1         -7        -1        -7        -1             4
+       11           5         -5        -1        -7         1             4
+       12           3         -7         1        -7         1             4
+       13           6         -5        -1        -5        -1             4
+       14           2         -7         1        -7        -1             4
+       15           7         -5         1        -7        -1             4
+       16           8         -5         1        -7         1             4
+       17           9         -5         1        -5        -1             4
+       18          10         -5         1        -5         1             4
+       19           4         -5        -1        -7        -1             4
+       20          11         -3        -1        -7        -1             4
+       21          12         -3        -1        -7         1             4
+       22          13         -3        -1        -5        -1             4
+       23          14         -3        -1        -5         1             4
+       24          15         -3        -1        -3        -1             4
+       25          16         -3         1        -7        -1             4
+       26          17         -3         1        -7         1             4
+       27          18         -3         1        -5        -1             4
+       28          22         -1        -1        -7        -1             4
+       29          23         -1        -1        -7         1             4
+       30          24         -1        -1        -5        -1             4
+       31          29         -1         1        -7        -1             4
+       32          37          1        -1        -7        -1             4
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     1:  MAGNETIC Z FIELD =   1750.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6299330970     CM-1    = -0.9063331745     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.629933097005            -0.906333174458    
+          2       2        -0.674531249793            -0.970499965476    
+          3       2        -0.652232173399            -0.938416569967    
+          4       2        -0.629933097005            -0.906333174458    
+          5       2        -0.561642654576            -0.808078464924    
+          6       2        -0.556524734622            -0.800714920032    
+          7       2        -0.539343578182            -0.775995069415    
+          8       2        -0.448870132101            -0.645823967149    
+          9       2        -0.448754059359            -0.645656964372    
+         10       4        -0.674531249793            -0.970499965476    
+         11       4        -0.652232173399            -0.938416569967    
+         12       4        -0.629933097005            -0.906333174458    
+         13       4        -0.578823811015            -0.832798315541    
+         14       4        -0.561642654576            -0.808078464924    
+         15       4        -0.556524734622            -0.800714920032    
+         16       4        -0.539343578182            -0.775995069415    
+         17       4        -0.483116372238            -0.695096665606    
+         18       4        -0.482982460987            -0.694903997194    
+         19       4        -0.471169208495            -0.677907362658    
+         20       4        -0.465935215798            -0.670376814989    
+         21       4        -0.460683384593            -0.662820601685    
+         22       4        -0.448870132101            -0.645823967149    
+         23       4        -0.448754059359            -0.645656964372    
+         24       4        -0.380829673664            -0.547928928803    
+         25       4        -0.375461769717            -0.540205712723    
+         26       4        -0.370093865770            -0.532482496642    
+         27       4        -0.364685185788            -0.524700612945    
+         28       4        -0.358530597270            -0.515845533294    
+         29       4        -0.358280613278            -0.515485862106    
+         30       4        -0.268347911217            -0.386092769834    
+         31       4        -0.267941078447            -0.385507428251    
+         32       4        -0.267807167196            -0.385314759840    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    5    0   1 1.8661598530049E-003   1.1363367787859E+002  -3.3999463364472E+000
+    6    2   4 1.8661598530049E-003   1.0957790189940E+005  -9.1215128849899E+004
+    7    4   4 1.8661598530049E-003  -2.8831677316124E+004  -7.9299619673928E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     2:  MAGNETIC Z FIELD =   1755.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6317949059     CM-1    = -0.9090119020     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.631794905854            -0.909011901980    
+          2       2        -0.676390242318            -0.973174640936    
+          3       2        -0.654092574086            -0.941093271458    
+          4       2        -0.631794905854            -0.909011901980    
+          5       2        -0.563238490732            -0.810374517085    
+          6       2        -0.558117903901            -0.803007135153    
+          7       2        -0.540940822500            -0.778293147607    
+          8       2        -0.450202662441            -0.647741180990    
+          9       2        -0.450086739146            -0.647574393234    
+         10       4        -0.676390242318            -0.973174640936    
+         11       4        -0.654092574086            -0.941093271458    
+         12       4        -0.631794905854            -0.909011901980    
+         13       4        -0.580415572133            -0.835088504632    
+         14       4        -0.563238490732            -0.810374517085    
+         15       4        -0.558117903901            -0.803007135153    
+         16       4        -0.540940822500            -0.778293147607    
+         17       4        -0.484440901948            -0.697002368327    
+         18       4        -0.484307199522            -0.696810000367    
+         19       4        -0.472500330673            -0.679822550469    
+         20       4        -0.467263820547            -0.672288380780    
+         21       4        -0.462009531290            -0.664728630889    
+         22       4        -0.450202662441            -0.647741180990    
+         23       4        -0.450086739146            -0.647574393234    
+         24       4        -0.381895873039            -0.549462951811    
+         25       4        -0.376525660488            -0.541736414164    
+         26       4        -0.371155447936            -0.534009876516    
+         27       4        -0.365744606685            -0.526224883235    
+         28       4        -0.359598204807            -0.517381582333    
+         29       4        -0.359348579087            -0.517022426618    
+         30       4        -0.269150299169            -0.387247227066    
+         31       4        -0.268744121454            -0.386662827960    
+         32       4        -0.268610419027            -0.386470460001    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    5    0   1 1.8661598531239E-003   2.9144457766178E+002  -3.3399770532299E+001
+    6    2   4 1.8661598531239E-003   8.1395541469760E+005  -7.0232754148364E+005
+    7    4   4 1.8661598531239E-003   8.9527147792413E+003  -4.7425876717692E-004
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     3:  MAGNETIC Z FIELD =   1760.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6336567147     CM-1    = -0.9116906295     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.633656714702            -0.911690629502    
+          2       2        -0.678249247982            -0.975849335302    
+          3       2        -0.655952981342            -0.943769982402    
+          4       2        -0.633656714702            -0.911690629502    
+          5       2        -0.564834326888            -0.812670569247    
+          6       2        -0.559711086163            -0.805299368954    
+          7       2        -0.542538060248            -0.780591216347    
+          8       2        -0.451535179798            -0.649658376153    
+          9       2        -0.451419405793            -0.649491803193    
+         10       4        -0.678249247982            -0.975849335302    
+         11       4        -0.655952981342            -0.943769982402    
+         12       4        -0.633656714702            -0.911690629502    
+         13       4        -0.582007352803            -0.837378721854    
+         14       4        -0.564834326888            -0.812670569247    
+         15       4        -0.559711086163            -0.805299368954    
+         16       4        -0.542538060248            -0.780591216347    
+         17       4        -0.485765457624            -0.698908108405    
+         18       4        -0.485631963615            -0.698716040312    
+         19       4        -0.473831446438            -0.681737729053    
+         20       4        -0.468592431708            -0.674199955799    
+         21       4        -0.463335696975            -0.666636687412    
+         22       4        -0.451535179798            -0.649658376153    
+         23       4        -0.451419405793            -0.649491803193    
+         24       4        -0.382962059996            -0.550996956952    
+         25       4        -0.377589551258            -0.543267115605    
+         26       4        -0.372217042521            -0.535537274258    
+         27       4        -0.366804051719            -0.527749188254    
+         28       4        -0.360665793357            -0.518917604052    
+         29       4        -0.360416525343            -0.518558962999    
+         30       4        -0.269952662983            -0.388401649569    
+         31       4        -0.269547138902            -0.387818190898    
+         32       4        -0.269413644893            -0.387626122805    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    5    0   1 1.8661598530049E-003  -1.7133040108984E+002  -1.9610672848624E+001
+    6    2   4 1.8661598530049E-003  -1.4335963675705E+006  -5.2655687966905E+005
+    7    4   4 1.8661598530049E-003   5.0937189853504E+004  -3.5186965322616E-004
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     4:  MAGNETIC Z FIELD =   1765.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6355185236     CM-1    = -0.9143693570     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.635518523551            -0.914369357024    
+          2       2        -0.680108266694            -0.978524048440    
+          3       2        -0.657813395123            -0.946446702732    
+          4       2        -0.635518523551            -0.914369357024    
+          5       2        -0.566430163044            -0.814966621409    
+          6       2        -0.561304281314            -0.807591621298    
+          7       2        -0.544135291472            -0.782889275701    
+          8       2        -0.452867684266            -0.651575552771    
+          9       2        -0.452752059393            -0.651409194378    
+         10       4        -0.680108266694            -0.978524048440    
+         11       4        -0.657813395123            -0.946446702732    
+         12       4        -0.635518523551            -0.914369357024    
+         13       4        -0.583599152886            -0.839668967007    
+         14       4        -0.566430163044            -0.814966621409    
+         15       4        -0.561304281314            -0.807591621298    
+         16       4        -0.544135291472            -0.782889275701    
+         17       4        -0.487090039077            -0.700813885573    
+         18       4        -0.486956753076            -0.700622116757    
+         19       4        -0.475162555838            -0.683652898480    
+         20       4        -0.469921049235            -0.676111539975    
+         21       4        -0.464661881505            -0.668544771049    
+         22       4        -0.452867684266            -0.651575552771    
+         23       4        -0.452752059393            -0.651409194378    
+         24       4        -0.384028234633            -0.552530944366    
+         25       4        -0.378653442029            -0.544797817046    
+         26       4        -0.373278649426            -0.537064689726    
+         27       4        -0.367863520700            -0.529273527726    
+         28       4        -0.361733363061            -0.520453598658    
+         29       4        -0.361484452187            -0.520095471448    
+         30       4        -0.270755002851            -0.389556037619    
+         31       4        -0.270350130982            -0.388973517335    
+         32       4        -0.270216844981            -0.388781748519    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    5    0   1 1.8661598530049E-003  -4.0221116257114E+001  -2.3735064659047E+000
+    6    2   4 1.8661598530049E-003  -8.1813363399355E+005  -7.7997351032433E+004
+    7    4   4 1.8661598530049E-003   4.4186168647352E+004  -6.6435736698801E-005
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+Note: The following floating-point exceptions are signalling: IEEE_INVALID_FLAG IEEE_DIVIDE_BY_ZERO IEEE_UNDERFLOW_FLAG IEEE_DENORMAL
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       3.22 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
