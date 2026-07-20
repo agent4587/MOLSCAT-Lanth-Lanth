@@ -1,2 +1,0 @@
-B0_G,Delta_G,a_bg_re,a_bg_im,a_res_re,a_res_im,Gamma_inel_G,ifconv_used,status,dipole_dipole,aniso_vdw,hyperfine,lmax,run_label
-1757.20727,16.944,34.086,-0.0264037,2084.4,-8.6038,-0.55416,3,ok,False,True,True,4,test_1757_pipeline
