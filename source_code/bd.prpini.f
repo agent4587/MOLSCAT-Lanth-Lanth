@@ -1,0 +1,200 @@
+      SUBROUTINE PRPINI(RMIN,RMAX,DR,RVFAC,IRMSET,IRXSET,
+     1                  EPS,EPL,DRSEG,EPSEG,IPRSEG,STPSEG,TOLSEG,
+     2                  POWSEG,DIRNAM,POWRX,TOLHI)
+C  Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur
+C  Distributed under the GNU General Public License, version 3
+
+C  CR Le Sueur Dec 2018
+C  OCT 2022 UPDATED TO TAKE ACCOUNT OF RMID OUTSIDE RANGE RMID-RMAX
+      IMPLICIT NONE
+
+C  THIS ROUTINE SETS UP THE NUMBER OF SEGMENTS FOR A BOUND OR FIELD
+C  CALCULATION AND PUTS INITIAL (OR INDICATIVE) VALUES INTO IPROPS, IPROPL,
+C  DRS, DRL, STEPS, STEPL, TOLHIS, TOLHIL, AS WELL AS RMIN, RMAX, RMID,
+C  RMATCH
+
+      INTEGER, PARAMETER              :: MXSEG=3
+
+      DOUBLE PRECISION, INTENT(IN)    :: RMIN,RMAX,DR,RVFAC,EPS,EPL,
+     1                                   POWRX,TOLHI
+      INTEGER,          INTENT(IN)    :: IRMSET,IRXSET
+      DOUBLE PRECISION, INTENT(OUT)   :: DRSEG(MXSEG),EPSEG(MXSEG),
+     1                                   STPSEG(MXSEG),TOLSEG(MXSEG),
+     2                                   POWSEG(MXSEG)
+      INTEGER,          INTENT(OUT)   :: IPRSEG(MXSEG)
+      CHARACTER(3),     INTENT(OUT)   :: DIRNAM(MXSEG)
+C
+C  COMMON BLOCK FOR CONTROL OF PROPAGATION SEGMENTS
+      COMMON /RADIAL/ RMNINT,RMXINT,RMID,RMATCH,DRS,DRL,STEPS,STEPL,
+     1                POWRS,POWRL,TOLHIS,TOLHIL,CAYS,CAYL,unset,
+     2                IPROPS,IPROPL,NSEG
+      DOUBLE PRECISION RMNINT,RMXINT,RMID,RMATCH,
+     1                 STEPS,STEPL,TOLHIS,TOLHIL,DRS,DRL,CAYS,CAYL,
+     1                 POWRS,POWRL,unset
+      INTEGER          IPROPS,IPROPL,NSEG
+
+C  SET UP NUMBER OF SEGMENTS
+      NSEG=2
+      IF (RMATCH.EQ.unset .AND. RMID.EQ.unset) THEN
+        STOP
+      ELSEIF (RMATCH.EQ.unset .OR. RMATCH.LT.RMIN .OR. RMATCH.GT.RMAX)
+     1THEN
+        RMATCH=RMID
+      ELSEIF (RMID.NE.unset .AND. RMID.GT.RMAX) THEN
+        NSEG=2
+        IPROPL=IPROPS
+        RMID=RMATCH
+        DRL=DRS
+        TOLHIL=TOLHIS
+        POWRL=POWRS
+        STEPL=STEPS
+      ELSEIF (RMID.NE.unset .AND. RMID.LT.RMIN) THEN
+        NSEG=2
+        IPROPS=IPROPL
+        RMID=RMATCH
+        DRS=DRL
+        TOLHIS=TOLHIL
+        POWRS=POWRL
+        STEPS=STEPL
+      ELSEIF (RMID.EQ.unset .OR. ABS(RMID/RMATCH-1.D0).LT.1.D-8) THEN
+        RMID=RMATCH
+      ELSE
+        NSEG=3
+      ENDIF
+
+C  CHECK THAT PROPAGATOR FLAGS HAVE BEEN SET AS REQUIRED
+      IF (IPROPS.EQ.0) IPROPS=6
+
+      IF (IPROPL.EQ.0) IPROPL=IPROPS
+
+      IF (IPROPS.LT.5 .OR. IPROPS.GT.9) THEN
+        WRITE(6,101) IPROPS
+  101   FORMAT(/'  *** ERROR: IPROPS = ',I2,' IS NOT A KNOWN VALUE')
+        STOP
+      ENDIF
+      IF (IPROPL.LT.5 .OR. IPROPL.GT.9) THEN
+        WRITE(6,102) IPROPL
+  102   FORMAT(/'  *** WARNING: IPROPL = ',I2,' IS NOT A KNOWN VALUE'/
+     1          '               SETTING IPROPL = IPROPS')
+        IPROPL=IPROPS
+      ENDIF
+
+C  SET UP TOLHI
+      IF (TOLHIS.EQ.unset) TOLHIS=TOLHI
+      IF (TOLHIL.EQ.unset) TOLHIL=TOLHIS
+
+C  ONLY VIVS AND AIRY CAN MAKE USE OF TOLHI AT THE MOMENT
+C  (AND WKB USES IT FOR A DIFFERENT PURPOSE)
+      IF (IPROPS.EQ.9) THEN
+        IF (TOLHIS.LT.0.D0 .OR. TOLHIS.GE.1.D0) THEN
+          WRITE(6,*) ' *** THIS VALUE FOR TOLHIS IS INVALID: ',TOLHIS
+          STOP
+        ENDIF
+      ENDIF
+      IF (IPROPS.NE.4 .AND. IPROPS.NE.9 .AND. IPROPS.NE.-1) TOLHIS=0.D0
+
+      IF (IPROPL.EQ.9) THEN
+        IF (TOLHIL.LT.0.D0 .OR. TOLHIL.GE.1.D0) THEN
+          WRITE(6,*) ' *** THIS VALUE FOR TOLHIL IS INVALID: ',TOLHIL
+          STOP
+        ENDIF
+      ENDIF
+      IF (IPROPL.NE.4 .AND. IPROPL.NE.9) TOLHIL=0.D0
+
+C  SET UP POWR
+      IF (IPROPL.EQ.9) THEN
+        IF (TOLHIL.EQ.0.D0) THEN
+          IF (POWRL.EQ.unset) POWRL=4.D0/3.D0
+        ELSE
+          IF (POWRL.EQ.unset) POWRL=POWRX
+        ENDIF
+      ELSE
+        POWRL=0.D0
+      ENDIF
+
+      IF (IPROPS.EQ.9) THEN
+        IF (TOLHIS.EQ.0.D0) THEN
+          IF (POWRS.EQ.unset) POWRS=0.D0
+        ELSE
+          IF (POWRS.EQ.unset) POWRS=3.D0
+        ENDIF
+      ELSE
+        POWRS=0.D0
+      ENDIF
+
+C  SET UP STEP/DR
+      IF (STEPS.LE.0.D0 .AND. DRS.EQ.unset) THEN
+        DRS=DR
+        STEPS=-10.D0
+      ELSEIF (STEPS.LE.0.D0) THEN
+        STEPS=-10.D0
+      ELSEIF (STEPS.GT.0.D0 .AND. DRS.NE.unset) THEN
+        STEPS=-10.D0
+      ENDIF
+
+      IF (STEPL.EQ.unset .AND. DRL.EQ.unset) THEN
+        STEPL=STEPS
+C  LEAVE DRL unset SO THAT IT INHERITS SHORT-RANGE VALUE
+      ELSEIF (STEPL.NE.unset .AND. DRL.NE.unset) THEN
+        STEPL=-10.D0
+      ENDIF
+
+C  SET UP VALUES FOR PRINTING
+      DIRNAM(1)='OUT'
+      IPRSEG(1)=IPROPS
+      DRSEG(1)=DRS
+      EPSEG(1)=EPS
+      POWSEG(1)=POWRS
+      STPSEG(1)=STEPS
+      TOLSEG(1)=TOLHIS
+
+      DIRNAM(2)='IN'
+      IPRSEG(2)=IPROPL
+      DRSEG(2)=DRL
+      EPSEG(2)=EPL
+      POWSEG(2)=POWRL
+      STPSEG(2)=STEPL
+      TOLSEG(2)=TOLHIL
+
+!  Start of long IF block #1
+      IF (NSEG.EQ.3) THEN
+!  Start of long IF block #2
+        IF (RMID.LT.RMATCH) THEN
+          DIRNAM(2)='OUT'
+          IPRSEG(2)=IPROPS
+          DRSEG(2)=unset
+          EPSEG(2)=EPS
+          POWSEG(2)=POWRS
+          STPSEG(2)=STEPS
+          TOLSEG(2)=TOLHIS
+
+          DIRNAM(3)='IN'
+          IPRSEG(3)=IPROPL
+          DRSEG(3)=DRL
+          EPSEG(3)=EPL
+          POWSEG(3)=POWRL
+          STPSEG(3)=STEPL
+          TOLSEG(3)=TOLHIL
+        ELSE
+C         DIRNAM(2)='IN'
+C         IPRSEG(2)=IPROPL
+C         DRSEG(2)=DRL
+C         EPSEG(2)=EPL
+C         POWSEG(2)=POWRL
+C         STPSEG(2)=STEPL
+C         TOLSEG(2)=TOLHIL
+
+          DIRNAM(3)='IN'
+          IPRSEG(3)=IPROPS
+          DRSEG(3)=unset
+          EPSEG(3)=EPS
+          POWSEG(3)=POWRS
+          STPSEG(3)=STEPS
+          TOLSEG(3)=TOLHIS
+        ENDIF
+!  End of long IF block #2
+      ENDIF
+!  End of long IF block #1
+
+      RETURN
+      END

@@ -1,0 +1,182 @@
+      SUBROUTINE CPL25(N,MXLAM,LAM,NSTATE,JSTATE,JSINDX,MVALUE,
+     1                 VL,IPRINT,LFIRST)
+C  Copyright (C) 2019 J. M. Hutson & C. R. Le Sueur
+C  Distributed under the GNU General Public License, version 3
+C
+C  CS COUPLING MATRIX FOR SYMMETRIC TOP ROTOR-ATOM (ITYPE=25)
+C  SEE (FOR EXAMPLE) EQN 32 OF GREEN JCP (1976) 64 3463
+C
+C  SAVES COUPLING COEFFICIENTS USING NEW DYNAMIC STORAGE
+C
+C  CRLS 10-05-22: SAVES COUPLING COEFFICIENTS USING ALLOCATABLE ARRAYS
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      SAVE NL12,IXMX,ISTART,IFIRST,CPL
+C
+C  SPECIFICATIONS FOR ARGUMENTS
+      DIMENSION LAM(MXLAM),JSTATE(NSTATE,3),JSINDX(N),VL(*)
+      INTEGER IPRINT
+      LOGICAL LFIRST
+      ALLOCATABLE CPL(:),CPLTMP(:)
+C
+      LOGICAL LODD
+C
+      PARAMETER (Z0=0.D0, HALF=0.5D0, ONE=1.D0, SQRTHF=SQRT(0.5D0))
+C
+C  STATEMENT FUNCTION DEFINITIONS
+      LODD(I)=I-2*(I/2).NE.0
+C
+C  IF LFIRST IS TRUE (FIRST CALL), DO SOME INITIALIZATION
+      IF (LFIRST) THEN
+        IFIRST=-1
+        LFIRST=.FALSE.
+        IF (ALLOCATED(CPL)) DEALLOCATE (CPL)
+      ENDIF
+C
+      XM=MVALUE
+C
+      IF (IFIRST.GT.-1) GOTO 1000
+
+C  FIRST TIME THROUGH SET UP SOME STORAGE POINTERS
+      NL12=NSTATE*(NSTATE+1)/2
+      IXMX=NL12*MXLAM
+      ALLOCATE (CPL(IXMX))
+C
+ 1000 MVABS=ABS(MVALUE)
+C  SEE IF VALUES ARE STORED FOR THIS HIGH AN MVALUE
+C  IF NOT, TRY TO STORE THEM IN XCPL().
+      IF (MVABS.LE.IFIRST) GOTO 2000
+
+C  TEST FOR AVAILABLE STORAGE; NEED IXMX FOR THIS MVAL
+      NCPL=SIZE(CPL)
+      IF (NCPL/IXMX.LE.MVABS) THEN
+        ALLOCATE (CPLTMP(NCPL))
+        CPLTMP=CPL
+        DEALLOCATE (CPL)
+        ALLOCATE (CPL(IXMX*(MVABS+1)))
+        CPL(1:NCPL)=CPLTMP
+        DEALLOCATE (CPLTMP)
+      ENDIF
+
+!  Start of long DO loop #1
+      DO MV=IFIRST+1,MVABS
+
+        IX=MV*IXMX
+!  Start of long DO loop #2
+        DO IL=1,MXLAM
+          LM=LAM(2*IL-1)
+          MU=LAM(2*IL)
+          DO I1=1,NSTATE
+            J1 =JSTATE(I1,1)
+            K1 =JSTATE(I1,2)
+            IS1=JSTATE(I1,3)
+          DO I2=1,I1
+            J2 =JSTATE(I2,1)
+            K2 =JSTATE(I2,2)
+            IS2=JSTATE(I2,3)
+            IX=IX+1
+            CPL(IX)=0.D0
+            IF (J1.LT.MV .OR. J2.LT.MV) CYCLE
+            PARFCT=(ONE+PARSGN(J1+J2+IS1+IS2+LM+MU))*HALF
+            IF (PARFCT.LE.1.D-5) CYCLE
+            IF (K1.EQ.0) PARFCT=PARFCT*SQRTHF
+            IF (K2.EQ.0) PARFCT=PARFCT*SQRTHF
+            KDIF=K2-K1
+            IF (ABS(KDIF).EQ.MU) THEN
+              WPAR=ONE
+              IF (KDIF.LT.0 .AND. LODD(MU)) WPAR=-WPAR
+C  CONTRIBUTION FROM (J1, K1, MVALUE / Y(LM,MU) / J2, K2, MVALUE)
+              CPL(IX)=PARFCT*WPAR*GSYMTP(J1,K1,J2,K2,MV,LM,KDIF)
+            ENDIF
+            KSUM=K2+K1
+            IF (ABS(KSUM).EQ.MU) THEN
+C  CONTRIBUTION FROM (J1,-K1, MVALUE / Y(LM,MU) / J2, K2, MVALUE)
+              CPL(IX)=CPL(IX)+PARFCT*PARSGN(IS1)*
+     &                        GSYMTP(J1,-K1,J2,K2,MV,LM,KSUM)
+            ENDIF
+          ENDDO
+          ENDDO
+        ENDDO
+!  End of long DO loop #2
+      ENDDO
+!  End of long DO loop #1
+
+C  RESET IFIRST TO REFLECT HIGHEST M-VALUE STORED.
+      IFIRST=MVABS
+C
+ 2000 IXM=MVABS*IXMX
+      NZERO=0
+!  Start of long DO loop #3
+      DO LL=1,MXLAM
+        NNZ=0
+        I=LL
+        LM=LAM(2*LL-1)
+        MU=LAM(2*LL)
+!  Start of long DO loop #4
+        DO ICOL=1,N
+          I1=JSINDX(ICOL)
+          J1=JSTATE(I1,1)
+          K1 =JSTATE(I1,2)
+          IS1=JSTATE(I1,3)
+!  Start of long DO loop #5
+        DO IROW=1,ICOL
+          I2=JSINDX(IROW)
+          J2=JSTATE(I2,1)
+          K2 =JSTATE(I2,2)
+          IS2=JSTATE(I2,3)
+C         IF (NOMEM) THEN
+C           VL(I)=0.D0
+C           V=0
+C           PARFCT=(ONE+PARSGN(J1+J2+IS1+IS2+LM+MU))*HALF
+C           IF (PARFCT.LE.1.D-5) THEN
+C             I=I+MXLAM
+C             CYCLE
+C           ENDIF
+C           IF (K1.EQ.0) PARFCT=PARFCT*SQRTHF
+C           IF (K2.EQ.0) PARFCT=PARFCT*SQRTHF
+C           KDIF=K2-K1
+C           IF (ABS(KDIF).EQ.MU) THEN
+C             WPAR=ONE
+C             IF (KDIF.LT.0 .AND. LODD(MU)) WPAR=-WPAR
+C  CONTRIBUTION FROM (J1, K1, MVALUE / Y(LM,MU) / J2, K2, MVALUE)
+C             VL(I)=VL(I)+PARFCT*WPAR*GSYMTP(J1,K1,J2,K2,MVALUE,LM,KDIF)
+C           ENDIF
+C           KSUM=K2+K1
+C           IF (ABS(KSUM).EQ.MU) 
+C  CONTRIBUTION FROM (J1,-K1, MVALUE / Y(LM,MU) / J2, K2, MVALUE)
+C    1        VL(I)=VL(I)+PARFCT*PARSGN(IS1)*
+C    2                    GSYMTP(J1,-K1,J2,K2,MVALUE,LM,KSUM)
+C         ELSE
+            IF (I1.GT.I2) THEN
+              IX12=I1*(I1-1)/2+I2
+            ELSE
+              IX12=I2*(I2-1)/2+I1
+            ENDIF
+            IX=IXM+(LL-1)*NL12+IX12
+            VL(I)=CPL(IX)
+C  WE HAVE STORED COUPLING FOR POSITIVE MVALUES; CORRECT IF NECESSARY
+C  FOR PARITY OF THRJ(J1,LM,J2,-MVAL,0,MVAL)
+            IF (MVALUE.LT.0 .AND. LODD(J1+J2+LM)) VL(I)=-VL(I)
+C         ENDIF
+          IF (VL(I).NE.Z0) NNZ=NNZ+1
+          I=I+MXLAM
+        ENDDO
+!  End of long DO loop #5
+        ENDDO
+!  End of long DO loop #4
+        IF (NNZ.LE.0) THEN
+          NZERO=NZERO+1
+          IF (IPRINT.GE.14) WRITE(6,612) MVALUE,LL
+        ENDIF
+  612   FORMAT('  * * * NOTE.  FOR MVALUE =',I4,',  ALL COUPLING '
+     1         'COEFFICIENTS ARE 0.0 FOR EXPANSION TERM',I4)
+      ENDDO
+!  End of long DO loop #3
+
+      IF (NZERO.GT.0 .AND. IPRINT.GE.10 .AND. IPRINT.LT.14)
+     1  WRITE(6,620) MVALUE,NZERO
+  620 FORMAT('  * * * NOTE.  FOR MVALUE =',I4,',  ALL COUPLING ',
+     1       'COEFFICIENTS ARE 0.0 FOR',I5,' POTENTIAL EXPANSION TERMS')
+
+      RETURN
+      END

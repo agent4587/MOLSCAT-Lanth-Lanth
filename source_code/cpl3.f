@@ -1,0 +1,174 @@
+      SUBROUTINE CPL3(N,MXLAM,LAM,NSTATE,JSTATE,JSINDX,L,JTOT,IEX,
+     1                VL,IPRINT,LFIRST)
+C  Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur
+C  Distributed under the GNU General Public License, version 3
+C
+C  COUPLING MATRIX ELEMENTS FOR LINEAR ROTOR-LINEAR ROTOR (ITYPE=3)
+C  SEE (FOR EXAMPLE) EQN 12 OF HEIL, GREEN AND KOURI JCP (1978) 68 2562
+C
+C  JAN 93 CODE TO SAVE JTOT-INDEPENDENT PARTS IN DEDICATED STORAGE
+C         WORKS W/ NEW DYNAMIC STORAGE CAPABILITIES.
+C
+C  LOWER DIAGONAL OF XCPL IS STORED FOR MAIN COUPLING ELEMENTS
+C  BUT EXCHANGE PART REQUIRES FULL MATRIX (NSTATE,NSTATE) STORAGE.
+C
+C  CRLS 10-05-22: SAVES COUPLING COEFFICIENTS USING ALLOCATABLE ARRAYS
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      SAVE IXEX,ISTART,IFIRST,CPL
+      LOGICAL LODD,LFIRST
+      INTEGER IPRINT
+      DIMENSION LAM(*),JSTATE(NSTATE,3),JSINDX(*),L(*)
+      DIMENSION VL(*)
+      ALLOCATABLE CPL(:)
+C
+C  PIFCT IS FACTOR (4.*PI)**(-3/2)
+      PARAMETER (PIFCT=(4.D0*ACOS(-1.D0))**(-1.5D0), SQRTHF=SQRT(0.5D0))
+C  STATEMENT FUNCTIONS
+      LODD(I)=I-2*(I/2).NE.0
+      Z(I)=DBLE(I+I+1)
+C
+C  INITIALIZE IFIRST IF LFIRST IS SET TRUE
+      IF (LFIRST) THEN
+        IFIRST=0
+        LFIRST=.FALSE.
+        IF (ALLOCATED(CPL)) DEALLOCATE (CPL)
+      ENDIF
+C
+      NLSQ=NSTATE*NSTATE
+      NL12=NSTATE*(NSTATE+1)/2
+      IF (IFIRST.GT.0) GOTO 1000
+C
+C  FIRST TIME THROUGH EVALUATE JTOT-INDEPENDENT PARTS OF VL()
+      IXMX=NL12*MXLAM
+      IXEX=IXMX
+      IF (IEX.GT.0) IXMX=IXEX+NLSQ*MXLAM
+      ALLOCATE (CPL(IXMX))
+
+      NZERO=0
+!  Start of long DO loop #1
+      DO LL=1,MXLAM
+        LM1=LAM(3*LL-2)
+        LM2=LAM(3*LL-1)
+        LM=LAM(3*LL)
+        IL12=0
+!  Start of long DO loop #2
+      DO I1=1,NSTATE
+        J1 =JSTATE(I1,1)
+        J2 =JSTATE(I1,2)
+        J12=JSTATE(I1,3)
+!  Start of long DO loop #3
+      DO I2=1,I1
+        IL12=IL12+1
+        J1P =JSTATE(I2,1)
+        J2P =JSTATE(I2,2)
+        J12P=JSTATE(I2,3)
+C  INDEX FOR XCPL(IL12,LL,1), I.E., SYMMETRIZED
+        IX=(LL-1)*NL12+IL12
+        FACTOR=PIFCT*Z(LM)*SQRT((Z(LM1)*Z(LM2))*(Z(J1)*Z(J2)*Z(J12))*
+     1                          (Z(J1P)*Z(J2P)*Z(J12P)))
+        JSUM=J1+J2+J12P
+        IF (LODD(JSUM)) FACTOR=-FACTOR
+        CPL(IX)=THREEJ(LM1,J1P,J1)*THREEJ(LM2,J2P,J2)*
+     1               XNINEJ(J12P,J2P,J1P,J12,J2,J1,LM,LM2,LM1)*FACTOR
+        IF (IEX.EQ.0) CYCLE
+C  INDEX FOR XCPL(I2,I1,LL,2), I.E., UNSYMMETRIZED
+        IE=(LL-1)*NLSQ+(I1-1)*NSTATE+I2
+        IF (J1.EQ.J2) THEN
+          CPL(IXEX+IE)=CPL(IX)
+        ELSE
+          CPL(IXEX+IE)=THREEJ(LM1,J1P,J2)*THREEJ(LM2,J2P,J1)*
+     1                 XNINEJ(J12P,J2P,J1P,J12,J1,J2,LM,LM2,LM1)*FACTOR
+        ENDIF
+        IF (I1.EQ.I2) CYCLE
+C  ELSE WE NEED TO STORE I1<->I2 VALUES
+        IE=(LL-1)*NLSQ+(I2-1)*NSTATE+I1
+        IF (J1P.EQ.J2P) THEN
+          CPL(IXEX+IE)=CPL(IX)
+        ELSE
+          CPL(IXEX+IE)=THREEJ(LM1,J2P,J1)*THREEJ(LM2,J1P,J2)*
+     1                 XNINEJ(J12P,J1P,J2P,J12,J2,J1,LM,LM2,LM1)*FACTOR
+        ENDIF
+      ENDDO
+!  End of long DO loop #3
+      ENDDO
+!  End of long DO loop #2
+      ENDDO
+!  End of long DO loop #1
+
+C  RESET IFIRST
+      IFIRST=1
+C
+C  EVALUATE VL() USING STORED JTOT-INDEPENDENT PARTS
+ 1000 NZERO=0
+!  Start of long DO loop #4
+      DO LL=1,MXLAM
+        NNZ=0
+        I=LL
+        LM=LAM(3*LL)
+!  Start of long DO loop #5
+        DO ICOL=1,N
+          LV=L(ICOL)
+          I1=JSINDX(ICOL)
+          J1 =JSTATE(I1,1)
+          J2 =JSTATE(I1,2)
+          J12=JSTATE(I1,3)
+!  Start of long DO loop #6
+        DO IROW=1,ICOL
+          LVP=L(IROW)
+          I2=JSINDX(IROW)
+          J1P =JSTATE(I2,1)
+          J2P =JSTATE(I2,2)
+          J12P=JSTATE(I2,3)
+C  GET JTOT-DEPENDENT PARTS
+          XFACT=SQRT(Z(LV)*Z(LVP))*THREEJ(LM,LVP,LV)
+     1                *SIXJ(LVP,LV,J12P,J12,LM,JTOT)
+          IF (LODD(JTOT)) XFACT=-XFACT
+C  GET JTOT-INDEPENDENT PARTS FROM XCPL.
+C  BELOW IS FOR SYMMETRIZED MAIN PART
+          IF (I1.GE.I2) THEN
+            IL12=I1*(I1-1)/2+I2
+          ELSE
+            IL12=I2*(I2-1)/2+I1
+          ENDIF
+          IX=(LL-1)*NL12+IL12
+          VL(I)=XFACT*CPL(IX)
+C ***
+C *** N.B. CODE BELOW ASSUMES THAT SYMMETRICALLY RELATED POTENTIAL TERMS
+C ***   I.E. A(LM1,LM2,LM) AND A(LM2,LM1,LM) ARE BOTH PRESENT IN POTL.
+C ***
+C  BELOW IS FOR XCPL(I2,I1,LL,IEX) STORAGE ORDER
+          IF (IEX.NE.0) THEN
+            IE=(LL-1)*NLSQ+(I1-1)*NSTATE+I2
+            IF (J1.EQ.J2) THEN
+              T=VL(I)
+            ELSE
+              T=XFACT*CPL(IXEX+IE)
+            ENDIF
+            IF (LODD(IEX+J1+J2-J12+LV)) T=-T
+            VL(I)=VL(I)+T
+            IF (J1 .EQ.J2)  VL(I)=VL(I)*SQRTHF
+            IF (J1P.EQ.J2P) VL(I)=VL(I)*SQRTHF
+          ENDIF
+          IF (VL(I).NE.0.D0) NNZ=NNZ+1
+          I=I+MXLAM
+        ENDDO
+!  End of long DO loop #6
+        ENDDO
+!  End of long DO loop #5
+        IF (NNZ.LE.0) THEN
+          NZERO=NZERO+1
+          IF (IPRINT.GE.14) WRITE(6,612) JTOT, LL
+        ENDIF
+  612   FORMAT('  * * * NOTE.  FOR JTOT =',I4,',  ALL COUPLING ',
+     1         'COEFFICIENTS ARE 0.0 FOR SYMMETRY',I4)
+      ENDDO
+!  End of long DO loop #4
+
+      IF (NZERO.GT.0 .AND. IPRINT.GE.10 .AND. IPRINT.LT.14)
+     1  WRITE(6,620) JTOT,NZERO
+  620 FORMAT('  * * * NOTE.  FOR JTOT =',I4,',  ALL COUPLING ',
+     1       'COEFFICIENTS ARE 0.0 FOR',I5,' POTENTIAL EXPANSION TERMS')
+
+      RETURN
+      END

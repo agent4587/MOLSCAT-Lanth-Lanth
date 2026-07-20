@@ -1,0 +1,58 @@
+      SUBROUTINE CHECK6(N,JL,A,LIOS)
+C  Copyright (C) 2022 J. M. Hutson & C. R. Le Sueur
+C  Distributed under the GNU General Public License, version 3
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+C  THIS SUBROUTINE CHECKS THAT FOR ASYMMETRIC TOP FUNCTIONS, THE A
+C  COEFFICIENTS FOR REPEATED SETS OF JI (=JL(...,1)) ARE ORTHOGONAL TO
+C  EACH OTHER
+C
+C  CRLS 08-2022: SET6I USES TEMPORARY ARRAY TO COPY JSTATE INTO SO THAT IT
+C                CAN USE THIS CODE INSTEAD OF CHCK6I
+C                LIOS=.TRUE. INDICATES THAT THIS ROUTINE IS BEING CALLED
+C                FROM SET6I
+C
+C
+      DIMENSION JL(N,6),A(*)
+      LOGICAL LIOS
+      DATA EPS/7.D-6/
+      WRITE(6,600)
+  600 FORMAT(/'  CHECK6.  INPUT FUNCTIONS WILL BE CHECKED FOR ',
+     &       'ORTHOGONALITY.')
+      NERR=0
+      DO I1=2,N
+      DO I2=1,I1-1
+C  SEE IF SAME J-VALUE
+        IF (JL(I2,1).NE.JL(I1,1)) CYCLE
+C  CHECK THAT NK AGREE
+        IF (.NOT.LIOS) THEN
+          NK1=JL(I1,5)
+          NK2=JL(I2,5)
+ 3000     IF (NK1.EQ.NK2) GOTO 1001
+          WRITE(6,699) I1,I2,NK1,NK2
+  699     FORMAT(/' ***** CHECK6 ERROR.  FOR LEVELS',2I4,
+     &           ', NK NOT EQUAL.',2I10)
+          NERR=NERR+1
+          CYCLE
+        ELSE
+          NK1=2*JL(I1,1)+1
+        ENDIF
+
+ 1001   TOTAL=0.D0
+        DO II=1,NK1
+          TOTAL=TOTAL+A(JL(I1,4)+II)*A(JL(I2,4)+II)
+        ENDDO
+        IF (ABS(TOTAL).LE.EPS) CYCLE
+        WRITE(6,698) I1,I2,TOTAL
+  698   FORMAT(/' ***** CHECK6 ERROR.  LEVEL',2I4,' ARE NOT ORTHOGONAL.'
+     &         ,'  OVERLAP =',E12.4)
+        NERR=NERR+1
+      ENDDO
+      ENDDO
+
+      IF (NERR.LE.0) RETURN
+      WRITE(6,697) NERR
+  697 FORMAT(/' *****'/'  ***** CHECK6.  NUMBER OF ERRORS =',I4/
+     1       '  ***** EXECUTION TERMINATING UNLESS CHECK6 MODIFIED'/
+     2       '  *****')
+      STOP
+      END
