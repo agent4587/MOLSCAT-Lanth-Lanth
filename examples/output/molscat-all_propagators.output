@@ -1,0 +1,3232 @@
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:39                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  2
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+
+  COUPLED EQUATIONS SOLVED BY PROPAGATOR OF DE VOGELAERE
+  PROPAGATION PARAMETERS ARE:    TOLHI  = 0.00E+00
+                                 NSTAB =  5  (STEPS PER STABILIZATION)
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   30.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ========================================== model system: ITYPE=1; IPROPS=2 ===========================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  DVPROP. PSI AND PSI' PROPAGATED FROM       0.6417  TO  20.000      IN  20180  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.08 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079788082524E-001  -3.6047176499736E-001  -6.1050727023519E-001  -7.3353851556357E-001
+    2    1 8.9189093420158E-002  -1.4701457211476E-001   1.8004033734395E-001  -2.3827414956145E-001
+    3    1 4.9602513153465E-006   2.3968824239357E-001   1.4419842363906E-004   2.2224891743193E-003
+    4    1 6.2516130380089E-006   2.7454570328961E-001  -3.8408591385283E-004   2.4706458768486E-003
+    5    1 1.4126589039195E-006   2.2173672576471E-001   2.0995970330069E-004   1.1698614562885E-003
+    6    1 4.0123134477752E-007   4.3798976007756E-001  -5.8595455509868E-004   2.4060050734906E-004
+    1    2 8.9189093420158E-002  -1.4701457211476E-001   1.8004033734395E-001  -2.3827414956145E-001
+    2    2 9.1079977828277E-001  -4.3355820334367E-001  -8.7239727487416E-001  -3.8694027068130E-001
+    3    2 4.3015932646309E-007   3.1022751599852E-001  -2.4231161905094E-004   6.0946239074779E-004
+    4    2 3.2659265055129E-007  -4.2340862066649E-001  -5.0657533848404E-004  -2.6452613668797E-004
+    5    2 2.8171854356698E-006   1.5919604017639E-001   9.0650423015358E-004   1.4125988518980E-003
+    6    2 7.5543596572457E-006   6.7105962456984E-002   2.5078023125739E-003   1.1248498647796E-003
+    1    3 4.9602513153465E-006   2.3968824239357E-001   1.4419842363906E-004   2.2224891743193E-003
+    2    3 4.3015932646309E-007   3.1022751599852E-001  -2.4231161905094E-004   6.0946239074778E-004
+    3    3 8.4456879321962E-001   2.5395334578693E-001  -2.2825354147695E-002   9.1872073908651E-001
+    4    3 7.5999412818448E-002  -4.3520544172729E-001  -2.5314762910372E-001  -1.0915901564972E-001
+    5    3 7.8650292944653E-002   4.5370511488970E-001  -2.6866561045091E-001   8.0430608015185E-002
+    6    3 7.7611060663213E-004  -3.4272272619244E-001  -1.5327666005951E-002  -2.3263130946675E-002
+    1    4 6.2516130380089E-006   2.7454570328961E-001  -3.8408591385283E-004   2.4706458768486E-003
+    2    4 3.2659265055129E-007  -4.2340862066649E-001  -5.0657533848404E-004  -2.6452613668797E-004
+    3    4 7.5999412818448E-002  -4.3520544172729E-001  -2.5314762910372E-001  -1.0915901564972E-001
+    4    4 9.2235287149921E-001   3.7562467517000E-001  -6.8175991913162E-001   6.7642906809573E-001
+    5    4 1.6342862633446E-003  -2.3564277924344E-001   3.6418757682966E-003  -4.0261929961601E-002
+    6    4 6.8512133055815E-006  -3.0547877420791E-002   2.5694158159132E-003  -4.9931520156757E-004
+    1    5 1.4126589039195E-006   2.2173672576471E-001   2.0995970330069E-004   1.1698614562885E-003
+    2    5 2.8171854356698E-006   1.5919604017639E-001   9.0650423015358E-004   1.4125988518980E-003
+    3    5 7.8650292944653E-002   4.5370511488970E-001  -2.6866561045091E-001   8.0430608015185E-002
+    4    5 1.6342862633446E-003  -2.3564277924344E-001   3.6418757682966E-003  -4.0261929961601E-002
+    5    5 8.8311908043990E-001   1.5350759498193E-001   5.3547950344411E-001   7.7225694029328E-001
+    6    5 3.6592110507764E-002   3.5402157394695E-001  -1.1631196532931E-001   1.5186716968785E-001
+    1    6 4.0123134477752E-007   4.3798976007756E-001  -5.8595455509868E-004   2.4060050734906E-004
+    2    6 7.5543596572457E-006   6.7105962456984E-002   2.5078023125739E-003   1.1248498647796E-003
+    3    6 7.7611060663213E-004  -3.4272272619244E-001  -1.5327666005951E-002  -2.3263130946675E-002
+    4    6 6.8512133055815E-006  -3.0547877420791E-002   2.5694158159132E-003  -4.9931520156756E-004
+    5    6 3.6592110507764E-002   3.5402157394695E-001  -1.1631196532931E-001   1.5186716968785E-001
+    6    6 9.6261697208130E-001   5.4661725427301E-002   9.2383107470843E-001   3.3038328874862E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  DE VOGELAERE PROPAGATION WITH STORED POTENTIAL MATRICES
+
+  DVPROP. PSI AND PSI' PROPAGATED FROM       0.6417  TO  20.000      IN  20180  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.04 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789585632872E-001   1.9175425353390E-001   3.4097618109655E-001   8.8973653417938E-001
+    2    1 9.2098762428877E-002   4.0287852749657E-001  -2.4870458328908E-001   1.7391030067217E-001
+    3    1 2.0372014641202E-006   2.5820985530103E-001  -7.3593547896694E-005   1.4254071186255E-003
+    4    1 2.6051513996182E-006   2.9851658054978E-001  -4.8443925227266E-004   1.5396330765724E-003
+    5    1 5.7099926571281E-007   2.3431272478240E-001   7.4360399907390E-005   7.5197725805932E-004
+    6    1 1.6789027615546E-007   4.3964730777648E-001  -3.8063529031976E-004   1.5168075658650E-004
+    1    2 9.2098762428877E-002   4.0287852749657E-001  -2.4870458328908E-001   1.7391030067217E-001
+    2    2 9.0789675688545E-001   1.1400248016116E-001   7.1866824359182E-001   6.2562985265898E-001
+    3    2 1.7847129543221E-007   3.2801491504793E-001  -1.9888786837624E-004   3.7271290726908E-004
+    4    2 1.4223354521922E-007  -4.0170701575545E-001  -3.0747155568873E-004  -2.1839136352331E-004
+    5    2 1.1433015354192E-006   1.6795757573846E-001   5.2709808676316E-004   9.3030594018838E-004
+    6    2 3.0166793009889E-006   6.6833899786977E-002   1.5859565035164E-003   7.0811105763353E-004
+    1    3 2.0372014641203E-006   2.5820985530103E-001  -7.3593547896694E-005   1.4254071186255E-003
+    2    3 1.7847129543229E-007   3.2801491504791E-001  -1.9888786837624E-004   3.7271290726918E-004
+    3    3 8.3188575400636E-001  -2.6474118541102E-001  -8.4357362265942E-002  -9.0816826053210E-001
+    4    3 8.2161459091263E-002   5.2773352974938E-002   2.7102433924425E-001   9.3312735617823E-002
+    5    3 8.5033024409610E-002  -7.2053613262773E-002   2.6222741898007E-001  -1.2755314635344E-001
+    6    3 9.1754682000460E-004   1.2254089559442E-001   2.1747371740643E-002   2.1085507875763E-002
+    1    4 2.6051513996182E-006   2.9851658054978E-001  -4.8443925227266E-004   1.5396330765724E-003
+    2    4 1.4223354521923E-007  -4.0170701575544E-001  -3.0747155568873E-004  -2.1839136352333E-004
+    3    4 8.2161459091263E-002   5.2773352974938E-002   2.7102433924425E-001   9.3312735617823E-002
+    4    4 9.1590170454543E-001  -1.2977888633859E-001   6.5609903162849E-001  -6.9673220482591E-001
+    5    4 1.9252074981223E-003   2.4406523634837E-001   1.6357669052330E-003   4.3846684763549E-002
+    6    4 8.8814802436503E-006   4.3903090572560E-001  -2.7641710123406E-003   1.1139294673302E-003
+    1    5 5.7099926571271E-007   2.3431272478240E-001   7.4360399907390E-005   7.5197725805926E-004
+    2    5 1.1433015354197E-006   1.6795757573848E-001   5.2709808676316E-004   9.3030594018866E-004
+    3    5 8.5033024409609E-002  -7.2053613262770E-002   2.6222741898007E-001  -1.2755314635344E-001
+    4    5 1.9252074981224E-003   2.4406523634837E-001   1.6357669052330E-003   4.3846684763550E-002
+    5    5 8.7328026091825E-001  -3.7938520354083E-001  -6.7874110383780E-001  -6.4233229319356E-001
+    6    5 3.9759792873204E-002  -1.8685051580393E-001   7.7057666247825E-002  -1.8390733793311E-001
+    1    6 1.6789027615546E-007   4.3964730777648E-001  -3.8063529031976E-004   1.5168075658648E-004
+    2    6 3.0166793009889E-006   6.6833899786982E-002   1.5859565035164E-003   7.0811105763359E-004
+    3    6 9.1754682000462E-004   1.2254089559442E-001   2.1747371740643E-002   2.1085507875764E-002
+    4    6 8.8814802436508E-006   4.3903090572558E-001  -2.7641710123406E-003   1.1139294673304E-003
+    5    6 3.9759792873205E-002  -1.8685051580393E-001   7.7057666247825E-002  -1.8390733793311E-001
+    6    6 9.5931059425697E-001  -4.9422247830487E-001  -9.7879874803505E-001  -3.5547223548208E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.12 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:40                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  5
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY LOG-DERIVATIVE PROPAGATOR OF JOHNSON
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ========================================== model system: ITYPE=1; IPROPS=5 ===========================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  LDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.09 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079808544937E-001  -3.5913070217365E-001  -6.0430483559948E-001  -7.3865672075766E-001
+    2    1 8.9188886807477E-002  -1.4567358957843E-001   1.8204132473775E-001  -2.3674848023842E-001
+    3    1 4.9618004887097E-006   2.4046864637943E-001   1.3331974374336E-004   2.2235166594019E-003
+    4    1 6.2516805985600E-006   2.7533138550877E-001  -3.9627988377615E-004   2.4687330459720E-003
+    5    1 1.4129880884855E-006   2.2252018457740E-001   2.0422219316003E-004   1.1710172433856E-003
+    6    1 4.0127397657321E-007   4.3877118446981E-001  -5.8715998742705E-004   2.3773330801107E-004
+    1    2 8.9188886807477E-002  -1.4567358957843E-001   1.8204132473775E-001  -2.3674848023842E-001
+    2    2 9.1079998336956E-001  -4.3221730188768E-001  -8.6910642586658E-001  -3.9427655761786E-001
+    3    2 4.3049923023220E-007   3.1095706037722E-001  -2.4519957404186E-004   6.0858557255483E-004
+    4    2 3.2660624679226E-007  -4.2264475250948E-001  -5.0531042677642E-004  -2.6695995838944E-004
+    5    2 2.8177405979513E-006   1.5998073892394E-001   8.9961717956535E-004   1.4171907169405E-003
+    6    2 7.5549768852425E-006   6.7888269276772E-002   2.5023451970095E-003   1.1372094794917E-003
+    1    3 4.9618004887097E-006   2.4046864637943E-001   1.3331974374336E-004   2.2235166594019E-003
+    2    3 4.3049923023220E-007   3.1095706037722E-001  -2.4519957404186E-004   6.0858557255483E-004
+    3    3 8.4456860845343E-001   2.5417621290288E-001  -2.4111827499435E-002   9.1868777515980E-001
+    4    3 7.5999585260181E-002  -4.3498247113833E-001  -2.5299473972924E-001  -1.0951368375466E-001
+    5    3 7.8650303754201E-002   4.5392794711391E-001  -2.6877797614106E-001   8.0054377117781E-002
+    6    3 7.7611023247464E-004  -3.4250007188603E-001  -1.5295102715934E-002  -2.3284545634040E-002
+    1    4 6.2516805985600E-006   2.7533138550877E-001  -3.9627988377615E-004   2.4687330459720E-003
+    2    4 3.2660624679226E-007  -4.2264475250948E-001  -5.0531042677642E-004  -2.6695995838944E-004
+    3    4 7.5999585260180E-002  -4.3498247113833E-001  -2.5299473972924E-001  -1.0951368375466E-001
+    4    4 9.2235269483335E-001   3.7584773571278E-001  -6.8270721997477E-001   6.7547283189457E-001
+    5    4 1.6342904135395E-003  -2.3542014349996E-001   3.6981977514495E-003  -4.0256847205546E-002
+    6    4 6.8512060869634E-006  -3.0325644772590E-002   2.5701091651307E-003  -4.9572670522651E-004
+    1    5 1.4129880884855E-006   2.2252018457740E-001   2.0422219316003E-004   1.1710172433856E-003
+    2    5 2.8177405979513E-006   1.5998073892394E-001   8.9961717956535E-004   1.4171907169405E-003
+    3    5 7.8650303754201E-002   4.5392794711391E-001  -2.6877797614106E-001   8.0054377117781E-002
+    4    5 1.6342904135395E-003  -2.3542014349996E-001   3.6981977514495E-003  -4.0256847205546E-002
+    5    5 8.8311908963475E-001   1.5373037598330E-001   5.3439799654924E-001   7.7300573795988E-001
+    6    5 3.6592085468823E-002   3.5424433021587E-001  -1.1652436763249E-001   1.5170417666192E-001
+    1    6 4.0127397657321E-007   4.3877118446981E-001  -5.8715998742705E-004   2.3773330801107E-004
+    2    6 7.5549768852425E-006   6.7888269276772E-002   2.5023451970095E-003   1.1372094794917E-003
+    3    6 7.7611023247464E-004  -3.4250007188603E-001  -1.5295102715934E-002  -2.3284545634040E-002
+    4    6 6.8512060869634E-006  -3.0325644772591E-002   2.5701091651307E-003  -4.9572670522651E-004
+    5    6 3.6592085468823E-002   3.5424433021587E-001  -1.1652436763249E-001   1.5170417666192E-001
+    6    6 9.6261699684175E-001   5.4884449888574E-002   9.2336783745944E-001   3.3167579590200E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  LDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.07 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789591267709E-001   1.9272408026762E-001   3.3554819501364E-001   8.9179780303619E-001
+    2    1 9.2098705948235E-002   4.0384826713528E-001  -2.4975952837299E-001   1.7239165854280E-001
+    3    1 2.0374254984069E-006   2.5874471530349E-001  -7.8387691257188E-005   1.4252301106370E-003
+    4    1 2.6050018010386E-006   2.9905802699742E-001  -4.8966022364440E-004   1.5379319446644E-003
+    5    1 5.7104527699878E-007   2.3485314932579E-001   7.1809464549396E-005   7.5225572633242E-004
+    6    1 1.6790210157681E-007   4.4018667972150E-001  -3.8116056852693E-004   1.5039522125734E-004
+    1    2 9.2098705948235E-002   4.0384826713528E-001  -2.4975952837299E-001   1.7239165854280E-001
+    2    2 9.0789681312404E-001   1.1497213272971E-001   7.1484329724625E-001   6.2999672499636E-001
+    3    2 1.7844398145470E-007   3.2858578178658E-001  -2.0020813359209E-004   3.7196866090878E-004
+    4    2 1.4221834785833E-007  -4.0116412329245E-001  -3.0670842798020E-004  -2.1942718168960E-004
+    5    2 1.1433772330889E-006   1.6849447414282E-001   5.2397411476321E-004   9.3210962882429E-004
+    6    2 3.0168881653822E-006   6.7372975382722E-002   1.5836037780486E-003   7.1350349651017E-004
+    1    3 2.0374254984070E-006   2.5874471530349E-001  -7.8387691257188E-005   1.4252301106370E-003
+    2    3 1.7844398145468E-007   3.2858578178658E-001  -2.0020813359209E-004   3.7196866090876E-004
+    3    3 8.3188523862467E-001  -2.6463227693293E-001  -8.3735864214373E-002  -9.0822549164233E-001
+    4    3 8.2161667886664E-002   5.2882373898550E-002   2.7096070085750E-001   9.3498483824492E-002
+    5    3 8.5033324008298E-002  -7.1944834031001E-002   2.6231499986649E-001  -1.2737411374899E-001
+    6    3 9.1755361088595E-004   1.2264952702205E-001   2.1733055157372E-002   2.1100424744838E-002
+    1    4 2.6050018010387E-006   2.9905802699741E-001  -4.8966022364440E-004   1.5379319446644E-003
+    2    4 1.4221834785833E-007  -4.0116412329245E-001  -3.0670842798020E-004  -2.1942718168960E-004
+    3    4 8.2161667886664E-002   5.2882373898550E-002   2.7096070085750E-001   9.3498483824492E-002
+    4    4 9.1590148355262E-001  -1.2966974874701E-001   6.5657656948964E-001  -6.9628204913658E-001
+    5    4 1.9252197516603E-003   2.4417422413689E-001   1.6057458422013E-003   4.3847934181105E-002
+    6    4 8.8815889087338E-006   4.3913978362479E-001  -2.7649493190911E-003   1.1120450402711E-003
+    1    5 5.7104527699878E-007   2.3485314932579E-001   7.1809464549396E-005   7.5225572633242E-004
+    2    5 1.1433772330888E-006   1.6849447414282E-001   5.2397411476321E-004   9.3210962882428E-004
+    3    5 8.5033324008299E-002  -7.1944834031003E-002   2.6231499986649E-001  -1.2737411374899E-001
+    4    5 1.9252197516603E-003   2.4417422413689E-001   1.6057458422013E-003   4.3847934181105E-002
+    5    5 8.7327980501661E-001  -3.7927654958764E-001  -6.7830225293516E-001  -6.4279534743159E-001
+    6    5 3.9759936800926E-002  -1.8674199319753E-001   7.7183188486525E-002  -1.8385508482492E-001
+    1    6 1.6790210157681E-007   4.4018667972150E-001  -3.8116056852693E-004   1.5039522125734E-004
+    2    6 3.0168881653822E-006   6.7372975382723E-002   1.5836037780486E-003   7.1350349651019E-004
+    3    6 9.1755361088593E-004   1.2264952702205E-001   2.1733055157372E-002   2.1100424744838E-002
+    4    6 8.8815889087338E-006   4.3913978362479E-001  -2.7649493190911E-003   1.1120450402710E-003
+    5    6 3.9759936800926E-002  -1.8674199319753E-001   7.7183188486525E-002  -1.8385508482492E-001
+    6    6 9.5931044320901E-001  -4.9411408751731E-001  -9.7877423493008E-001  -3.6213812917787E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.16 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:40                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  6
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY DIABATIC MODIFIED LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ========================================== model system: ITYPE=1; IPROPS=6 ===========================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  MDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.10 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079768797872E-001  -3.6022085246542E-001  -6.0935000208525E-001  -7.3450000880696E-001
+    2    1 8.9189284338223E-002  -1.4676371690014E-001   1.8041586716742E-001  -2.3799033428367E-001
+    3    1 4.9617762643274E-006   2.3983299600642E-001   1.4219883308694E-004   2.2229610334408E-003
+    4    1 6.2516524864602E-006   2.7469564242612E-001  -3.8641454628309E-004   2.4702907288174E-003
+    5    1 1.4129774956420E-006   2.2188477071654E-001   2.0889496634170E-004   1.1701881851562E-003
+    6    1 4.0127680924858E-007   4.3813630450109E-001  -5.8620905293327E-004   2.4007447908442E-004
+    1    2 8.9189284338223E-002  -1.4676371690014E-001   1.8041586716742E-001  -2.3799033428367E-001
+    2    2 9.1079958585743E-001  -4.3330740621361E-001  -8.7178635753147E-001  -3.8831447652571E-001
+    3    2 4.3049484910376E-007   3.1032220417274E-001  -2.4276879575705E-004   6.0955570779907E-004
+    4    2 3.2660851245389E-007  -4.2327936988498E-001  -5.0637264430284E-004  -2.6494387623728E-004
+    5    2 2.8177306124452E-006   1.5934519803257E-001   9.0526754392502E-004   1.4135845522505E-003
+    6    2 7.5549703724353E-006   6.7252685288377E-002   2.5068655876956E-003   1.1272068566429E-003
+    1    3 4.9617762643274E-006   2.3983299600642E-001   1.4219883308694E-004   2.2229610334408E-003
+    2    3 4.3049484910376E-007   3.1032220417274E-001  -2.4276879575705E-004   6.0955570779907E-004
+    3    3 8.4456868233583E-001   2.5399517485080E-001  -2.3066809806070E-002   9.1871464809330E-001
+    4    3 7.5999467790971E-002  -4.3516358884408E-001  -2.5311900641199E-001  -1.0922562146300E-001
+    5    3 7.8650345880956E-002   4.5374692544136E-001  -2.6868682099869E-001   8.0360052903021E-002
+    6    3 7.7611172112785E-004  -3.4268096675402E-001  -1.5321572645726E-002  -2.3267168559788E-002
+    1    4 6.2516524864602E-006   2.7469564242612E-001  -3.8641454628309E-004   2.4702907288174E-003
+    2    4 3.2660851245389E-007  -4.2327936988498E-001  -5.0637264430284E-004  -2.6494387623728E-004
+    3    4 7.5999467790971E-002  -4.3516358884408E-001  -2.5311900641199E-001  -1.0922562146300E-001
+    4    4 9.2235281404701E-001   3.7566655025163E-001  -6.8193784879965E-001   6.7624964652229E-001
+    5    4 1.6342886721153E-003  -2.3560097024419E-001   3.6524548891256E-003  -4.0261001544897E-002
+    6    4 6.8512288996477E-006  -3.0506150991463E-002   2.5695495597879E-003  -4.9864211559139E-004
+    1    5 1.4129774956420E-006   2.2188477071654E-001   2.0889496634170E-004   1.1701881851562E-003
+    2    5 2.8177306124452E-006   1.5934519803257E-001   9.0526754392502E-004   1.4135845522505E-003
+    3    5 7.8650345880956E-002   4.5374692544136E-001  -2.6868682099869E-001   8.0360052903021E-002
+    4    5 1.6342886721153E-003  -2.3560097024419E-001   3.6524548891256E-003  -4.0261001544897E-002
+    5    5 8.8311899922930E-001   1.5354938457563E-001   5.3527668751084E-001   7.7239747995233E-001
+    6    5 3.6592135509525E-002   3.5406334493086E-001  -1.1635185934449E-001   1.5183668969194E-001
+    1    6 4.0127680924858E-007   4.3813630450109E-001  -5.8620905293327E-004   2.4007447908442E-004
+    2    6 7.5549703724353E-006   6.7252685288376E-002   2.5068655876956E-003   1.1272068566429E-003
+    3    6 7.7611172112785E-004  -3.4268096675402E-001  -1.5321572645726E-002  -2.3267168559788E-002
+    4    6 6.8512288996477E-006  -3.0506150991463E-002   2.5695495597879E-003  -4.9864211559138E-004
+    5    6 3.6592135509525E-002   3.5406334493086E-001  -1.1635185934449E-001   1.5183668969194E-001
+    6    6 9.6261694529327E-001   5.4703476013223E-002   9.2374436172214E-001   3.3062561830540E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  MDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.05 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789569373933E-001   1.9193561453708E-001   3.3996205265583E-001   8.9012442753435E-001
+    2    1 9.2098924905320E-002   4.0305984000495E-001  -2.4890276351837E-001   1.7362701177593E-001
+    3    1 2.0374174364571E-006   2.5830619582306E-001  -7.4460316040183E-005   1.4254378617787E-003
+    4    1 2.6049938497158E-006   2.9861942012413E-001  -4.8541932169118E-004   1.5392731829811E-003
+    5    1 5.7104274322843E-007   2.3441472717063E-001   7.3881255118067E-005   7.5205339130318E-004
+    6    1 1.6790132557807E-007   4.3974844141243E-001  -3.8074412610039E-004   1.5144383783474E-004
+    1    2 9.2098924905320E-002   4.0305984000495E-001  -2.4890276351837E-001   1.7362701177593E-001
+    2    2 9.0789659419620E-001   1.1418374420290E-001   7.1795517374048E-001   6.2644789304098E-001
+    3    2 1.7844271306395E-007   3.2814753604463E-001  -1.9918242280356E-004   3.7251721505194E-004
+    4    2 1.4221809534358E-007  -4.0160261863925E-001  -3.0731154456188E-004  -2.1858112892600E-004
+    5    2 1.1433688441865E-006   1.6805614968732E-001   5.2653729145559E-004   9.3065961817044E-004
+    6    2 3.0168688228610E-006   6.6934743423634E-002   1.5855573160936E-003   7.0913808263486E-004
+    1    3 2.0374174364570E-006   2.5830619582306E-001  -7.4460316040183E-005   1.4254378617787E-003
+    2    3 1.7844271306382E-007   3.2814753604466E-001  -1.9918242280356E-004   3.7251721505177E-004
+    3    3 8.3188566741657E-001  -2.6472075317219E-001  -8.4240766960760E-002  -9.0817903554224E-001
+    4    3 8.2161500626121E-002   5.2793802389350E-002   2.7101241599276E-001   9.3347581671335E-002
+    5    3 8.5033068276256E-002  -7.2033196075446E-002   2.6224384761687E-001  -1.2751953835924E-001
+    6    3 9.1754782091426E-004   1.2256128484487E-001   2.1744682169737E-002   2.1088305248440E-002
+    1    4 2.6049938497157E-006   2.9861942012413E-001  -4.8541932169118E-004   1.5392731829811E-003
+    2    4 1.4221809534357E-007  -4.0160261863925E-001  -3.0731154456188E-004  -2.1858112892600E-004
+    3    4 8.2161500626121E-002   5.2793802389350E-002   2.7101241599276E-001   9.3347581671336E-002
+    4    4 9.1590166109724E-001  -1.2975842033430E-001   6.5618860461656E-001  -6.9664781365380E-001
+    5    4 1.9252095692265E-003   2.4408566020256E-001   1.6301410612148E-003   4.3846917900202E-002
+    6    4 8.8814954663988E-006   4.3905128996499E-001  -2.7643160284738E-003   1.1135763831555E-003
+    1    5 5.7104274322830E-007   2.3441472717063E-001   7.3881255118067E-005   7.5205339130309E-004
+    2    5 1.1433688441859E-006   1.6805614968729E-001   5.2653729145559E-004   9.3065961817008E-004
+    3    5 8.5033068276259E-002  -7.2033196075452E-002   2.6224384761687E-001  -1.2751953835925E-001
+    4    5 1.9252095692261E-003   2.4408566020256E-001   1.6301410612148E-003   4.3846917900197E-002
+    5    5 8.7328019348662E-001  -3.7936480216502E-001  -6.7865873429354E-001  -6.4241926796580E-001
+    6    5 3.9759814256320E-002  -1.8683012991822E-001   7.7081242720886E-002  -1.8389751568992E-001
+    1    6 1.6790132557806E-007   4.3974844141244E-001  -3.8074412610039E-004   1.5144383783472E-004
+    2    6 3.0168688228609E-006   6.6934743423629E-002   1.5855573160936E-003   7.0913808263480E-004
+    3    6 9.1754782091420E-004   1.2256128484487E-001   2.1744682169737E-002   2.1088305248439E-002
+    4    6 8.8814954663954E-006   4.3905128996506E-001  -2.7643160284738E-003   1.1135763831539E-003
+    5    6 3.9759814256320E-002  -1.8683012991822E-001   7.7081242720886E-002  -1.8389751568992E-001
+    6    6 9.5931057165715E-001  -4.9420210852963E-001  -9.7879417890388E-001  -3.5672496422821E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.15 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:40                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  7
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY QUASIADIABATIC MODIFIED LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ========================================== model system: ITYPE=1; IPROPS=7 ===========================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  MAPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.22 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079771358140E-001  -3.6022085489825E-001  -6.0935002187725E-001  -7.3450000981593E-001
+    2    1 8.9189258771012E-002  -1.4676371932939E-001   1.8041583767566E-001  -2.3799030292599E-001
+    3    1 4.9617634215709E-006   2.3983299629638E-001   1.4219864500750E-004   2.2229581568102E-003
+    4    1 6.2516346327459E-006   2.7469564806976E-001  -3.8641408211026E-004   2.4702871877360E-003
+    5    1 1.4129745096675E-006   2.2188475404734E-001   2.0889486817831E-004   1.1701869268268E-003
+    6    1 4.0127502369796E-007   4.3813615740481E-001  -5.8620752682795E-004   2.4007448674989E-004
+    1    2 8.9189258771012E-002  -1.4676371932939E-001   1.8041583767566E-001  -2.3799030292599E-001
+    2    2 9.1079961145807E-001  -4.3330740864068E-001  -8.7178637570519E-001  -3.8831446868855E-001
+    3    2 4.3049421614344E-007   3.1032209534507E-001  -2.4276820048000E-004   6.0955542568264E-004
+    4    2 3.2660717567329E-007  -4.2327950764031E-001  -5.0637183735137E-004  -2.6494289575432E-004
+    5    2 2.8177235855390E-006   1.5934519249924E-001   9.0526646428422E-004   1.4135827581650E-003
+    6    2 7.5549459449568E-006   6.7252692990718E-002   2.5068614804179E-003   1.1272051556632E-003
+    1    3 4.9617634215709E-006   2.3983299629638E-001   1.4219864500750E-004   2.2229581568102E-003
+    2    3 4.3049421614344E-007   3.1032209534507E-001  -2.4276820048000E-004   6.0955542568264E-004
+    3    3 8.4456870485004E-001   2.5399517389519E-001  -2.3066804597324E-002   9.1871466047718E-001
+    4    3 7.5999456583201E-002  -4.3516359002875E-001  -2.5311898856106E-001  -1.0922561152507E-001
+    5    3 7.8650334824194E-002   4.5374692417371E-001  -2.6868680147247E-001   8.0360049394518E-002
+    6    3 7.7611148492804E-004  -3.4268095626852E-001  -1.5321568781368E-002  -2.3267166028673E-002
+    1    4 6.2516346327459E-006   2.7469564806976E-001  -3.8641408211026E-004   2.4702871877360E-003
+    2    4 3.2660717567329E-007  -4.2327950764031E-001  -5.0637183735137E-004  -2.6494289575431E-004
+    3    4 7.5999456583201E-002  -4.3516359002875E-001  -2.5311898856106E-001  -1.0922561152507E-001
+    4    4 9.2235282577095E-001   3.7566654937742E-001  -6.8193784941915E-001   6.7624965456593E-001
+    5    4 1.6342881784756E-003  -2.3560095953172E-001   3.6524570474127E-003  -4.0260995218603E-002
+    6    4 6.8512255612756E-006  -3.0506116424144E-002   2.5695490420620E-003  -4.9864143601793E-004
+    1    5 1.4129745096675E-006   2.2188475404734E-001   2.0889486817831E-004   1.1701869268268E-003
+    2    5 2.8177235855390E-006   1.5934519249924E-001   9.0526646428422E-004   1.4135827581650E-003
+    3    5 7.8650334824194E-002   4.5374692417371E-001  -2.6868680147247E-001   8.0360049394518E-002
+    4    5 1.6342881784756E-003  -2.3560095953172E-001   3.6524570474127E-003  -4.0260995218603E-002
+    5    5 8.8311901646813E-001   1.5354938373580E-001   5.3527669681104E-001   7.7239748466654E-001
+    6    5 3.6592129831102E-002   3.5406334381606E-001  -1.1635184925312E-001   1.5183667872580E-001
+    1    6 4.0127502369796E-007   4.3813615740481E-001  -5.8620752682795E-004   2.4007448674990E-004
+    2    6 7.5549459449568E-006   6.7252692990718E-002   2.5068614804179E-003   1.1272051556632E-003
+    3    6 7.7611148492803E-004  -3.4268095626852E-001  -1.5321568781368E-002  -2.3267166028673E-002
+    4    6 6.8512255612756E-006  -3.0506116424144E-002   2.5695490420620E-003  -4.9864143601794E-004
+    5    6 3.6592129831102E-002   3.5406334381606E-001  -1.1635184925312E-001   1.5183667872580E-001
+    6    6 9.6261695123744E-001   5.4703475127728E-002   9.2374436641371E-001   3.3062561418675E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  MAPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.04 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789571680798E-001   1.9193561248563E-001   3.3996206844823E-001   8.9012443446093E-001
+    2    1 9.2098901850923E-002   4.0305983796658E-001  -2.4890273014171E-001   1.7362699323241E-001
+    3    1 2.0374123207378E-006   2.5830619738040E-001  -7.4460236507440E-005   1.4254360714943E-003
+    4    1 2.6049865839757E-006   2.9861942692519E-001  -4.8541871051166E-004   1.5392710155983E-003
+    5    1 5.7104159470402E-007   2.3441471120808E-001   7.3881256247889E-005   7.5205262759946E-004
+    6    1 1.6790059388617E-007   4.3974829207726E-001  -3.8074315438337E-004   1.5144386509981E-004
+    1    2 9.2098901850923E-002   4.0305983796658E-001  -2.4890273014171E-001   1.7362699323241E-001
+    2    2 9.0789661726376E-001   1.1418374217693E-001   7.1795519083565E-001   6.2644789186005E-001
+    3    2 1.7844247065939E-007   3.2814742584562E-001  -1.9918202958328E-004   3.7251709994372E-004
+    4    2 1.4221752514842E-007  -4.0160275913793E-001  -3.0731112146739E-004  -2.1858041945901E-004
+    5    2 1.1433660810554E-006   1.6805614560599E-001   5.2653667909052E-004   9.3065848012452E-004
+    6    2 3.0168592383315E-006   6.6934752179925E-002   1.5855547584354E-003   7.0913704340859E-004
+    1    3 2.0374123207377E-006   2.5830619738040E-001  -7.4460236507440E-005   1.4254360714943E-003
+    2    3 1.7844247065940E-007   3.2814742584561E-001  -1.9918202958328E-004   3.7251709994373E-004
+    3    3 8.3188568590199E-001  -2.6472075383704E-001  -8.4240771690526E-002  -9.0817904528070E-001
+    4    3 8.2161491406939E-002   5.2793801542681E-002   2.7101240128446E-001   9.3347574992434E-002
+    5    3 8.5033059228524E-002  -7.2033196983497E-002   2.6224383293761E-001  -1.2751953307126E-001
+    6    3 9.1754760775987E-004   1.2256129241799E-001   2.1744678640546E-002   2.1088303833625E-002
+    1    4 2.6049865839757E-006   2.9861942692519E-001  -4.8541871051166E-004   1.5392710155983E-003
+    2    4 1.4221752514842E-007  -4.0160275913792E-001  -3.0731112146739E-004  -2.1858041945902E-004
+    3    4 8.2161491406939E-002   5.2793801542681E-002   2.7101240128446E-001   9.3347574992434E-002
+    4    4 9.1590167077219E-001  -1.2975842093429E-001   6.5618860545606E-001  -6.9664781980698E-001
+    5    4 1.9252091246018E-003   2.4408566793593E-001   1.6301387424449E-003   4.3846912916215E-002
+    6    4 8.8814921604176E-006   4.3905131485212E-001  -2.7643156881200E-003   1.1135757436434E-003
+    1    5 5.7104159470382E-007   2.3441471120807E-001   7.3881256247889E-005   7.5205262759933E-004
+    2    5 1.1433660810555E-006   1.6805614560600E-001   5.2653667909052E-004   9.3065848012462E-004
+    3    5 8.5033059228526E-002  -7.2033196983500E-002   2.6224383293761E-001  -1.2751953307127E-001
+    4    5 1.9252091246018E-003   2.4408566793593E-001   1.6301387424449E-003   4.3846912916216E-002
+    5    5 8.7328020766584E-001  -3.7936480272581E-001  -6.7865874206674E-001  -6.4241927078991E-001
+    6    5 3.9759809573372E-002  -1.8683013068608E-001   7.7081237294309E-002  -1.8389750523199E-001
+    1    6 1.6790059388616E-007   4.3974829207727E-001  -3.8074315438337E-004   1.5144386509978E-004
+    2    6 3.0168592383315E-006   6.6934752179925E-002   1.5855547584354E-003   7.0913704340859E-004
+    3    6 9.1754760775984E-004   1.2256129241799E-001   2.1744678640546E-002   2.1088303833624E-002
+    4    6 8.8814921604180E-006   4.3905131485211E-001  -2.7643156881200E-003   1.1135757436436E-003
+    5    6 3.9759809573371E-002  -1.8683013068608E-001   7.7081237294309E-002  -1.8389750523199E-001
+    6    6 9.5931057656688E-001  -4.9420210910725E-001  -9.7879418153806E-001  -3.5672492961771E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.26 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:40                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  8
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY SYMPLECTIC LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS AND GRAY
+  USING THE SIX-STEP FIFTH-ORDER METHOD OF MCLACHLAN AND ATELA
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ========================================== model system: ITYPE=1; IPROPS=8 ===========================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  MGPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.22 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079774415263E-001  -3.6022116973299E-001  -6.0935148506482E-001  -7.3449881674645E-001
+    2    1 8.9189228172252E-002  -1.4676402879994E-001   1.8041534396433E-001  -2.3799061291254E-001
+    3    1 4.9617740418569E-006   2.3983278252135E-001   1.4220178304434E-004   2.2229603448456E-003
+    4    1 6.2516475761510E-006   2.7469543420862E-001  -3.8641116272576E-004   2.4702902642143E-003
+    5    1 1.4129776998715E-006   2.2188453433829E-001   2.0889671941156E-004   1.1701879594709E-003
+    6    1 4.0127580120960E-007   4.3813593606594E-001  -5.8620776087073E-004   2.4007553458137E-004
+    1    2 8.9189228172252E-002  -1.4676402879994E-001   1.8041534396433E-001  -2.3799061291254E-001
+    2    2 9.1079964203101E-001  -4.3330771274947E-001  -8.7178713231568E-001  -3.8831280942021E-001
+    3    2 4.3049519299761E-007   3.1032186088795E-001  -2.4276757795780E-004   6.0955647489803E-004
+    4    2 3.2660772860226E-007  -4.2327972957196E-001  -5.0637263542796E-004  -2.6494241391669E-004
+    5    2 2.8177301288151E-006   1.5934498446849E-001   9.0526936307121E-004   1.4135832161920E-003
+    6    2 7.5549636882744E-006   6.7252489680217E-002   2.5068658641196E-003   1.1272032769587E-003
+    1    3 4.9617740418569E-006   2.3983278252135E-001   1.4220178304434E-004   2.2229603448456E-003
+    2    3 4.3049519299761E-007   3.1032186088795E-001  -2.4276757795780E-004   6.0955647489803E-004
+    3    3 8.4456872150035E-001   2.5399506543560E-001  -2.3066178746659E-002   9.1871468525238E-001
+    4    3 7.5999447541386E-002  -4.3516370165967E-001  -2.5311905011455E-001  -1.0922542749056E-001
+    5    3 7.8650327329219E-002   4.5374681712473E-001  -2.6868673461931E-001   8.0360226286584E-002
+    6    3 7.7611135980930E-004  -3.4268105662023E-001  -1.5321582216959E-002  -2.3267154492509E-002
+    1    4 6.2516475761510E-006   2.7469543420862E-001  -3.8641116272576E-004   2.4702902642143E-003
+    2    4 3.2660772860226E-007  -4.2327972957196E-001  -5.0637263542796E-004  -2.6494241391669E-004
+    3    4 7.5999447541386E-002  -4.3516370165967E-001  -2.5311905011455E-001  -1.0922542749056E-001
+    4    4 9.2235283516723E-001   3.7566643474876E-001  -6.8193736583512E-001   6.7625014916456E-001
+    5    4 1.6342878128393E-003  -2.3560106560920E-001   3.6524298047047E-003  -4.0260993149213E-002
+    6    4 6.8512232366202E-006  -3.0506210249644E-002   2.5695483121705E-003  -4.9864286623007E-004
+    1    5 1.4129776998715E-006   2.2188453433829E-001   2.0889671941156E-004   1.1701879594709E-003
+    2    5 2.8177301288151E-006   1.5934498446849E-001   9.0526936307121E-004   1.4135832161920E-003
+    3    5 7.8650327329219E-002   4.5374681712473E-001  -2.6868673461931E-001   8.0360226286584E-002
+    4    5 1.6342878128393E-003  -2.3560106560920E-001   3.6524298047047E-003  -4.0260993149213E-002
+    5    5 8.8311902654496E-001   1.5354927838746E-001   5.3527721113256E-001   7.7239713476107E-001
+    6    5 3.6592127605157E-002   3.5406323879844E-001  -1.1635174552548E-001   1.5183675088176E-001
+    1    6 4.0127580120960E-007   4.3813593606594E-001  -5.8620776087073E-004   2.4007553458136E-004
+    2    6 7.5549636882744E-006   6.7252489680217E-002   2.5068658641196E-003   1.1272032769587E-003
+    3    6 7.7611135980930E-004  -3.4268105662023E-001  -1.5321582216959E-002  -2.3267154492509E-002
+    4    6 6.8512232366203E-006  -3.0506210249645E-002   2.5695483121705E-003  -4.9864286623008E-004
+    5    6 3.6592127605157E-002   3.5406323879844E-001  -1.1635174552548E-001   1.5183675088176E-001
+    6    6 9.6261695357231E-001   5.4703370690439E-002   9.2374458448995E-001   3.3062500842767E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  MGPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.16 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789570695007E-001   1.9193536526638E-001   3.3996344925411E-001   8.9012390155603E-001
+    2    1 9.2098911695883E-002   4.0305958723921E-001  -2.4890246991852E-001   1.7362739462522E-001
+    3    1 2.0374172623537E-006   2.5830603556238E-001  -7.4458877517628E-005   1.4254378758517E-003
+    4    1 2.6049927188403E-006   2.9861926555615E-001  -4.8541772141635E-004   1.5392733202961E-003
+    5    1 5.7104307512757E-007   2.3441454732031E-001   7.3882126433823E-005   7.5205352636710E-004
+    6    1 1.6790098918871E-007   4.3974809557778E-001  -3.8074341561142E-004   1.5144451346041E-004
+    1    2 9.2098911695883E-002   4.0305958723921E-001  -2.4890246991852E-001   1.7362739462522E-001
+    2    2 9.0789660740741E-001   1.1418348794042E-001   7.1795618763493E-001   6.2644674158632E-001
+    3    2 1.7844295556839E-007   3.2814724649378E-001  -1.9918188042646E-004   3.7251783055066E-004
+    4    2 1.4221784780215E-007  -4.0160295152428E-001  -3.0731173429068E-004  -2.1858029593128E-004
+    5    2 1.1433690103431E-006   1.6805598024091E-001   5.2653832055310E-004   9.3065912520765E-004
+    6    2 3.0168668943062E-006   6.6934587157270E-002   1.5855575055707E-003   7.0913629919393E-004
+    1    3 2.0374172623538E-006   2.5830603556238E-001  -7.4458877517628E-005   1.4254378758517E-003
+    2    3 1.7844295556844E-007   3.2814724649377E-001  -1.9918188042646E-004   3.7251783055072E-004
+    3    3 8.3188568968131E-001  -2.6472083261552E-001  -8.4241221412158E-002  -9.0817900564608E-001
+    4    3 8.2161490309958E-002   5.2793723048485E-002   2.7101244551364E-001   9.3347440707682E-002
+    5    3 8.5033056622211E-002  -7.2033275684864E-002   2.6224376586081E-001  -1.2751966079531E-001
+    6    3 9.1754752629830E-004   1.2256121178948E-001   2.1744688358693E-002   2.1088291881554E-002
+    1    4 2.6049927188404E-006   2.9861926555615E-001  -4.8541772141635E-004   1.5392733202961E-003
+    2    4 1.4221784780216E-007  -4.0160295152428E-001  -3.0731173429068E-004  -2.1858029593129E-004
+    3    4 8.2161490309958E-002   5.2793723048485E-002   2.7101244551364E-001   9.3347440707681E-002
+    4    4 9.1590167195295E-001  -1.2975849922217E-001   6.5618826319978E-001  -6.9664814303335E-001
+    5    4 1.9252090352030E-003   2.4408558789590E-001   1.6301607554862E-003   4.3846911078367E-002
+    6    4 8.8814913235825E-006   4.3905123087999E-001  -2.7643149703531E-003   1.1135771496687E-003
+    1    5 5.7104307512768E-007   2.3441454732031E-001   7.3882126433823E-005   7.5205352636717E-004
+    2    5 1.1433690103439E-006   1.6805598024094E-001   5.2653832055310E-004   9.3065912520805E-004
+    3    5 8.5033056622211E-002  -7.2033275684864E-002   2.6224376586081E-001  -1.2751966079531E-001
+    4    5 1.9252090352030E-003   2.4408558789590E-001   1.6301607554862E-003   4.3846911078368E-002
+    5    5 8.7328021253252E-001  -3.7936488147998E-001  -6.7865906184411E-001  -6.4241893676120E-001
+    6    5 3.9759807397973E-002  -1.8683020892388E-001   7.7081144784789E-002  -1.8389753809293E-001
+    1    6 1.6790098918871E-007   4.3974809557778E-001  -3.8074341561142E-004   1.5144451346042E-004
+    2    6 3.0168668943063E-006   6.6934587157277E-002   1.5855575055707E-003   7.0913629919401E-004
+    3    6 9.1754752629832E-004   1.2256121178948E-001   2.1744688358693E-002   2.1088291881555E-002
+    4    6 8.8814913235832E-006   4.3905123087998E-001  -2.7643149703531E-003   1.1135771496689E-003
+    5    6 3.9759807397973E-002  -1.8683020892388E-001   7.7081144784789E-002  -1.8389753809293E-001
+    6    6 9.5931057881652E-001  -4.9420218694914E-001  -9.7879420013285E-001  -3.5672014280276E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.38 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:41                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 1
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  3
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+
+  COUPLED EQUATIONS SOLVED BY WALKER-LIGHT R-MATRIX PROPAGATOR
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ===================================== model system: ITYPE=1; IPROPS=3 ,IPROPL=3 ======================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  START R-MATRIX PROPAGATOR AT RSTART = 0.64166
+
+  RMPROP. R MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.19 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1080081611305E-001  -3.6038477382764E-001  -6.1010722348960E-001  -7.3387328058654E-001
+    2    1 8.9186156742677E-002  -1.4692751946091E-001   1.8016767251882E-001  -2.3817171646068E-001
+    3    1 4.9615819505802E-006   2.3969089051753E-001   1.4418077944366E-004   2.2227896556848E-003
+    4    1 6.2513876696039E-006   2.7455355372971E-001  -3.8420085455690E-004   2.4705823955014E-003
+    5    1 1.4129287243490E-006   2.2174206907497E-001   2.0994047404898E-004   1.1699802227837E-003
+    6    1 4.0124593374410E-007   4.3799448824052E-001  -5.8597235541093E-004   2.4058747356890E-004
+    1    2 8.9186156742677E-002  -1.4692751946091E-001   1.8016767251882E-001  -2.3817171646068E-001
+    2    2 9.1080271388286E-001  -4.3347108998846E-001  -8.7218675826621E-001  -3.8741834312270E-001
+    3    2 4.3047706602267E-007   3.1017797076524E-001  -2.4221128634822E-004   6.0976287094920E-004
+    4    2 3.2658213143642E-007  -4.2342181596271E-001  -5.0658910972809E-004  -2.6447987700639E-004
+    5    2 2.8176305285956E-006   1.5920323442379E-001   9.0651197818121E-004   1.4127514155044E-003
+    6    2 7.5546847386992E-006   6.7111487352360E-002   2.5078172199177E-003   1.1249611238543E-003
+    1    3 4.9615819505802E-006   2.3969089051753E-001   1.4418077944366E-004   2.2227896556848E-003
+    2    3 4.3047706602267E-007   3.1017797076524E-001  -2.4221128634822E-004   6.0976287094920E-004
+    3    3 8.4457356091472E-001   2.5387621997809E-001  -2.2380206489717E-002   9.1873428545592E-001
+    4    3 7.5997090531115E-002  -4.3528302655708E-001  -2.5319694333134E-001  -1.0903393241913E-001
+    5    3 7.8647895625527E-002   4.5362811101296E-001  -2.6862257029430E-001   8.0559359195630E-002
+    6    3 7.7606086962374E-004  -3.4279971367036E-001  -1.5338425702514E-002  -2.3254968643114E-002
+    1    4 6.2513876696039E-006   2.7455355372971E-001  -3.8420085455690E-004   2.4705823955014E-003
+    2    4 3.2658213143642E-007  -4.2342181596271E-001  -5.0658910972809E-004  -2.6447987700639E-004
+    3    4 7.5997090531115E-002  -4.3528302655708E-001  -2.5319694333134E-001  -1.0903393241913E-001
+    4    4 9.2235529921624E-001   3.7554663590467E-001  -6.8142905701870E-001   6.7676416827935E-001
+    5    4 1.6341817320492E-003  -2.3572013208469E-001   3.6221912998829E-003  -4.0262407556383E-002
+    6    4 6.8505507944136E-006  -3.0625144158505E-002   2.5690488826631E-003  -5.0053834308801E-004
+    1    5 1.4129287243490E-006   2.2174206907497E-001   2.0994047404898E-004   1.1699802227837E-003
+    2    5 2.8176305285956E-006   1.5920323442379E-001   9.0651197818121E-004   1.4127514155044E-003
+    3    5 7.8647895625527E-002   4.5362811101296E-001  -2.6862257029430E-001   8.0559359195630E-002
+    4    5 1.6341817320492E-003  -2.3572013208469E-001   3.6221912998829E-003  -4.0262407556383E-002
+    5    5 8.8312272222837E-001   1.5343071572472E-001   5.3585358192871E-001   7.7199978041612E-001
+    6    5 3.6590969854800E-002   3.5394467782052E-001  -1.1623676502232E-001   1.5192098048639E-001
+    1    6 4.0124593374410E-007   4.3799448824052E-001  -5.8597235541093E-004   2.4058747356890E-004
+    2    6 7.5546847386992E-006   6.7111487352359E-002   2.5078172199177E-003   1.1249611238543E-003
+    3    6 7.7606086962374E-004  -3.4279971367036E-001  -1.5338425702514E-002  -2.3254968643114E-002
+    4    6 6.8505507944136E-006  -3.0625144158506E-002   2.5690488826631E-003  -5.0053834308802E-004
+    5    6 3.6590969854800E-002   3.5394467782052E-001  -1.1623676502232E-001   1.5192098048639E-001
+    6    6 9.6261816279411E-001   5.4584809172487E-002   9.2399120561711E-001   3.2993698600847E-001
+
+  * * * * * * * * * *  STATE-TO-STATE PARTIAL CROSS SECTIONS (ANGSTROM**2) FROM LEVEL I TO LEVEL F  * * * * * * * * * *
+                       FOR JTOT =  10 AND SYMMETRY BLOCK =   1 AT ENERGY(  1) =  1000.000     CM-1
+
+    F  I =      2              3
+    2       9.44595E-02    3.73136E-07
+    3       3.27632E-07    1.00216E-01
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  *-*-*-*-*-*-*-*-*-*-STATE-TO-STATE INTEGRAL CROSS SECTIONS: (ANGSTROM**2) ACCUMULATED FROM JTOT =  10 TO  10 -*-*-*-*-*-*-*-*-*-*
+
+    F  I =      1              2              3
+    1       0.00000E+00    0.00000E+00    0.00000E+00
+    2       0.00000E+00    9.44595E-02    3.73136E-07
+    3       0.00000E+00    3.27632E-07    1.00216E-01
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  RMPROP. R MATRIX PROPAGATED FROM       0.6417  TO  20.000      IN   8072  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.04 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789887806326E-001   1.9178128349094E-001   3.4082563564227E-001   8.8979591151697E-001
+    2    1 9.2095740811968E-002   4.0290563705412E-001  -2.4873012225883E-001   1.7386508301863E-001
+    3    1 2.0373347542186E-006   2.5817545776391E-001  -7.3287875922531E-005   1.4254696213744E-003
+    4    1 2.6048795245562E-006   2.9848868858283E-001  -4.8414415877144E-004   1.5396376060891E-003
+    5    1 5.7102222951260E-007   2.3428339224838E-001   7.4500487408699E-005   7.5197866119223E-004
+    6    1 1.6788826094306E-007   4.3961802989065E-001  -3.8060509668202E-004   1.5174986432527E-004
+    1    2 9.2095740811968E-002   4.0290563705412E-001  -2.4873012225883E-001   1.7386508301863E-001
+    2    2 9.0789977846894E-001   1.1402966934112E-001   7.1856254957056E-001   6.2575365825827E-001
+    3    2 1.7843507277104E-007   3.2801467193323E-001  -1.9886711486600E-004   3.7267538608810E-004
+    4    2 1.4220644749042E-007  -4.0173372101051E-001  -3.0747890216435E-004  -2.1831896897483E-004
+    5    2 1.1433267518156E-006   1.6792559295017E-001   5.2729083942616E-004   9.3021025713163E-004
+    6    2 3.0167508195596E-006   6.6804975553823E-002   1.5861039679361E-003   7.0783121042866E-004
+    1    3 2.0373347542186E-006   2.5817545776391E-001  -7.3287875922531E-005   1.4254696213744E-003
+    2    3 1.7843507277109E-007   3.2801467193322E-001  -1.9886711486600E-004   3.7267538608816E-004
+    3    3 8.3189080006732E-001  -2.6482653681536E-001  -8.4844638721542E-002  -9.0812564513262E-001
+    4    3 8.2159001671427E-002   5.2687507452181E-002   2.7107057724756E-001   9.3165142741803E-002
+    5    3 8.5030493435449E-002  -7.2138820245423E-002   2.6215519155472E-001  -1.2769161670351E-001
+    6    3 9.1748905598666E-004   1.2245574533956E-001   2.1757964770039E-002   2.1073206330609E-002
+    1    4 2.6048795245562E-006   2.9848868858283E-001  -4.8414415877144E-004   1.5396376060891E-003
+    2    4 1.4220644749042E-007  -4.0173372101051E-001  -3.0747890216435E-004  -2.1831896897482E-004
+    3    4 8.2159001671427E-002   5.2687507452182E-002   2.7107057724756E-001   9.3165142741805E-002
+    4    4 9.1590428406126E-001  -1.2986521785563E-001   6.5572192522664E-001  -6.9708897627084E-001
+    5    4 1.9250865459339E-003   2.4397966199657E-001   1.6592900062748E-003   4.3844421567732E-002
+    6    4 8.8806354039276E-006   4.3894547562904E-001  -2.7634412429242E-003   1.1153599871042E-003
+    1    5 5.7102222951263E-007   2.3428339224838E-001   7.4500487408699E-005   7.5197866119225E-004
+    2    5 1.1433267518159E-006   1.6792559295018E-001   5.2729083942616E-004   9.3021025713179E-004
+    3    5 8.5030493435448E-002  -7.2138820245421E-002   2.6215519155472E-001  -1.2769161670350E-001
+    4    5 1.9250865459339E-003   2.4397966199657E-001   1.6592900062748E-003   4.3844421567732E-002
+    5    5 8.7328412732778E-001  -3.7947025867115E-001  -6.7908578359309E-001  -6.4197089174630E-001
+    6    5 3.9758578341847E-002  -1.8693556536125E-001   7.6958203017914E-002  -1.8394568037902E-001
+    1    6 1.6788826094307E-007   4.3961802989065E-001  -3.8060509668202E-004   1.5174986432528E-004
+    2    6 3.0167508195597E-006   6.6804975553828E-002   1.5861039679361E-003   7.0783121042873E-004
+    3    6 9.1748905598675E-004   1.2245574533957E-001   2.1757964770039E-002   2.1073206330611E-002
+    4    6 8.8806354039275E-006   4.3894547562904E-001  -2.7634412429242E-003   1.1153599871042E-003
+    5    6 3.9758578341848E-002  -1.8693556536125E-001   7.6958203017914E-002  -1.8394568037902E-001
+    6    6 9.5931186732768E-001  -4.9430752300740E-001  -9.7881825249052E-001  -3.5024219035974E-002
+
+  * * * * * * * * * *  STATE-TO-STATE PARTIAL CROSS SECTIONS (ANGSTROM**2) FROM LEVEL I TO LEVEL F  * * * * * * * * * *
+                       FOR JTOT =  10 AND SYMMETRY BLOCK =   1 AT ENERGY(  2) =  900.0000     CM-1
+
+    F  I =      2              3
+    2       2.90584E-02    2.03109E-07
+    3       1.52332E-07    2.09539E-01
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.10E-01 &   2.03E-07
+
+  *-*-*-*-*-*-*-*-*-*-STATE-TO-STATE INTEGRAL CROSS SECTIONS: (ANGSTROM**2) ACCUMULATED FROM JTOT =  10 TO  10 -*-*-*-*-*-*-*-*-*-*
+
+    F  I =      1              2              3
+    1       0.00000E+00    0.00000E+00    0.00000E+00
+    2       0.00000E+00    2.90584E-02    2.03109E-07
+    3       0.00000E+00    1.52332E-07    2.09539E-01
+
+  ===================================== model system: ITYPE=1; IPROPS=3 ,IPROPL=3 ======================================
+
+  LEVEL   4 WITH ENERGY   1260.000000000000 IS NEVER OPEN
+
+  STATE-TO-STATE INTEGRAL CROSS SECTIONS IN ANGSTROM**2 BETWEEN    3 LEVELS WITH THRESHOLD ENERGIES (IN CM-1):
+
+    1     0.000000000000
+    2   180.000000000000
+    3   600.000000000000
+
+   ENERGY (CM-1)    JTOTL  JSTEP  JTOTU      F    I         SIG(F,I)
+   1000.000000         10      1     10      2    2         9.445952E-02  
+   1000.000000         10      1     10      3    2         3.276319E-07  
+
+   1000.000000         10      1     10      2    3         3.731363E-07  
+   1000.000000         10      1     10      3    3         0.100216      
+
+  TOTAL INELASTIC INTEGRAL CROSS SECTIONS IN ANGSTROM**2 FROM LEVEL
+   3.27632E-07                                                  2
+   3.73136E-07                                                  3
+
+
+   ENERGY (CM-1)    JTOTL  JSTEP  JTOTU      F    I         SIG(F,I)
+   900.0000000         10      1     10      2    2         2.905837E-02  
+   900.0000000         10      1     10      3    2         1.523321E-07  
+
+   900.0000000         10      1     10      2    3         2.031094E-07  
+   900.0000000         10      1     10      3    3         0.209539      
+
+  TOTAL INELASTIC INTEGRAL CROSS SECTIONS IN ANGSTROM**2 FROM LEVEL
+   1.52332E-07                                                  2
+   2.03109E-07                                                  3
+
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.23 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:41                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  9 AND IPROPL =  9
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 2 SEGMENTS
+
+  PROPAGATION RANGES ARE CONTROLLED BY VARIABLES RMIN, RMID AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMID =   1.000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMID =      1.00
+
+  COUPLED EQUATIONS SOLVED BY VARIABLE-STEP AIRY PROPAGATOR.
+  PUBLICATIONS RESULTING FROM THE USE OF THIS PROPAGATOR SHOULD REFERENCE
+  M. H. ALEXANDER AND D. E. MANOLOPOULOS,  J. CHEM. PHYS. 86, 2044 (1987).
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 2 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMID =      1.00 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY VARIABLE-STEP AIRY PROPAGATOR.
+  PUBLICATIONS RESULTING FROM THE USE OF THIS PROPAGATOR SHOULD REFERENCE
+  M. H. ALEXANDER AND D. E. MANOLOPOULOS,  J. CHEM. PHYS. 86, 2044 (1987).
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE SCALES AS R**1.33
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ===================================== model system: ITYPE=1; IPROPS=9, IPROPL=9 ======================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  AIPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  1.0000      IN    149  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.01 CPU SECS.
+
+  AIPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       1.0000  TO  20.000      IN    791  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.03 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079779005748E-001  -3.6022137730079E-001  -6.0935245834398E-001  -7.3449804054717E-001
+    2    1 8.9189180400921E-002  -1.4676406992525E-001   1.8041523415123E-001  -2.3799059579546E-001
+    3    1 4.9624790029120E-006   2.3983261308298E-001   1.4221425134817E-004   2.2231181051904E-003
+    4    1 6.2525617379224E-006   2.7469513436889E-001  -3.8643475938978E-004   2.4704715976222E-003
+    5    1 1.4131622318105E-006   2.2188487161576E-001   2.0890787970641E-004   1.1702648117444E-003
+    6    1 4.0133862422316E-007   4.3813852963806E-001  -5.8625755936207E-004   2.4008477318227E-004
+    1    2 8.9189180400921E-002  -1.4676406992525E-001   1.8041523415123E-001  -2.3799059579546E-001
+    2    2 9.1079968829453E-001  -4.3330758750190E-001  -8.7178684887215E-001  -3.8831350533827E-001
+    3    2 4.3054915039509E-007   3.1032308638876E-001  -2.4278748538139E-004   6.0959280453207E-004
+    4    2 3.2666067887775E-007  -4.2327827983247E-001  -5.0641126724678E-004  -2.6496850243616E-004
+    5    2 2.8181078129962E-006   1.5934500805577E-001   9.0532982197812E-004   1.4136780844426E-003
+    6    2 7.5559869065348E-006   6.7252695066614E-002   2.5070341642764E-003   1.1272828419194E-003
+    1    3 4.9624790029120E-006   2.3983261308298E-001   1.4221425134817E-004   2.2231181051904E-003
+    2    3 4.3054915039509E-007   3.1032308638876E-001  -2.4278748538139E-004   6.0959280453207E-004
+    3    3 8.4456800278805E-001   2.5399489520268E-001  -2.3065186270771E-002   9.1871431901889E-001
+    4    3 7.6000159094673E-002  -4.3516391607035E-001  -2.5312038218640E-001  -1.0922559780785E-001
+    5    3 7.8650332898326E-002   4.5374692310039E-001  -2.6868679764093E-001   8.0360050222645E-002
+    6    3 7.7611219080128E-004  -3.4268419279991E-001  -1.5322048900619E-002  -2.3266865029228E-002
+    1    4 6.2525617379224E-006   2.7469513436889E-001  -3.8643475938978E-004   2.4704715976222E-003
+    2    4 3.2666067887775E-007  -4.2327827983247E-001  -5.0641126724678E-004  -2.6496850243616E-004
+    3    4 7.6000159094673E-002  -4.3516391607035E-001  -2.5312038218640E-001  -1.0922559780785E-001
+    4    4 9.2235210621610E-001   3.7566598942648E-001  -6.8193520418319E-001   6.7625179002479E-001
+    5    4 1.6343044848766E-003  -2.3560530094085E-001   3.6513770275319E-003  -4.0261295690519E-002
+    6    4 6.8509819323996E-006  -3.0517524127255E-002   2.5694676082622E-003  -4.9881674239245E-004
+    1    5 1.4131622318105E-006   2.2188487161576E-001   2.0890787970641E-004   1.1702648117444E-003
+    2    5 2.8181078129962E-006   1.5934500805577E-001   9.0532982197812E-004   1.4136780844426E-003
+    3    5 7.8650332898326E-002   4.5374692310039E-001  -2.6868679764093E-001   8.0360050222645E-002
+    4    5 1.6343044848766E-003  -2.3560530094085E-001   3.6513770275319E-003  -4.0261295690519E-002
+    5    5 8.8311896635990E-001   1.5354941309330E-001   5.3527653914983E-001   7.7239756148999E-001
+    6    5 3.6592164986852E-002   3.5406361713682E-001  -1.1635216589828E-001   1.5183655184978E-001
+    1    6 4.0133862422316E-007   4.3813852963806E-001  -5.8625755936207E-004   2.4008477318227E-004
+    2    6 7.5559869065348E-006   6.7252695066613E-002   2.5070341642764E-003   1.1272828419194E-003
+    3    6 7.7611219080128E-004  -3.4268419279991E-001  -1.5322048900619E-002  -2.3266865029228E-002
+    4    6 6.8509819323996E-006  -3.0517524127255E-002   2.5694676082622E-003  -4.9881674239245E-004
+    5    6 3.6592164986852E-002   3.5406361713682E-001  -1.1635216589828E-001   1.5183655184978E-001
+    6    6 9.6261691451488E-001   5.4703842940671E-002   9.2374358470346E-001   3.3062774268666E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  AIPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  1.0000      IN    149  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.00 CPU SECS.
+
+  AIPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       1.0000  TO  20.000      IN    791  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.02 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789578662973E-001   1.9193513183891E-001   3.3996476968819E-001   8.9012344200149E-001
+    2    1 9.2098831303161E-002   4.0305953307492E-001  -2.4890230219598E-001   1.7362740355341E-001
+    3    1 2.0376810869102E-006   2.5830582243036E-001  -7.4461789194648E-005   1.4255302623446E-003
+    4    1 2.6053559498708E-006   2.9861885313836E-001  -4.8544757371268E-004   1.5393818899309E-003
+    5    1 5.7110469178708E-007   2.3441513315940E-001   7.3883343928516E-005   7.5209437125737E-004
+    6    1 1.6792537951158E-007   4.3975199780798E-001  -3.8077478250161E-004   1.5144617698192E-004
+    1    2 9.2098831303161E-002   4.0305953307492E-001  -2.4890230219598E-001   1.7362740355341E-001
+    2    2 9.0789668728095E-001   1.1418361302757E-001   7.1795572686316E-001   6.2644733341706E-001
+    3    2 1.7846158803458E-007   3.2814887891004E-001  -1.9919610015572E-004   3.7253523553797E-004
+    4    2 1.4224057768715E-007  -4.0160070901411E-001  -3.0733321117296E-004  -2.1860209284740E-004
+    5    2 1.1435011765511E-006   1.6805589202892E-001   5.2656926776901E-004   9.3071262094821E-004
+    6    2 3.0172125436287E-006   6.6934766958717E-002   1.5856475322630E-003   7.0917871305958E-004
+    1    3 2.0376810869102E-006   2.5830582243036E-001  -7.4461789194648E-005   1.4255302623445E-003
+    2    3 1.7846158803457E-007   3.2814887891004E-001  -1.9919610015572E-004   3.7253523553796E-004
+    3    3 8.3188486170498E-001  -2.6472103993956E-001  -8.4242362533065E-002  -9.0817844395241E-001
+    4    3 8.2162313395522E-002   5.2793478844075E-002   2.7101394622897E-001   9.3347492440463E-002
+    5    3 8.5033060567114E-002  -7.2033177670390E-002   2.6224385047595E-001  -1.2751950225225E-001
+    6    3 9.1754818971753E-004   1.2255792633010E-001   2.1745131544078E-002   2.1087850621821E-002
+    1    4 2.6053559498708E-006   2.9861885313836E-001  -4.8544757371268E-004   1.5393818899309E-003
+    2    4 1.4224057768715E-007  -4.0160070901411E-001  -3.0733321117296E-004  -2.1860209284741E-004
+    3    4 8.2162313395522E-002   5.2793478844075E-002   2.7101394622897E-001   9.3347492440464E-002
+    4    4 9.1590082732863E-001  -1.2975897026286E-001   6.5618589881174E-001  -6.9664976389091E-001
+    5    4 1.9252300193508E-003   2.4408163660504E-001   1.6312582187878E-003   4.3847109550966E-002
+    6    4 8.8816599668145E-006   4.3904006628577E-001  -2.7642630907590E-003   1.1137816356369E-003
+    1    5 5.7110469178694E-007   2.3441513315940E-001   7.3883343928516E-005   7.5209437125728E-004
+    2    5 1.1435011765512E-006   1.6805589202892E-001   5.2656926776901E-004   9.3071262094825E-004
+    3    5 8.5033060567118E-002  -7.2033177670396E-002   2.6224385047595E-001  -1.2751950225226E-001
+    4    5 1.9252300193507E-003   2.4408163660504E-001   1.6312582187878E-003   4.3847109550965E-002
+    5    5 8.7328014179254E-001  -3.7936473913574E-001  -6.7865845979292E-001  -6.4241951771723E-001
+    6    5 3.9759853015150E-002  -1.8682980040005E-001   7.7081661037013E-002  -1.8389744573247E-001
+    1    6 1.6792537951158E-007   4.3975199780799E-001  -3.8077478250161E-004   1.5144617698189E-004
+    2    6 3.0172125436286E-006   6.6934766958716E-002   1.5856475322630E-003   7.0917871305956E-004
+    3    6 9.1754818971738E-004   1.2255792633009E-001   2.1745131544078E-002   2.1087850621818E-002
+    4    6 8.8816599668141E-006   4.3904006628578E-001  -2.7642630907590E-003   1.1137816356367E-003
+    5    6 3.9759853015151E-002  -1.8682980040005E-001   7.7081661037013E-002  -1.8389744573247E-001
+    6    6 9.5931053199724E-001  -4.9420168245681E-001  -9.7879406316903E-001  -3.5675116009788E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.06 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:41                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  6 AND IPROPL =  9
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 2 SEGMENTS
+
+  PROPAGATION RANGES ARE CONTROLLED BY VARIABLES RMIN, RMID AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMID = unset   RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO VALUE OF RMID CHOSEN USING RVFAC =    1.40
+
+  COUPLED EQUATIONS SOLVED BY DIABATIC MODIFIED LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 2 WILL BE PROPAGATED OUTWARDS
+
+  FROM VALUE OF RMID CHOSEN USING RVFAC =    1.40 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY VARIABLE-STEP AIRY PROPAGATOR.
+  PUBLICATIONS RESULTING FROM THE USE OF THIS PROPAGATOR SHOULD REFERENCE
+  M. H. ALEXANDER AND D. E. MANOLOPOULOS,  J. CHEM. PHYS. 86, 2044 (1987).
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZES ADJUSTED TO MAINTAIN APPROXIMATE ACCURACY VIA PERTURBATION THEORY
+  WITH TOLHI =  1.00E-04 AND POWR =   3.0    
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ===================================== model system: ITYPE=1; IPROPS=6, IPROPL=9 ======================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  RMID =   1.0650 OBTAINED FROM RVFAC = 1.400
+
+  MDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  1.0650      IN    177  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.00 CPU SECS.
+
+  AIPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       1.0650  TO  20.000      IN    226  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.01 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079735353290E-001  -3.6022087749644E-001  -6.0935000572641E-001  -7.3449977811714E-001
+    2    1 8.9189630487063E-002  -1.4676365193146E-001   1.8041631441962E-001  -2.3799072246267E-001
+    3    1 4.9572661417672E-006   2.3981962549074E-001   1.4232085520472E-004   2.2219385490920E-003
+    4    1 6.2453553069631E-006   2.7468509705912E-001  -3.8605628682747E-004   2.4690718601054E-003
+    5    1 1.4110121721016E-006   2.2190147641556E-001   2.0862689430993E-004   1.1693959941235E-003
+    6    1 4.0234641346795E-007   4.3836948556894E-001  -5.8734137998654E-004   2.3953395755812E-004
+    1    2 8.9189630487063E-002  -1.4676365193146E-001   1.8041631441962E-001  -2.3799072246267E-001
+    2    2 9.1079923013185E-001  -4.3330724521492E-001  -8.7178579447394E-001  -3.8831528258013E-001
+    3    2 4.2943004282605E-007   3.1046926610146E-001  -2.4303081142813E-004   6.0857708428977E-004
+    4    2 3.2704451410988E-007  -4.2299202139064E-001  -5.0623102790316E-004  -2.6603507381168E-004
+    5    2 2.8176986739029E-006   1.5933690927199E-001   9.0533603095876E-004   1.4135293930268E-003
+    6    2 7.5652078546531E-006   6.7237089101509E-002   2.5086740186246E-003   1.1277244889294E-003
+    1    3 4.9572661417672E-006   2.3981962549074E-001   1.4232085520472E-004   2.2219385490920E-003
+    2    3 4.2943004282606E-007   3.1046926610146E-001  -2.4303081142813E-004   6.0857708428977E-004
+    3    3 8.4456805769414E-001   2.5399515272656E-001  -2.3066673564868E-002   9.1871431155980E-001
+    4    3 7.5999770959193E-002  -4.3516351427093E-001  -2.5311946008936E-001  -1.0922595791873E-001
+    5    3 7.8650671293155E-002   4.5374681636130E-001  -2.6868732176124E-001   8.0360403296178E-002
+    6    3 7.7611335732929E-004  -3.4268152175392E-001  -1.5321669932714E-002  -2.3267139656654E-002
+    1    4 6.2453553069631E-006   2.7468509705912E-001  -3.8605628682747E-004   2.4690718601053E-003
+    2    4 3.2704451410987E-007  -4.2299202139064E-001  -5.0623102790316E-004  -2.6603507381168E-004
+    3    4 7.5999770959193E-002  -4.3516351427093E-001  -2.5311946008936E-001  -1.0922595791873E-001
+    4    4 9.2235250318519E-001   3.7566675785903E-001  -6.8193861600588E-001   6.7624864301910E-001
+    5    4 1.6343020215419E-003  -2.3560021939804E-001   3.6526597466261E-003  -4.0261148745624E-002
+    6    4 6.8514342550573E-006  -3.0505535236859E-002   2.5695899979213E-003  -4.9863964708003E-004
+    1    5 1.4110121721016E-006   2.2190147641556E-001   2.0862689430993E-004   1.1693959941235E-003
+    2    5 2.8176986739029E-006   1.5933690927199E-001   9.0533603095876E-004   1.4135293930268E-003
+    3    5 7.8650671293155E-002   4.5374681636130E-001  -2.6868732176124E-001   8.0360403296178E-002
+    4    5 1.6343020215419E-003  -2.3560021939804E-001   3.6526597466261E-003  -4.0261148745624E-002
+    5    5 8.8311872330369E-001   1.5354921439205E-001   5.3527742980905E-001   7.7239678691765E-001
+    6    5 3.6592074670764E-002   3.5406315818363E-001  -1.1635158445992E-001   1.5183669999190E-001
+    1    6 4.0234641346795E-007   4.3836948556894E-001  -5.8734137998654E-004   2.3953395755812E-004
+    2    6 7.5652078546531E-006   6.7237089101510E-002   2.5086740186246E-003   1.1277244889294E-003
+    3    6 7.7611335732929E-004  -3.4268152175392E-001  -1.5321669932714E-002  -2.3267139656654E-002
+    4    6 6.8514342550573E-006  -3.0505535236859E-002   2.5695899979213E-003  -4.9863964708002E-004
+    5    6 3.6592074670764E-002   3.5406315818363E-001  -1.1635158445992E-001   1.5183669999190E-001
+    6    6 9.6261699298338E-001   5.4703253731917E-002   9.2374484636658E-001   3.3062433636163E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  RMID =   1.0650 OBTAINED FROM RVFAC = 1.400
+
+  MDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  1.0650      IN    177  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.00 CPU SECS.
+
+  AIPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       1.0650  TO  20.000      IN    226  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.01 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789716965331E-001   1.9193554858061E-001   3.3996269786685E-001   8.9012501016004E-001
+    2    1 9.2097461781601E-002   4.0305976297339E-001  -2.4890070238609E-001   1.7362575308205E-001
+    3    1 2.0325270805323E-006   2.5829054050805E-001  -7.4230854320064E-005   1.4237334233624E-003
+    4    1 2.5987898470955E-006   2.9860447768015E-001  -4.8469659815176E-004   1.5374846519025E-003
+    5    1 5.6926089874791E-007   2.3443823170053E-001   7.3655004811091E-005   7.5089003123906E-004
+    6    1 1.6798725993408E-007   4.3998479028137E-001  -3.8106608406823E-004   1.5091686289803E-004
+    1    2 9.2097461781601E-002   4.0305976297339E-001  -2.4890070238609E-001   1.7362575308205E-001
+    2    2 9.0789806271561E-001   1.1418365925437E-001   7.1795608875023E-001   6.2644801647230E-001
+    3    2 1.7766880644395E-007   3.2830966501481E-001  -1.9912857728843E-004   3.7150587633446E-004
+    4    2 1.4228217894272E-007  -4.0125520327427E-001  -3.0690279944972E-004  -2.1930082223432E-004
+    5    2 1.1413527178476E-006   1.6803907592717E-001   5.2617260732652E-004   9.2978228911225E-004
+    6    2 3.0141990827197E-006   6.6920756222973E-002   1.5849178896203E-003   7.0868495530900E-004
+    1    3 2.0325270805323E-006   2.5829054050805E-001  -7.4230854320064E-005   1.4237334233624E-003
+    2    3 1.7766880644390E-007   3.2830966501483E-001  -1.9912857728843E-004   3.7150587633439E-004
+    3    3 8.3188623328236E-001  -2.6472069438689E-001  -8.4240460167719E-002  -9.0817937553827E-001
+    4    3 8.2161046814872E-002   5.2793919151343E-002   2.7101159905291E-001   9.3347522696951E-002
+    5    3 8.5032966765073E-002  -7.2033264087621E-002   2.6224363659216E-001  -1.2751957430917E-001
+    6    3 9.1754294179924E-004   1.2256208977746E-001   2.1744517700386E-002   2.1088359153259E-002
+    1    4 2.5987898470955E-006   2.9860447768015E-001  -4.8469659815176E-004   1.5374846519024E-003
+    2    4 1.4228217894271E-007  -4.0125520327428E-001  -3.0690279944972E-004  -2.1930082223428E-004
+    3    4 8.2161046814871E-002   5.2793919151342E-002   2.7101159905291E-001   9.3347522696950E-002
+    4    4 9.1590213530585E-001  -1.2975816192369E-001   6.5618990559345E-001  -6.9664692858227E-001
+    5    4 1.9251953598986E-003   2.4408734940307E-001   1.6296696751812E-003   4.3846773389252E-002
+    6    4 8.8814473497193E-006   4.3905519946609E-001  -2.7643358935551E-003   1.1135054635351E-003
+    1    5 5.6926089874807E-007   2.3443823170053E-001   7.3655004811091E-005   7.5089003123916E-004
+    2    5 1.1413527178461E-006   1.6803907592711E-001   5.2617260732652E-004   9.2978228911142E-004
+    3    5 8.5032966765072E-002  -7.2033264087618E-002   2.6224363659216E-001  -1.2751957430917E-001
+    4    5 1.9251953598988E-003   2.4408734940307E-001   1.6296696751812E-003   4.3846773389254E-002
+    5    5 8.7328046598462E-001  -3.7936489778730E-001  -6.7865922615117E-001  -6.4241896044911E-001
+    6    5 3.9759661276785E-002  -1.8683026464713E-001   7.7080938758287E-002  -1.8389722715943E-001
+    1    6 1.6798725993409E-007   4.3998479028136E-001  -3.8106608406823E-004   1.5091686289806E-004
+    2    6 3.0141990827194E-006   6.6920756222958E-002   1.5849178896203E-003   7.0868495530882E-004
+    3    6 9.1754294179929E-004   1.2256208977746E-001   2.1744517700386E-002   2.1088359153260E-002
+    4    6 8.8814473497201E-006   4.3905519946607E-001  -2.7643358935551E-003   1.1135054635355E-003
+    5    6 3.9759661276785E-002  -1.8683026464713E-001   7.7080938758287E-002  -1.8389722715943E-001
+    6    6 9.5931073214772E-001  -4.9420223751705E-001  -9.7879428968946E-001  -3.5671706141140E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.02 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:41                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+  INTERACTION TYPE IS    LINEAR RIGID ROTOR  -  ATOM.  
+
+  MOLECULAR QUANTUM NUMBERS TAKEN FROM JLEVEL INPUT.  NLEVEL =  4
+
+  ENERGY LEVELS OBTAINED FROM B(E) =   30.000000
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  EACH PAIR STATE IS LABELLED BY  1 QUANTUM NUMBER 
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY DIAGONAL.
+
+  PAIR STATE     PAIR STATE QUANTUM NUMBERS    PAIR LEVEL     PAIR ENERGY (CM-1)
+                ---------        J ---------
+        1                        0                1             0.0000000
+        2                        2                2           180.0000000
+        3                        4                3           600.0000000
+        4                        6                4          1260.0000000
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  5 AND IPROPL =  4
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 2 SEGMENTS
+
+  PROPAGATION RANGES ARE CONTROLLED BY VARIABLES RMIN, RMID AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMID = unset   RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO VALUE OF RMID CHOSEN USING RVFAC =    1.40
+
+  COUPLED EQUATIONS SOLVED BY LOG-DERIVATIVE PROPAGATOR OF JOHNSON
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 2 WILL BE PROPAGATED OUTWARDS
+
+  FROM VALUE OF RMID CHOSEN USING RVFAC =    1.40 TO RMAX =     20.00
+
+
+  USING VARIABLE INTERVAL / VARIABLE STEP (VIVS) PROPAGATOR
+
+  PROPAGATION PARAMETERS ARE:    DRMAX  =     5.00        XSQMAX =   1.00E+04
+                                 ALPHA1 =     1.00        ALPHA2 =     1.50
+                                 IALPHA =        6
+                                 ISHIFT =        F        IV     =        T
+                                 IPERT  =        T        IVP    =        F
+                                 IALFP  =        F        IVPP   =        F
+                                 ISYM   =        T        NUMDER =        F
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZES ADJUSTED TO MAINTAIN APPROXIMATE ACCURACY VIA PERTURBATION THEORY
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  STATE-TO-STATE INTEGRAL CROSS-SECTIONS WILL BE COMPUTED BUT NOT STORED ON DISK
+
+  ======================================================================================================================
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ===================================== model system: ITYPE=1; IPROPS=5, IPROPL=4 ======================================
+
+  *****************************  ANGULAR MOMENTUM JTOT  =  10   AND SYMMETRY BLOCK  =    1  ****************************
+
+  CHANNEL FUNCTION LIST:
+
+  EACH CHANNEL FUNCTION IS FORMED BY COMBINING A PAIR STATE WITH A VALUE OF L.
+
+  CHANNEL  PAIR STATE    PAIR STATE QUANTUM NUMBERS            L        PAIR LEVEL   PAIR ENERGY (CM-1)
+                         ---------      J   ---------
+        1           4                   6                      5             4      1260.0000000
+        2           3                   4                      7             3       600.0000000
+        3           4                   6                      7             4      1260.0000000
+        4           2                   2                      9             2       180.0000000
+        5           3                   4                      9             3       600.0000000
+        6           4                   6                      9             4      1260.0000000
+        7           2                   2                     11             2       180.0000000
+        8           3                   4                     11             3       600.0000000
+        9           4                   6                     11             4      1260.0000000
+       10           3                   4                     13             3       600.0000000
+       11           4                   6                     13             4      1260.0000000
+       12           4                   6                     15             4      1260.0000000
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   1000.000000     CM-1    
+  INNER CLASSICAL TURNING POINT AT R =     0.761
+  RADIAL PROPAGATION WILL START AT R =     0.642
+
+  RMID =   1.0650 OBTAINED FROM RVFAC = 1.400
+
+  LDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  1.0650      IN    177  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.00 CPU SECS.
+
+  VVPROP. R MATRIX PROPAGATED FROM       1.0650  TO  20.000      IN   1830  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.04 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    3.11905962E+01         4            9         2                180.000000000000     3.600000000000
+           2    3.11905962E+01         7           11         2                180.000000000000     3.600000000000
+           3    2.17844573E+01         5            9         3                600.000000000000    12.000000000000
+           4    2.17844573E+01         2            7         3                600.000000000000    12.000000000000
+           5    2.17844573E+01         8           11         3                600.000000000000    12.000000000000
+           6    2.17844573E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.1079814307541E-001  -3.6021006969290E-001  -6.0930039041922E-001  -7.3454147419352E-001
+    2    1 8.9188842202156E-002  -1.4675297204465E-001   1.8043148671404E-001  -2.3797756365741E-001
+    3    1 4.9567329389858E-006   2.3983709182012E-001   1.4206936841881E-004   2.2218346548614E-003
+    4    1 6.2457972689055E-006   2.7469976579430E-001  -3.8629751834250E-004   2.4691236291907E-003
+    5    1 1.4113785071124E-006   2.2188835515362E-001   2.0875039569667E-004   1.1695305807925E-003
+    6    1 4.0081371812632E-007   4.3815190064960E-001  -5.8589420909027E-004   2.3987849816273E-004
+    1    2 8.9188842202156E-002  -1.4675297204465E-001   1.8043148671404E-001  -2.3797756365741E-001
+    2    2 9.1080004219050E-001  -4.3329669834650E-001  -8.7176044833610E-001  -3.8837322630087E-001
+    3    2 4.3003895589933E-007   3.1032421105849E-001  -2.4264789805104E-004   6.0922980349844E-004
+    4    2 3.2625242447223E-007  -4.2329003015600E-001  -5.0611426552093E-004  -2.6476550891013E-004
+    5    2 2.8142647138319E-006   1.5934872157325E-001   9.0467934222243E-004   1.4127349367761E-003
+    6    2 7.5450512451319E-006   6.7254499819129E-002   2.5052065379260E-003   1.1264952052560E-003
+    1    3 4.9567329389858E-006   2.3983709182012E-001   1.4206936841881E-004   2.2218346548614E-003
+    2    3 4.3003895589933E-007   3.1032421105849E-001  -2.4264789805104E-004   6.0922980349844E-004
+    3    3 8.4455946562848E-001   2.5398968161438E-001  -2.3034974645333E-002   9.1871043075148E-001
+    4    3 7.6003654016702E-002  -4.3516802151591E-001  -2.5312901956592E-001  -1.0922157969145E-001
+    5    3 7.8655278419986E-002   4.5374084928061E-001  -2.6869217793434E-001   8.0372830837851E-002
+    6    3 7.7621516293440E-004  -3.4268734665090E-001  -1.5323526396751E-002  -2.3268104815444E-002
+    1    4 6.2457972689055E-006   2.7469976579430E-001  -3.8629751834250E-004   2.4691236291907E-003
+    2    4 3.2625242447223E-007  -4.2329003015600E-001  -5.0611426552093E-004  -2.6476550891013E-004
+    3    4 7.6003654016702E-002  -4.3516802151591E-001  -2.5312901956592E-001  -1.0922157969145E-001
+    4    4 9.2234843127357E-001   3.7566324587515E-001  -6.8192218818936E-001   6.7626219806271E-001
+    5    4 1.6344895958276E-003  -2.3560448467125E-001   3.6517903126084E-003  -4.0263557013015E-002
+    6    4 6.8530642043886E-006  -3.0509416499720E-002   2.5698834688025E-003  -4.9876162759807E-004
+    1    5 1.4113785071124E-006   2.2188835515362E-001   2.0875039569667E-004   1.1695305807925E-003
+    2    5 2.8142647138319E-006   1.5934872157325E-001   9.0467934222243E-004   1.4127349367761E-003
+    3    5 7.8655278419986E-002   4.5374084928061E-001  -2.6869217793434E-001   8.0372830837851E-002
+    4    5 1.6344895958276E-003  -2.3560448467125E-001   3.6517903126084E-003  -4.0263557013015E-002
+    5    5 8.8311143403071E-001   1.5354279478438E-001   5.3530637522309E-001   7.7237200795745E-001
+    6    5 3.6594572310254E-002   3.5405640552590E-001  -1.1634911277384E-001   1.5184681842895E-001
+    1    6 4.0081371812632E-007   4.3815190064960E-001  -5.8589420909027E-004   2.3987849816272E-004
+    2    6 7.5450512451319E-006   6.7254499819128E-002   2.5052065379260E-003   1.1264952052560E-003
+    3    6 7.7621516293440E-004  -3.4268734665090E-001  -1.5323526396751E-002  -2.3268104815444E-002
+    4    6 6.8530642043886E-006  -3.0509416499720E-002   2.5698834688025E-003  -4.9876162759806E-004
+    5    6 3.6594572310254E-002   3.5405640552590E-001  -1.1634911277384E-001   1.5184681842895E-001
+    6    6 9.6261441359764E-001   5.4696202969281E-002   9.2375825489761E-001   3.3058297007888E-001
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  1) =  1000.000    : MAX DIAG & OFF-DIAG =  1.00E-01 &   3.73E-07
+
+  COUPLED EQUATIONS PROPAGATED AT                                 ENERGY =   900.0000000     CM-1    
+
+  RMID =   1.0650 OBTAINED FROM RVFAC = 1.400
+
+  LDPROP. LOG-DERIVATIVE MATRIX PROPAGATED FROM       0.6417  TO  1.0650      IN    177  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.00 CPU SECS.
+
+  VVPROP. R MATRIX PROPAGATED FROM       1.0650  TO  20.000      IN   1830  STEPS.
+  TIME TAKEN FOR CURRENT PROPAGATION:        0.01 CPU SECS.
+
+  OPEN CHANNEL   WVEC (1/ANG.)    CHANNEL           L    PAIR LEVEL            PAIR ENERGY (CM-1)  PAIR ENERGY (EPSIL)
+           1    2.92269164E+01         4            9         2                180.000000000000     3.600000000000
+           2    2.92269164E+01         7           11         2                180.000000000000     3.600000000000
+           3    1.88658934E+01         5            9         3                600.000000000000    12.000000000000
+           4    1.88658934E+01         2            7         3                600.000000000000    12.000000000000
+           5    1.88658934E+01         8           11         3                600.000000000000    12.000000000000
+           6    1.88658934E+01        10           13         3                600.000000000000    12.000000000000
+
+  ROW  COL       S**2                  PHASE/2PI              RE (S)                 IM (S)
+    1    1 9.0789937301237E-001   1.9193790909589E-001   3.3994990839983E-001   8.9013113235709E-001
+    2    1 9.2095242332667E-002   4.0306253035797E-001  -2.4890072217843E-001   1.7361933311623E-001
+    3    1 2.0387371024901E-006   2.5830449280972E-001  -7.4469169047091E-005   1.4259002227896E-003
+    4    1 2.6063666043242E-006   2.9861886247973E-001  -4.8554181094548E-004   1.5396804064961E-003
+    5    1 5.7148813358836E-007   2.3441137106724E-001   7.3925926436538E-005   7.5234506111814E-004
+    6    1 1.6806311752559E-007   4.3974823920149E-001  -3.8092733447103E-004   1.5151727089143E-004
+    1    2 9.2095242332667E-002   4.0306253035797E-001  -2.4890072217843E-001   1.7361933311623E-001
+    2    2 9.0790027235175E-001   1.1418683013683E-001   7.1794448139487E-001   6.2646308270033E-001
+    3    2 1.7856241797142E-007   3.2815147548563E-001  -1.9925844414291E-004   3.7263721017790E-004
+    4    2 1.4230388055364E-007  -4.0159126514699E-001  -3.0738861673777E-004  -2.1866897094393E-004
+    5    2 1.1443730435921E-006   1.6805759512902E-001   5.2676000865757E-004   9.3107300297624E-004
+    6    2 3.0200762412676E-006   6.6934853514214E-002   1.5863994530534E-003   7.0951604394787E-004
+    1    3 2.0387371024900E-006   2.5830449280972E-001  -7.4469169047091E-005   1.4259002227896E-003
+    2    3 1.7856241797132E-007   3.2815147548565E-001  -1.9925844414291E-004   3.7263721017776E-004
+    3    3 8.3189118350916E-001  -2.6472282691886E-001  -8.4252879617305E-002  -9.0818094881216E-001
+    4    3 8.2157183357598E-002   5.2790592766179E-002   2.7100717797712E-001   9.3339663822383E-002
+    5    3 8.5031874288778E-002  -7.2035312244956E-002   2.6224031092120E-001  -1.2752212990979E-001
+    6    3 9.1754154495272E-004   1.2256722901245E-001   2.1743820178616E-002   2.1089045236632E-002
+    1    4 2.6063666043242E-006   2.9861886247973E-001  -4.8554181094548E-004   1.5396804064961E-003
+    2    4 1.4230388055363E-007  -4.0159126514699E-001  -3.0738861673777E-004  -2.1866897094392E-004
+    3    4 8.2157183357598E-002   5.2790592766179E-002   2.7100717797712E-001   9.3339663822384E-002
+    4    4 9.1590611332002E-001  -1.2976235989799E-001   6.5617295511758E-001  -6.9666574933197E-001
+    5    4 1.9250736232493E-003   2.4409098419716E-001   1.6286168044952E-003   4.3845424282967E-002
+    6    4 8.8810286517595E-006   4.3907303587427E-001  -2.7643955029138E-003   1.1131694189248E-003
+    1    5 5.7148813358847E-007   2.3441137106724E-001   7.3925926436538E-005   7.5234506111821E-004
+    2    5 1.1443730435913E-006   1.6805759512898E-001   5.2676000865757E-004   9.3107300297579E-004
+    3    5 8.5031874288783E-002  -7.2035312244965E-002   2.6224031092120E-001  -1.2752212990981E-001
+    4    5 1.9250736232490E-003   2.4409098419716E-001   1.6286168044952E-003   4.3845424282964E-002
+    5    5 8.7328122352760E-001  -3.7936639402510E-001  -6.7866555995155E-001  -6.4241285888691E-001
+    6    5 3.9760112699220E-002  -1.8683179478635E-001   7.7079608308227E-002  -1.8389901218405E-001
+    1    6 1.6806311752559E-007   4.3974823920149E-001  -3.8092733447103E-004   1.5151727089145E-004
+    2    6 3.0200762412674E-006   6.6934853514201E-002   1.5863994530534E-003   7.0951604394773E-004
+    3    6 9.1754154495253E-004   1.2256722901243E-001   2.1743820178616E-002   2.1089045236628E-002
+    4    6 8.8810286517579E-006   4.3907303587431E-001  -2.7643955029138E-003   1.1131694189240E-003
+    5    6 3.9760112699220E-002  -1.8683179478636E-001   7.7079608308227E-002  -1.8389901218405E-001
+    6    6 9.5931027658782E-001  -4.9420347034268E-001  -9.7879433356945E-001  -3.5664115861034E-002
+
+  FOR JTOT =   10, SYMMETRY BLOCK =  1, ENERGY(  2) =  900.0000    : MAX DIAG & OFF-DIAG =  2.09E-01 &   2.03E-07
+
+  SIGMA NOT PRINTED BECAUSE ISIGPR = 0
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.05 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:41                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+   *******************
+   ****** I O S ******
+   *******************
+
+  PROCESSED BY IOSBIN ROUTINE (FEB 94).
+
+  INPUT  ITYPE = 101
+
+  BASIS TAKEN FROM NLEVEL, JLEVEL INPUT.  NO. OF LEVELS (NLEVEL) =   4
+     0    2    4    6
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS = -1
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+
+  PHASE SHIFT CALCULATED IN WKB APPROXIMATION BY GAUSS-MEHLER QUADRATURE.  SEE R. T PACK, JCP 60, 633 (1974).
+
+  WITH CONVERGENCE CONTROLLED BY:     TOLHI =    0.2000E-02
+                                      NGMP  =    18 ( 1) 22
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  IOSDRV ENTERED.  SET-UP FOR INFINITE ORDER SUDDEN CALCULATION.
+
+  * * * NOTE.
+  * * * NOTE.  USE WILL BE MADE OF FACT THAT POTENTIAL HAS ONLY EVEN LEGENDRE TERMS.
+
+  * * * NOTE.
+  NUMBER OF GAUSS POINTS FOR THETA (NGL) SET FROM &BASIS IOSNGP(1) =   8
+
+  * * * NOTE.
+  NUMBER OF GAUSS POINTS FOR THETA (NGL) SET FROM &BASIS IOSNGP(1) =   8
+
+  THETA INTEGRATION DONE BY   8-POINT GAUSSIAN QUADRATURE. POINTS/WEIGHTS ARE
+            0.019855  0.101229            0.101667  0.222381            0.237234  0.313707            0.408283  0.362684
+            0.591717  0.362684            0.762766  0.313707            0.898333  0.222381            0.980145  0.101229
+
+  LMAX TAKEN FROM &INPUT LMAX =   11
+
+  TIME TO SET UP CALCULATION WAS    0.00   SECONDS.  EXIT IOSDRV
+
+========================================================================================================================
+ IOSCLC (MAY 92).  ENERGY(  1) =   1000.0000 CM-1.
+
+  ***** PARTIAL WAVE =   10    FOR ENERGY(  1) =    1000.0000    *****
+ 
+  FOR QLS(  0) VIB LEV =  1 TO  1               ADD -0.1807E-01 = -0.1807E-01
+  FOR QLT(  0) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1715E+00 =  0.1715E+00
+  FOR QLT(  1) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  2) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1676E-01 =  0.1676E-01
+  FOR QLT(  3) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  4) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1268E-02 =  0.1268E-02
+  FOR QLT(  5) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  6) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.4018E-04 =  0.4018E-04
+  FOR QLT(  7) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  8) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.7011E-06 =  0.7011E-06
+  FOR QLT(  9) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT( 10) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.7152E-08 =  0.7152E-08
+  ***** ***** ***** END OF CALCULATION FOR ENERGY =   1000.0000 CM-1 ***** ***** *****
+
+                      PARTIAL WAVES FROM   10 TO    10 (IN STEPS OF    1)
+
+  ***** ***** ***** TIME WAS     0.00  SEC.
+ 
+
+  FOR ORIENTATION     1     SIG( 1, 1) =  2.2161E-01
+
+  AVERAGE OVER ORIENTATIONS
+                            SIG( 1, 1) =  1.1217E-02
+  STATE-TO-STATE CROSS SECTIONS (IN ANG**2) FOR KINETIC ENERGY =   1000.0000 CM-1.
+
+  PROCESSED BY IOSOUT (FEB 92).
+
+  NO. OF VIBRATIONAL LEVELS =   1.  LEVELS ARE
+          0
+
+  MAXIMUM J-VALUE REQUESTED IS   6
+
+   QLOLD(0)     1 TO  1 = -1.8068E-02
+
+   Q(  0 )      1 TO  1 =  1.7155E-01
+
+   Q(  1 )      1 TO  1 =  0.0000E+00
+
+   Q(  2 )      1 TO  1 =  1.6759E-02
+
+   Q(  3 )      1 TO  1 =  0.0000E+00
+
+   Q(  4 )      1 TO  1 =  1.2683E-03
+
+   Q(  5 )      1 TO  1 =  0.0000E+00
+
+   Q(  6 )      1 TO  1 =  4.0181E-05
+
+   Q(  7 )      1 TO  1 =  0.0000E+00
+
+   Q(  8 )      1 TO  1 =  7.0112E-07
+
+   Q(  9 )      1 TO  1 =  0.0000E+00
+
+   Q( 10 )      1 TO  1 =  7.1525E-09
+
+  ***** ***** ***** BELOW FOR VIB LEVEL  1 TO  1
+
+  FOR INITIAL LEVEL J =   0  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  1.7155E-01       2  1.6759E-02       4  1.2683E-03       6  4.0181E-05 
+
+  FOR INITIAL LEVEL J =   1  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  1.7825E-01       3  1.0619E-02       5  7.2314E-04 
+
+  FOR INITIAL LEVEL J =   2  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.3519E-03       2  1.7670E-01       4  8.9611E-03       6  5.8694E-04 
+
+  FOR INITIAL LEVEL J =   3  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  4.5511E-03       3  1.7626E-01       5  8.2668E-03 
+
+  FOR INITIAL LEVEL J =   4  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  1.4092E-04       2  4.9784E-03       4  1.7611E-01       6  7.8802E-03 
+
+  FOR INITIAL LEVEL J =   5  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  1.9722E-04       3  5.2607E-03       5  1.7604E-01 
+
+  FOR INITIAL LEVEL J =   6  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.0908E-06       2  2.2575E-04       4  5.4555E-03       6  1.7601E-01*
+
+  ***** NOTE.  FOR CROSS SECTIONS MARKED WITH A STAR, SOME CONTRIBUTING Q(L) ARE NOT AVAILABLE.
+ IOSCLC (MAY 92).  ENERGY(  2) =    900.0000 CM-1.
+
+  ***** PARTIAL WAVE =   10    FOR ENERGY(  2) =     900.0000    *****
+ 
+  FOR QLS(  0) VIB LEV =  1 TO  1               ADD -0.2054E-01 = -0.2054E-01
+  FOR QLT(  0) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.6015E-02 =  0.6015E-02
+  FOR QLT(  1) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  2) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1901E-01 =  0.1901E-01
+  FOR QLT(  3) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  4) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1481E-02 =  0.1481E-02
+  FOR QLT(  5) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  6) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.4827E-04 =  0.4827E-04
+  FOR QLT(  7) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  8) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.8663E-06 =  0.8663E-06
+  FOR QLT(  9) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT( 10) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.9091E-08 =  0.9091E-08
+  ***** ***** ***** END OF CALCULATION FOR ENERGY =    900.0000 CM-1 ***** ***** *****
+
+                      PARTIAL WAVES FROM   10 TO    10 (IN STEPS OF    1)
+
+  ***** ***** ***** TIME WAS     0.00  SEC.
+ 
+
+  FOR ORIENTATION     1     SIG( 1, 1) =  5.1687E-02
+
+  AVERAGE OVER ORIENTATIONS
+                            SIG( 1, 1) =  2.6161E-03
+  STATE-TO-STATE CROSS SECTIONS (IN ANG**2) FOR KINETIC ENERGY =    900.0000 CM-1.
+
+  PROCESSED BY IOSOUT (FEB 92).
+
+  NO. OF VIBRATIONAL LEVELS =   1.  LEVELS ARE
+          0
+
+  MAXIMUM J-VALUE REQUESTED IS   6
+
+   QLOLD(0)     1 TO  1 = -2.0537E-02
+
+   Q(  0 )      1 TO  1 =  6.0152E-03
+
+   Q(  1 )      1 TO  1 =  0.0000E+00
+
+   Q(  2 )      1 TO  1 =  1.9007E-02
+
+   Q(  3 )      1 TO  1 =  0.0000E+00
+
+   Q(  4 )      1 TO  1 =  1.4811E-03
+
+   Q(  5 )      1 TO  1 =  0.0000E+00
+
+   Q(  6 )      1 TO  1 =  4.8274E-05
+
+   Q(  7 )      1 TO  1 =  0.0000E+00
+
+   Q(  8 )      1 TO  1 =  8.6626E-07
+
+   Q(  9 )      1 TO  1 =  0.0000E+00
+
+   Q( 10 )      1 TO  1 =  9.0912E-09
+
+  ***** ***** ***** BELOW FOR VIB LEVEL  1 TO  1
+
+  FOR INITIAL LEVEL J =   0  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  6.0152E-03       2  1.9007E-02       4  1.4811E-03       6  4.8274E-05 
+
+  FOR INITIAL LEVEL J =   1  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  1.3618E-02       3  1.2062E-02       5  8.4511E-04 
+
+  FOR INITIAL LEVEL J =   2  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.8013E-03       2  1.1869E-02       4  1.0175E-02       6  6.8580E-04 
+
+  FOR INITIAL LEVEL J =   3  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  5.1695E-03       3  1.1364E-02       5  9.3851E-03 
+
+  FOR INITIAL LEVEL J =   4  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  1.6457E-04       2  5.6526E-03       4  1.1199E-02       6  8.9459E-03 
+
+  FOR INITIAL LEVEL J =   5  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  2.3049E-04       3  5.9724E-03       5  1.1122E-02 
+
+  FOR INITIAL LEVEL J =   6  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.7134E-06       2  2.6377E-04       4  6.1933E-03       6  1.1081E-02*
+
+  ***** NOTE.  FOR CROSS SECTIONS MARKED WITH A STAR, SOME CONTRIBUTING Q(L) ARE NOT AVAILABLE.
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.00 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 06 Nov 2025   at 16:35:41                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) = 11     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  20.000000000 ATOMIC MASS UNITS (DALTONS)
+
+  ENERGY-INDEPENDENT MATRICES WILL BE SAVED TEMPORARILY ON UNIT 30
+
+  ======================================================================================================================
+
+   *******************
+   ****** I O S ******
+   *******************
+
+  PROCESSED BY IOSBIN ROUTINE (FEB 94).
+
+  INPUT  ITYPE = 101
+
+  BASIS TAKEN FROM NLEVEL, JLEVEL INPUT.  NO. OF LEVELS (NLEVEL) =   4
+     0    2    4    6
+
+  ======================================================================================================================
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  ANGULAR DEPENDENCE OF POTENTIAL EXPANDED IN TERMS OF
+  LEGENDRE POLYNOMIALS, P(LAMBDA).
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+  WHICH HAS LAMBDA =   0
+
+                 1.00000000E+00 * R **-12
+                -2.00000000E+00 * R ** -6
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+  WHICH HAS LAMBDA =   2
+
+                -2.00000000E-01 * R ** -6
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  50.000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  3.5000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF RM (  3.50000000 ANGSTROM ) UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  6
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 1 SEGMENT 
+
+  PROPAGATION RANGE IS CONTROLLED BY VARIABLES RMIN AND RMAX, WITH INPUT VALUES
+  RMIN =  0.5000     RMAX =   20.00    
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN CHOSEN USING IRMSET =  9 TO RMAX =     20.00
+
+  COUPLED EQUATIONS SOLVED BY DIABATIC MODIFIED LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS
+
+  PROPAGATION STEP SIZE DETERMINED USING STEP =   12.0     (PER HALF WAVELENGTH)
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+
+  ======================================================================================================================
+
+  INPUT ENERGIES IN UNITS OF CM-1 BY DEFAULT.
+
+  CALCULATIONS WILL BE PERFORMED FOR    2 ENERGIES
+  ENERGY    1           =   1000.000000     CM-1
+  ENERGY    2           =   900.0000000     CM-1
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT =  10
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   1
+
+  IOSDRV ENTERED.  SET-UP FOR INFINITE ORDER SUDDEN CALCULATION.
+
+  * * * NOTE.
+  * * * NOTE.  USE WILL BE MADE OF FACT THAT POTENTIAL HAS ONLY EVEN LEGENDRE TERMS.
+
+  * * * NOTE.
+  NUMBER OF GAUSS POINTS FOR THETA (NGL) SET FROM &BASIS IOSNGP(1) =   8
+
+  * * * NOTE.
+  NUMBER OF GAUSS POINTS FOR THETA (NGL) SET FROM &BASIS IOSNGP(1) =   8
+
+  THETA INTEGRATION DONE BY   8-POINT GAUSSIAN QUADRATURE. POINTS/WEIGHTS ARE
+            0.019855  0.101229            0.101667  0.222381            0.237234  0.313707            0.408283  0.362684
+            0.591717  0.362684            0.762766  0.313707            0.898333  0.222381            0.980145  0.101229
+
+  LMAX TAKEN FROM &INPUT LMAX =   11
+
+  TIME TO SET UP CALCULATION WAS    0.00   SECONDS.  EXIT IOSDRV
+
+========================================================================================================================
+ IOSCLC (MAY 92).  ENERGY(  1) =   1000.0000 CM-1.
+
+  ***** PARTIAL WAVE =   10    FOR ENERGY(  1) =    1000.0000    *****
+ 
+  FOR QLS(  0) VIB LEV =  1 TO  1               ADD -0.1807E-01 = -0.1807E-01
+  FOR QLT(  0) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1720E+00 =  0.1720E+00
+  FOR QLT(  1) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  2) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1676E-01 =  0.1676E-01
+  FOR QLT(  3) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  4) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1268E-02 =  0.1268E-02
+  FOR QLT(  5) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  6) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.4018E-04 =  0.4018E-04
+  FOR QLT(  7) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  8) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.7012E-06 =  0.7012E-06
+  FOR QLT(  9) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT( 10) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.7156E-08 =  0.7156E-08
+  ***** ***** ***** END OF CALCULATION FOR ENERGY =   1000.0000 CM-1 ***** ***** *****
+
+                      PARTIAL WAVES FROM   10 TO    10 (IN STEPS OF    1)
+
+  ***** ***** ***** TIME WAS     0.02  SEC.
+ 
+
+  FOR ORIENTATION     1     SIG( 1, 1) =  2.2147E-01
+
+  AVERAGE OVER ORIENTATIONS
+                            SIG( 1, 1) =  1.1209E-02
+  STATE-TO-STATE CROSS SECTIONS (IN ANG**2) FOR KINETIC ENERGY =   1000.0000 CM-1.
+
+  PROCESSED BY IOSOUT (FEB 92).
+
+  NO. OF VIBRATIONAL LEVELS =   1.  LEVELS ARE
+          0
+
+  MAXIMUM J-VALUE REQUESTED IS   6
+
+   QLOLD(0)     1 TO  1 = -1.8069E-02
+
+   Q(  0 )      1 TO  1 =  1.7201E-01
+
+   Q(  1 )      1 TO  1 =  0.0000E+00
+
+   Q(  2 )      1 TO  1 =  1.6760E-02
+
+   Q(  3 )      1 TO  1 =  0.0000E+00
+
+   Q(  4 )      1 TO  1 =  1.2683E-03
+
+   Q(  5 )      1 TO  1 =  0.0000E+00
+
+   Q(  6 )      1 TO  1 =  4.0184E-05
+
+   Q(  7 )      1 TO  1 =  0.0000E+00
+
+   Q(  8 )      1 TO  1 =  7.0117E-07
+
+   Q(  9 )      1 TO  1 =  0.0000E+00
+
+   Q( 10 )      1 TO  1 =  7.1558E-09
+
+  ***** ***** ***** BELOW FOR VIB LEVEL  1 TO  1
+
+  FOR INITIAL LEVEL J =   0  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  1.7201E-01       2  1.6760E-02       4  1.2683E-03       6  4.0184E-05 
+
+  FOR INITIAL LEVEL J =   1  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  1.7872E-01       3  1.0620E-02       5  7.2318E-04 
+
+  FOR INITIAL LEVEL J =   2  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.3519E-03       2  1.7716E-01       4  8.9614E-03       6  5.8698E-04 
+
+  FOR INITIAL LEVEL J =   3  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  4.5512E-03       3  1.7672E-01       5  8.2670E-03 
+
+  FOR INITIAL LEVEL J =   4  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  1.4093E-04       2  4.9785E-03       4  1.7658E-01       6  7.8804E-03 
+
+  FOR INITIAL LEVEL J =   5  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  1.9723E-04       3  5.2608E-03       5  1.7651E-01 
+
+  FOR INITIAL LEVEL J =   6  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.0911E-06       2  2.2576E-04       4  5.4557E-03       6  1.7647E-01*
+
+  ***** NOTE.  FOR CROSS SECTIONS MARKED WITH A STAR, SOME CONTRIBUTING Q(L) ARE NOT AVAILABLE.
+ IOSCLC (MAY 92).  ENERGY(  2) =    900.0000 CM-1.
+
+  ***** PARTIAL WAVE =   10    FOR ENERGY(  2) =     900.0000    *****
+ 
+  FOR QLS(  0) VIB LEV =  1 TO  1               ADD -0.2054E-01 = -0.2054E-01
+  FOR QLT(  0) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.6317E-02 =  0.6317E-02
+  FOR QLT(  1) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  2) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1901E-01 =  0.1901E-01
+  FOR QLT(  3) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  4) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.1481E-02 =  0.1481E-02
+  FOR QLT(  5) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  6) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.4829E-04 =  0.4829E-04
+  FOR QLT(  7) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT(  8) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.8666E-06 =  0.8666E-06
+  FOR QLT(  9) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.0000E+00 =  0.0000E+00
+  FOR QLT( 10) VIB LEV =  1 TO  1  IOS T-MATRIX ADD  0.9095E-08 =  0.9095E-08
+  ***** ***** ***** END OF CALCULATION FOR ENERGY =    900.0000 CM-1 ***** ***** *****
+
+                      PARTIAL WAVES FROM   10 TO    10 (IN STEPS OF    1)
+
+  ***** ***** ***** TIME WAS     0.00  SEC.
+ 
+
+  FOR ORIENTATION     1     SIG( 1, 1) =  5.2757E-02
+
+  AVERAGE OVER ORIENTATIONS
+                            SIG( 1, 1) =  2.6703E-03
+  STATE-TO-STATE CROSS SECTIONS (IN ANG**2) FOR KINETIC ENERGY =    900.0000 CM-1.
+
+  PROCESSED BY IOSOUT (FEB 92).
+
+  NO. OF VIBRATIONAL LEVELS =   1.  LEVELS ARE
+          0
+
+  MAXIMUM J-VALUE REQUESTED IS   6
+
+   QLOLD(0)     1 TO  1 = -2.0538E-02
+
+   Q(  0 )      1 TO  1 =  6.3165E-03
+
+   Q(  1 )      1 TO  1 =  0.0000E+00
+
+   Q(  2 )      1 TO  1 =  1.9008E-02
+
+   Q(  3 )      1 TO  1 =  0.0000E+00
+
+   Q(  4 )      1 TO  1 =  1.4814E-03
+
+   Q(  5 )      1 TO  1 =  0.0000E+00
+
+   Q(  6 )      1 TO  1 =  4.8287E-05
+
+   Q(  7 )      1 TO  1 =  0.0000E+00
+
+   Q(  8 )      1 TO  1 =  8.6658E-07
+
+   Q(  9 )      1 TO  1 =  0.0000E+00
+
+   Q( 10 )      1 TO  1 =  9.0954E-09
+
+  ***** ***** ***** BELOW FOR VIB LEVEL  1 TO  1
+
+  FOR INITIAL LEVEL J =   0  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  6.3165E-03       2  1.9008E-02       4  1.4814E-03       6  4.8287E-05 
+
+  FOR INITIAL LEVEL J =   1  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  1.3920E-02       3  1.2063E-02       5  8.4526E-04 
+
+  FOR INITIAL LEVEL J =   2  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.8016E-03       2  1.2171E-02       4  1.0175E-02       6  6.8592E-04 
+
+  FOR INITIAL LEVEL J =   3  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  5.1699E-03       3  1.1666E-02       5  9.3859E-03 
+
+  FOR INITIAL LEVEL J =   4  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  1.6460E-04       2  5.6530E-03       4  1.1500E-02       6  8.9466E-03 
+
+  FOR INITIAL LEVEL J =   5  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      1  2.3053E-04       3  5.9728E-03       5  1.1424E-02 
+
+  FOR INITIAL LEVEL J =   6  NON-ZERO CROSS SECTIONS (ANG**2) TO FINAL LEVELS ARE
+      0  3.7144E-06       2  2.6382E-04       4  6.1938E-03       6  1.1382E-02*
+
+  ***** NOTE.  FOR CROSS SECTIONS MARKED WITH A STAR, SOME CONTRIBUTING Q(L) ARE NOT AVAILABLE.
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       0.02 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
