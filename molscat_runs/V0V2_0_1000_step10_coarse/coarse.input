@@ -1,0 +1,28 @@
+ &INPUT
+    LABEL  =  'V0V2_0_1000_step10 coarse scan',
+    URED   =  84.467109,
+    IPRINT =   6,
+    RMIN   =   3.0,  RMID   =  21.0,   RMAX   = 15.0E3, IRMSET = 0,
+    IPROPS =   6,    DR     =   0.002,
+    IPROPL =   9,    TOLHIL =   1.E-7,
+    JTOTL  = -12,    JTOTU  = -12,     IBFIX  =  2,     JSTEP  = 2,
+    EUNITS =   2,    NNRG   =   1,     ENERGY =  1E-06,
+                     DTOL   =   1.E-6,
+    FLDMIN =    0.0, FLDMAX = 100.0,  DFIELD =   1.0,
+    IREF   =   0,    ICHAN  =   1,
+    MONQN  =   8, -6, 8, -6,
+    LASTIN =   1,
+ /
+
+ &BASIS
+    ITYPE  = 9,
+ /
+
+ &BASIS9
+    LMAX   =  2,
+ /
+
+ &POTL
+    MXLAM  = 2, LAMBDA =  0, 1,
+                NTERM  = -1, -1,
+ /
