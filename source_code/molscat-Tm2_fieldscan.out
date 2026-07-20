@@ -1,0 +1,2244 @@
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                       Run on 13 Jul 2026   at 00:01:50                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+
+
+  This program is free software: you can redistribute it and/or modify it under
+  the terms of the GNU General Public License, version 3, as published by
+  the Free Software Foundation.
+
+  Publications resulting from the use of this program should cite both the
+  version of the program used:
+
+  J. M. Hutson & C. R. Le Sueur, MOLSCAT: a program for non-reactive quantum
+  scattering calculation on atomic and molecular collisions,
+  Version 2025.0, https//github.com/molscat/molscat
+
+  and the published paper:
+
+  J. M. Hutson & C. R. Le Sueur, Comput. Phys. Commun., 241, 9-18 (2019).
+
+
+  USING CODATA 2022 RECOMMENDED VALUES OF FUNDAMENTAL PHYSICAL CONSTANTS
+
+  PRINT LEVEL (IPRINT) =  6     OTHER PRINT CONTROLS  ISIGPR = 0
+
+  REDUCED MASS FOR INTERACTION =  84.467109000 ATOMIC MASS UNITS (DALTONS)
+
+  ======================================================================================================================
+  TM - TM 2F7/2 ATOMS + MAG FIELD 
+
+
+  Tm ATOM WITH J = 7/2,     MU_J   =    1.139400 MU_B
+              I = 1/2,     MU_NUC =    0.000000 MU_B
+              HYPERFINE SPLITTING =    0.743485, COUPLING CONST =    0.185871 GHZ
+
+  L UP TO    4
+  ONLY THE FOLLOWING L,MF PAIRS ARE INCLUDED (NOTE MFREQ >= 999 INCLUDES ALL MF)
+   L =   -1, MF =   -16
+  /2
+  TENSOR RANKS INCLUDED: k=0 (isotropic), k=2 (rank-2, Table 5).  k=4 and i=2 (mag. dip-dip): NOT YET IMPLEMENTED (rung 4 of the ladder).
+
+  INTERACTION TYPE IS  TM - TM 2F7/2 ATOMS + MAG FIELD 
+
+  QUANTUM NUMBERS FOR INTERACTING PAIR:
+  THE BASIS FUNCTIONS ARE LABELLED BY A SET OF   4 PAIR STATE QUANTUM NUMBERS AND A VALUE OF L.
+  THE RESULTING BASIS SET IS ASYMPTOTICALLY NON-DIAGONAL.
+
+  THE SETS OF PAIR STATE QUANTUM NUMBERS ARE:
+
+      SET       ------ PAIR STATE QUANTUM NUMBERS ------
+                    2*MJA     2*MIA     2*MJB     2*MIB
+        1              -7        -1        -7        -1
+        2              -7         1        -7        -1
+        3              -7         1        -7         1
+        4              -5        -1        -7        -1
+        5              -5        -1        -7         1
+        6              -5        -1        -5        -1
+        7              -5         1        -7        -1
+        8              -5         1        -7         1
+        9              -5         1        -5        -1
+       10              -5         1        -5         1
+       11              -3        -1        -7        -1
+       12              -3        -1        -7         1
+       13              -3        -1        -5        -1
+       14              -3        -1        -5         1
+       15              -3        -1        -3        -1
+       16              -3         1        -7        -1
+       17              -3         1        -7         1
+       18              -3         1        -5        -1
+       19              -3         1        -5         1
+       20              -3         1        -3        -1
+       21              -3         1        -3         1
+       22              -1        -1        -7        -1
+       23              -1        -1        -7         1
+       24              -1        -1        -5        -1
+       25              -1        -1        -5         1
+       26              -1        -1        -3        -1
+       27              -1        -1        -3         1
+       28              -1        -1        -1        -1
+       29              -1         1        -7        -1
+       30              -1         1        -7         1
+       31              -1         1        -5        -1
+       32              -1         1        -5         1
+       33              -1         1        -3        -1
+       34              -1         1        -3         1
+       35              -1         1        -1        -1
+       36              -1         1        -1         1
+       37               1        -1        -7        -1
+       38               1        -1        -7         1
+       39               1        -1        -5        -1
+       40               1        -1        -5         1
+       41               1        -1        -3        -1
+       42               1        -1        -3         1
+       43               1        -1        -1        -1
+       44               1        -1        -1         1
+       45               1        -1         1        -1
+       46               1         1        -7        -1
+       47               1         1        -7         1
+       48               1         1        -5        -1
+       49               1         1        -5         1
+       50               1         1        -3        -1
+       51               1         1        -3         1
+       52               1         1        -1        -1
+       53               1         1        -1         1
+       54               1         1         1        -1
+       55               1         1         1         1
+       56               3        -1        -7        -1
+       57               3        -1        -7         1
+       58               3        -1        -5        -1
+       59               3        -1        -5         1
+       60               3        -1        -3        -1
+       61               3        -1        -3         1
+       62               3        -1        -1        -1
+       63               3        -1        -1         1
+       64               3        -1         1        -1
+       65               3        -1         1         1
+       66               3        -1         3        -1
+       67               3         1        -7        -1
+       68               3         1        -7         1
+       69               3         1        -5        -1
+       70               3         1        -5         1
+       71               3         1        -3        -1
+       72               3         1        -3         1
+       73               3         1        -1        -1
+       74               3         1        -1         1
+       75               3         1         1        -1
+       76               3         1         1         1
+       77               3         1         3        -1
+       78               3         1         3         1
+       79               5        -1        -7        -1
+       80               5        -1        -7         1
+       81               5        -1        -5        -1
+       82               5        -1        -5         1
+       83               5        -1        -3        -1
+       84               5        -1        -3         1
+       85               5        -1        -1        -1
+       86               5        -1        -1         1
+       87               5        -1         1        -1
+       88               5        -1         1         1
+       89               5        -1         3        -1
+       90               5        -1         3         1
+       91               5        -1         5        -1
+       92               5         1        -7        -1
+       93               5         1        -7         1
+       94               5         1        -5        -1
+       95               5         1        -5         1
+       96               5         1        -3        -1
+       97               5         1        -3         1
+       98               5         1        -1        -1
+       99               5         1        -1         1
+      100               5         1         1        -1
+      101               5         1         1         1
+      102               5         1         3        -1
+      103               5         1         3         1
+      104               5         1         5        -1
+      105               5         1         5         1
+      106               7        -1        -7        -1
+      107               7        -1        -7         1
+      108               7        -1        -5        -1
+      109               7        -1        -5         1
+      110               7        -1        -3        -1
+      111               7        -1        -3         1
+      112               7        -1        -1        -1
+      113               7        -1        -1         1
+      114               7        -1         1        -1
+      115               7        -1         1         1
+      116               7        -1         3        -1
+      117               7        -1         3         1
+      118               7        -1         5        -1
+      119               7        -1         5         1
+      120               7        -1         7        -1
+      121               7         1        -7        -1
+      122               7         1        -7         1
+      123               7         1        -5        -1
+      124               7         1        -5         1
+      125               7         1        -3        -1
+      126               7         1        -3         1
+      127               7         1        -1        -1
+      128               7         1        -1         1
+      129               7         1         1        -1
+      130               7         1         1         1
+      131               7         1         3        -1
+      132               7         1         3         1
+      133               7         1         5        -1
+      134               7         1         5         1
+      135               7         1         7        -1
+      136               7         1         7         1
+
+  ======================================================================================================================
+
+  THIS CALCULATION USES  1 EXTERNAL FIELD VARIABLE 
+
+  OFFSET BETWEEN EFV INDICES AND COUPLING MATRIX COEFFICIENT INDICES IS  1
+  GENERAL-PURPOSE POTENL ROUTINE (MAY 18)
+
+  *** POTENL. ITYPE =   9 CANNOT BE PROCESSED TO DETERMINE THE POTENTIAL EXPANSION LABELS
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   1
+
+
+  pot-Tm2: Tm2 radial strengths V^(1)_0(R), V^(1)_2(R), Tiesinga et al. NJP 23, 085007 (2021), Table 5.
+  Table 5 covers R =  7.00 to 12.00 a0 (PCHIP spline of R^6*V(R)).
+  R > 12.50 a0: asymptotic C_k/R^6 tail, C0 = -3.669868E+08 C2 =  1.730533E+05 cm^-1 a0^6.
+  R <  7.00 a0: V0 exponential wall (rate b0 =  4.4857 a0^-1), V2 held constant at  2.246815 cm^-1.
+
+  INTERACTION POTENTIAL FOR EXPANSION TERM NUMBER   2
+
+
+  POTENL PROCESSING FINISHED.
+
+  POTENTIAL RETURNED IN UNITS OF EPSIL  =  1.0000000     CM-1
+        CODED WITH R IN UNITS OF RM     =  1.0000000     ANGSTROM
+
+  ALL LENGTHS ARE IN UNITS OF ANGSTROM UNLESS OTHERWISE STATED
+
+  INTERACTION MATRIX USES   2 BLOCKS OF VL ARRAY FOR R-DEPENDENT TERMS IN POTENTIAL
+                            2                    FOR CONSTANT    TERMS IN POTENTIAL
+
+  IN TOTAL:  4 BLOCKS OF VL ARRAY ARE USED
+
+
+  ======================================================================================================================
+
+  PROPAGATION METHODS FOR COUPLED EQUATIONS SPECIFIED BY IPROPS =  6 AND IPROPL =  9
+
+  COUPLED EQUATIONS WILL BE PROPAGATED OUTWARDS IN 2 SEGMENTS
+
+  PROPAGATION RANGES ARE CONTROLLED BY VARIABLES RMIN, RMID AND RMAX, WITH INPUT VALUES
+  RMIN =   3.000     RMID =   21.00     RMAX =  1.5000E+04
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 1 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMIN =      3.00 TO RMID =     21.00
+
+  COUPLED EQUATIONS SOLVED BY DIABATIC MODIFIED LOG-DERIVATIVE PROPAGATOR OF MANOLOPOULOS
+
+  PROPAGATION STEP SIZE DETERMINED USING DR =  2.000E-03
+  STEP SIZE CONSTANT THROUGHOUT RANGE
+  STEP SIZE MAY BE ADJUSTED SLIGHTLY SO THAT RANGE IS A WHOLE NUMBER OF STEPS
+
+  LOG-DERIVATIVE MATRIX INITIALISED IN THE LOCAL EIGENBASIS AT RMIN
+  LOCALLY CLOSED CHANNELS INITIALISED WITH A WKB BOUNDARY CONDITION
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  SEGMENT 2 WILL BE PROPAGATED OUTWARDS
+
+  FROM RMID =     21.00 TO RMAX =  15000.00
+
+  COUPLED EQUATIONS SOLVED BY VARIABLE-STEP AIRY PROPAGATOR.
+  PUBLICATIONS RESULTING FROM THE USE OF THIS PROPAGATOR SHOULD REFERENCE
+  M. H. ALEXANDER AND D. E. MANOLOPOULOS,  J. CHEM. PHYS. 86, 2044 (1987).
+
+  INITIAL STEP SIZE TAKEN FROM SIZE OF FINAL STEP OF PREVIOUS SEGMENT
+  STEP SIZES ADJUSTED TO MAINTAIN APPROXIMATE ACCURACY VIA PERTURBATION THEORY
+  WITH TOLHI =  1.00E-07 AND POWR =   3.0    
+
+  ======================================================================================================================
+
+  INPUT ENERGIES CONVERTED FROM K
+  TO INTERNAL WORKING UNITS OF CM-1 DUE TO INTEGER INPUT EUNITS =   2
+
+  INPUT ENERGY LIST IS
+                    6.950348E-07
+
+  CALCULATIONS WILL BE PERFORMED FOR    1 ENERGY  
+  ENERGY    1           =  6.9503480040E-07 CM-1 =  1.0000000000E-06 K       
+
+  ======================================================================================================================
+
+  CONTROL DATA FOR EXTERNAL FIELD VARIABLES.  CALCULATIONS WILL BE PERFORMED FOR 101 SETS
+
+                  MAGNETIC Z FIELD (GAUSS )
+  SET     1:          0.000000000    
+  SET     2:          20.00000000    
+  SET     3:          40.00000000    
+  SET     4:          60.00000000    
+  SET     5:          80.00000000    
+  SET     6:          100.0000000    
+  SET     7:          120.0000000    
+  SET     8:          140.0000000    
+  SET     9:          160.0000000    
+  SET    10:          180.0000000    
+  SET    11:          200.0000000    
+  SET    12:          220.0000000    
+  SET    13:          240.0000000    
+  SET    14:          260.0000000    
+  SET    15:          280.0000000    
+  SET    16:          300.0000000    
+  SET    17:          320.0000000    
+  SET    18:          340.0000000    
+  SET    19:          360.0000000    
+  SET    20:          380.0000000    
+  SET    21:          400.0000000    
+  SET    22:          420.0000000    
+  SET    23:          440.0000000    
+  SET    24:          460.0000000    
+  SET    25:          480.0000000    
+  SET    26:          500.0000000    
+  SET    27:          520.0000000    
+  SET    28:          540.0000000    
+  SET    29:          560.0000000    
+  SET    30:          580.0000000    
+  SET    31:          600.0000000    
+  SET    32:          620.0000000    
+  SET    33:          640.0000000    
+  SET    34:          660.0000000    
+  SET    35:          680.0000000    
+  SET    36:          700.0000000    
+  SET    37:          720.0000000    
+  SET    38:          740.0000000    
+  SET    39:          760.0000000    
+  SET    40:          780.0000000    
+  SET    41:          800.0000000    
+  SET    42:          820.0000000    
+  SET    43:          840.0000000    
+  SET    44:          860.0000000    
+  SET    45:          880.0000000    
+  SET    46:          900.0000000    
+  SET    47:          920.0000000    
+  SET    48:          940.0000000    
+  SET    49:          960.0000000    
+  SET    50:          980.0000000    
+  SET    51:          1000.000000    
+  SET    52:          1020.000000    
+  SET    53:          1040.000000    
+  SET    54:          1060.000000    
+  SET    55:          1080.000000    
+  SET    56:          1100.000000    
+  SET    57:          1120.000000    
+  SET    58:          1140.000000    
+  SET    59:          1160.000000    
+  SET    60:          1180.000000    
+  SET    61:          1200.000000    
+  SET    62:          1220.000000    
+  SET    63:          1240.000000    
+  SET    64:          1260.000000    
+  SET    65:          1280.000000    
+  SET    66:          1300.000000    
+  SET    67:          1320.000000    
+  SET    68:          1340.000000    
+  SET    69:          1360.000000    
+  SET    70:          1380.000000    
+  SET    71:          1400.000000    
+  SET    72:          1420.000000    
+  SET    73:          1440.000000    
+  SET    74:          1460.000000    
+  SET    75:          1480.000000    
+  SET    76:          1500.000000    
+  SET    77:          1520.000000    
+  SET    78:          1540.000000    
+  SET    79:          1560.000000    
+  SET    80:          1580.000000    
+  SET    81:          1600.000000    
+  SET    82:          1620.000000    
+  SET    83:          1640.000000    
+  SET    84:          1660.000000    
+  SET    85:          1680.000000    
+  SET    86:          1700.000000    
+  SET    87:          1720.000000    
+  SET    88:          1740.000000    
+  SET    89:          1760.000000    
+  SET    90:          1780.000000    
+  SET    91:          1800.000000    
+  SET    92:          1820.000000    
+  SET    93:          1840.000000    
+  SET    94:          1860.000000    
+  SET    95:          1880.000000    
+  SET    96:          1900.000000    
+  SET    97:          1920.000000    
+  SET    98:          1940.000000    
+  SET    99:          1960.000000    
+  SET   100:          1980.000000    
+  SET   101:          2000.000000    
+
+  ======================================================================================================================
+
+  TOTAL ANGULAR MOMENTUM JTOT = -16
+
+  EACH JTOT IS SPLIT INTO A MAXIMUM OF   2 SYMMETRY BLOCKS
+
+  CALCULATION(S) WILL BE FOR SYMMETRY BLOCK   2
+
+  ======================================================================================================================
+
+  THESE ENERGY VALUES ARE RELATIVE TO THE REFERENCE ENERGY WHICH IS THE ENERGY OF THE   1ST THRESHOLD.
+  THE REFERENCE ENERGY WILL BE CALCULATED FOR EVERY SYMMETRY BLOCK AND EFV SET
+
+  INITIALIZATION DONE.  TIME WAS   0.00 CPU SECS.
+
+  ======================= 169Tm-169Tm coarse field scan 0-2000G: looking for Feshbach resonances =======================
+
+  *****************************  ANGULAR MOMENTUM JTOT  = -16   AND SYMMETRY BLOCK  =    2  ****************************
+  SYMMETRY BLOCK =   2 SELECTS PARITY  1
+  MTOT =-16/2
+  BASIS SET GENERATED FOR TWO IDENTICAL BOSONS
+  CONSTRUCTION OF BASIS SET TOOK                  0.00 CPU SECS.
+  CONSTRUCTION OF COUPLING (VL) ARRAY TOOK        0.00 CPU SECS.
+
+  BASIS FUNCTION LIST:
+  BASIS FN        SET   ------ PAIR STATE QUANTUM NUMBERS ------           L 
+                            2*MJA     2*MIA     2*MJB     2*MIB 
+        1           1         -7        -1        -7        -1             0
+        2           1         -7        -1        -7        -1             2
+        3           1         -7        -1        -7        -1             4
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     1:  MAGNETIC Z FIELD =   0.000000000     GAUSS
+  REFERENCE ENERGY IS                           2.1700000000E-02 CM-1    =  3.1221458246E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0         2.170000000000E-02         3.122145824570E-02
+          2       2         2.170000000000E-02         3.122145824570E-02
+          3       4         2.170000000000E-02         3.122145824570E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531016E-003   1.8565979918421E+002  -4.1942512054813E-004
+    2    2   4 1.8661598531016E-003  -1.2425117528068E+005  -5.7620043251868E+004
+    3    4   4 1.8661598531016E-003   1.8478001084819E+005  -3.0620115890621E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     2:  MAGNETIC Z FIELD =   20.00000000     GAUSS
+  REFERENCE ENERGY IS                           1.4252764606E-02 CM-1    =  2.0506548158E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0         1.425276460566E-02         2.050654815767E-02
+          2       2         1.425276460566E-02         2.050654815767E-02
+          3       4         1.425276460566E-02         2.050654815767E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531016E-003   1.8565979902573E+002  -4.1942511963343E-004
+    2    2   4 1.8661598531016E-003  -1.2424842960618E+005  -5.7620043113678E+004
+    3    4   4 1.8661598531016E-003   1.8478247559874E+005  -3.7880980669504E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     3:  MAGNETIC Z FIELD =   40.00000000     GAUSS
+  REFERENCE ENERGY IS                           6.8055292113E-03 CM-1    =  9.7916380696E-03 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0         6.805529211312E-03         9.791638069627E-03
+          2       2         6.805529211312E-03         9.791638069627E-03
+          3       4         6.805529211312E-03         9.791638069627E-03
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531034E-003   1.8565979997648E+002  -4.1942512486091E-004
+    2    2   4 1.8661598531034E-003  -1.2425109098647E+005  -5.7620043782830E+004
+    3    4   4 1.8661598531034E-003   1.8477996058480E+005  -3.0845397476368E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     4:  MAGNETIC Z FIELD =   60.00000000     GAUSS
+  REFERENCE ENERGY IS                          -6.4170618303E-04 CM-1    = -9.2327201841E-04 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -6.417061830320E-04        -9.232720184122E-04
+          2       2        -6.417061830320E-04        -9.232720184122E-04
+          3       4        -6.417061830320E-04        -9.232720184122E-04
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531025E-003   1.8565979908116E+002  -4.1942512002736E-004
+    2    2   4 1.8661598531025E-003  -1.2425089974721E+005  -5.7620043179351E+004
+    3    4   4 1.8661598531025E-003   1.8478004432251E+005  -3.0470079401727E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     5:  MAGNETIC Z FIELD =   80.00000000     GAUSS
+  REFERENCE ENERGY IS                          -8.0889415774E-03 CM-1    = -1.1638182106E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -8.088941577376E-03        -1.163818210645E-02
+          2       2        -8.088941577376E-03        -1.163818210645E-02
+          3       4        -8.088941577376E-03        -1.163818210645E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531034E-003   1.8565979967598E+002  -4.1942512327692E-004
+    2    2   4 1.8661598531034E-003  -1.2425089782835E+005  -5.7620043563714E+004
+    3    4   4 1.8661598531034E-003   1.8478022127936E+005  -2.9676941099092E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     6:  MAGNETIC Z FIELD =   100.0000000     GAUSS
+  REFERENCE ENERGY IS                          -1.5536176972E-02 CM-1    = -2.2353092194E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -1.553617697172E-02        -2.235309219449E-02
+          2       2        -1.553617697172E-02        -2.235309219449E-02
+          3       4        -1.553617697172E-02        -2.235309219449E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531053E-003   1.8565979960281E+002  -4.1942512294186E-004
+    2    2   4 1.8661598531053E-003  -1.2425096344402E+005  -5.7620043526670E+004
+    3    4   4 1.8661598531053E-003   1.8478001861669E+005  -3.0585290177084E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     7:  MAGNETIC Z FIELD =   120.0000000     GAUSS
+  REFERENCE ENERGY IS                          -2.2983412366E-02 CM-1    = -3.3068002283E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -2.298341236606E-02        -3.306800228253E-02
+          2       2        -2.298341236606E-02        -3.306800228253E-02
+          3       4        -2.298341236606E-02        -3.306800228253E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531016E-003   1.8565979945732E+002  -4.1942512209493E-004
+    2    2   4 1.8661598531016E-003  -1.2425076243447E+005  -5.7620043417886E+004
+    3    4   4 1.8661598531016E-003   1.8478018477079E+005  -2.9840579179949E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     8:  MAGNETIC Z FIELD =   140.0000000     GAUSS
+  REFERENCE ENERGY IS                          -3.0430647760E-02 CM-1    = -4.3782912371E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -3.043064776041E-02        -4.378291237057E-02
+          2       2        -3.043064776041E-02        -4.378291237057E-02
+          3       4        -3.043064776041E-02        -4.378291237057E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531016E-003   1.8565979948873E+002  -4.1942512233290E-004
+    2    2   4 1.8661598531016E-003  -1.2425550317174E+005  -5.7620043476831E+004
+    3    4   4 1.8661598531016E-003   1.8477598068014E+005  -3.0375319007238E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET     9:  MAGNETIC Z FIELD =   160.0000000     GAUSS
+  REFERENCE ENERGY IS                          -3.7877883155E-02 CM-1    = -5.4497822459E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -3.787788315475E-02        -5.449782245861E-02
+          2       2        -3.787788315475E-02        -5.449782245861E-02
+          3       4        -3.787788315475E-02        -5.449782245861E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531090E-003   1.8565979882373E+002  -4.1942511876912E-004
+    2    2   4 1.8661598531090E-003  -1.2425518422126E+005  -5.7620043019169E+004
+    3    4   4 1.8661598531090E-003   1.8477648060944E+005  -2.8134624692883E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    10:  MAGNETIC Z FIELD =   180.0000000     GAUSS
+  REFERENCE ENERGY IS                          -4.5325118549E-02 CM-1    = -6.5212732547E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -4.532511854910E-02        -6.521273254665E-02
+          2       2        -4.532511854910E-02        -6.521273254665E-02
+          3       4        -4.532511854910E-02        -6.521273254665E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531016E-003   1.8565979958245E+002  -4.1942512295013E-004
+    2    2   4 1.8661598531016E-003  -1.2425552829881E+005  -5.7620043531680E+004
+    3    4   4 1.8661598531016E-003   1.8477581137950E+005  -3.1134122451612E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    11:  MAGNETIC Z FIELD =   200.0000000     GAUSS
+  REFERENCE ENERGY IS                          -5.2772353943E-02 CM-1    = -7.5927642635E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -5.277235394344E-02        -7.592764263468E-02
+          2       2        -5.277235394344E-02        -7.592764263468E-02
+          3       4        -5.277235394344E-02        -7.592764263468E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531090E-003   1.8565979916927E+002  -4.1942512056133E-004
+    2    2   4 1.8661598531090E-003  -1.2425462476603E+005  -5.7620043258861E+004
+    3    4   4 1.8661598531090E-003   1.8477712474137E+005  -2.5247619001271E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    12:  MAGNETIC Z FIELD =   220.0000000     GAUSS
+  REFERENCE ENERGY IS                          -6.0219589338E-02 CM-1    = -8.6642552723E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -6.021958933778E-02        -8.664255272272E-02
+          2       2        -6.021958933778E-02        -8.664255272272E-02
+          3       4        -6.021958933778E-02        -8.664255272272E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979925628E+002  -4.1942512107779E-004
+    2    2   4 1.8661598530941E-003  -1.2425520131882E+005  -5.7620043295577E+004
+    3    4   4 1.8661598530941E-003   1.8477681589770E+005  -2.6631887045762E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    13:  MAGNETIC Z FIELD =   240.0000000     GAUSS
+  REFERENCE ENERGY IS                          -6.7666824732E-02 CM-1    = -9.7357462811E-02 K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -6.766682473213E-02        -9.735746281076E-02
+          2       2        -6.766682473213E-02        -9.735746281076E-02
+          3       4        -6.766682473213E-02        -9.735746281076E-02
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979896974E+002  -4.1942511961279E-004
+    2    2   4 1.8661598530941E-003  -1.2425558365148E+005  -5.7620043111343E+004
+    3    4   4 1.8661598530941E-003   1.8477396909424E+005  -3.9391190969333E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    14:  MAGNETIC Z FIELD =   260.0000000     GAUSS
+  REFERENCE ENERGY IS                          -7.5114060126E-02 CM-1    = -0.1080723729     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -7.511406012647E-02        -0.108072372899    
+          2       2        -7.511406012647E-02        -0.108072372899    
+          3       4        -7.511406012647E-02        -0.108072372899    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979899056E+002  -4.1942511960535E-004
+    2    2   4 1.8661598530941E-003  -1.2425436002490E+005  -5.7620043115031E+004
+    3    4   4 1.8661598530941E-003   1.8477685834252E+005  -2.6441648883972E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    15:  MAGNETIC Z FIELD =   280.0000000     GAUSS
+  REFERENCE ENERGY IS                          -8.2561295521E-02 CM-1    = -0.1187872830     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -8.256129552082E-02        -0.118787282987    
+          2       2        -8.256129552082E-02        -0.118787282987    
+          3       4        -8.256129552082E-02        -0.118787282987    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979918389E+002  -4.1942512074315E-004
+    2    2   4 1.8661598530941E-003  -1.2425795641016E+005  -5.7620043268965E+004
+    3    4   4 1.8661598530941E-003   1.8477355368086E+005  -4.1253047190756E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    16:  MAGNETIC Z FIELD =   300.0000000     GAUSS
+  REFERENCE ENERGY IS                          -9.0008530915E-02 CM-1    = -0.1295021931     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -9.000853091516E-02        -0.129502193075    
+          2       2        -9.000853091516E-02        -0.129502193075    
+          3       4        -9.000853091516E-02        -0.129502193075    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531090E-003   1.8565979863292E+002  -4.1942511771312E-004
+    2    2   4 1.8661598531090E-003  -1.2425577931150E+005  -5.7620042889218E+004
+    3    4   4 1.8661598531090E-003   1.8477509279231E+005  -3.4354800622830E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    17:  MAGNETIC Z FIELD =   320.0000000     GAUSS
+  REFERENCE ENERGY IS                          -9.7455766310E-02 CM-1    = -0.1402171032     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -9.745576630950E-02        -0.140217103163    
+          2       2        -9.745576630950E-02        -0.140217103163    
+          3       4        -9.745576630950E-02        -0.140217103163    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979966262E+002  -4.1942512333851E-004
+    2    2   4 1.8661598530941E-003  -1.2425682853827E+005  -5.7620043601912E+004
+    3    4   4 1.8661598530941E-003   1.8477394975010E+005  -3.9477890281136E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    18:  MAGNETIC Z FIELD =   340.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1049030017     CM-1    = -0.1509320133     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.104903001704            -0.150932013251    
+          2       2        -0.104903001704            -0.150932013251    
+          3       4        -0.104903001704            -0.150932013251    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979995668E+002  -4.1942512432013E-004
+    2    2   4 1.8661598530941E-003  -1.2423979491884E+005  -5.7620043708172E+004
+    3    4   4 1.8661598530941E-003   1.8478911575804E+005  -2.6426452284938E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    19:  MAGNETIC Z FIELD =   360.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1123502371     CM-1    = -0.1616469233     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.112350237098            -0.161646923339    
+          2       2        -0.112350237098            -0.161646923339    
+          3       4        -0.112350237098            -0.161646923339    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979984017E+002  -4.1942512373264E-004
+    2    2   4 1.8661598530941E-003  -1.2424133963371E+005  -5.7620043630284E+004
+    3    4   4 1.8661598530941E-003   1.8478955713090E+005  -2.4448080566737E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    20:  MAGNETIC Z FIELD =   380.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1197974725     CM-1    = -0.1723618334     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.119797472493            -0.172361833427    
+          2       2        -0.119797472493            -0.172361833427    
+          3       4        -0.119797472493            -0.172361833427    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979899203E+002  -4.1942511903274E-004
+    2    2   4 1.8661598530941E-003  -1.2423935294891E+005  -5.7620043032101E+004
+    3    4   4 1.8661598530941E-003   1.8478858301449E+005  -2.8814369804821E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    21:  MAGNETIC Z FIELD =   400.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1272447079     CM-1    = -0.1830767435     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.127244707887            -0.183076743515    
+          2       2        -0.127244707887            -0.183076743515    
+          3       4        -0.127244707887            -0.183076743515    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979978641E+002  -4.1942512349543E-004
+    2    2   4 1.8661598531239E-003  -1.2424230222658E+005  -5.7620043605402E+004
+    3    4   4 1.8661598531239E-003   1.8479043244402E+005  -3.8832752233130E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    22:  MAGNETIC Z FIELD =   420.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1346919433     CM-1    = -0.1937916536     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.134691943281            -0.193791653603    
+          2       2        -0.134691943281            -0.193791653603    
+          3       4        -0.134691943281            -0.193791653603    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979862113E+002  -4.1942511705461E-004
+    2    2   4 1.8661598530941E-003  -1.2423742680451E+005  -5.7620042799899E+004
+    3    4   4 1.8661598530941E-003   1.8478904740523E+005  -2.6732830614174E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    23:  MAGNETIC Z FIELD =   440.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1421391787     CM-1    = -0.2045065637     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.142139178676            -0.204506563691    
+          2       2        -0.142139178676            -0.204506563691    
+          3       4        -0.142139178676            -0.204506563691    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979879318E+002  -4.1942511794700E-004
+    2    2   4 1.8661598530941E-003  -1.2424095123512E+005  -5.7620042899127E+004
+    3    4   4 1.8661598530941E-003   1.8478826454501E+005  -3.0241842954311E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    24:  MAGNETIC Z FIELD =   460.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1495864141     CM-1    = -0.2152214738     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.149586414070            -0.215221473779    
+          2       2        -0.149586414070            -0.215221473779    
+          3       4        -0.149586414070            -0.215221473779    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979932312E+002  -4.1942512086957E-004
+    2    2   4 1.8661598530941E-003  -1.2423874891810E+005  -5.7620043290236E+004
+    3    4   4 1.8661598530941E-003   1.8478623861349E+005  -3.9322601577753E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    25:  MAGNETIC Z FIELD =   480.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1570336495     CM-1    = -0.2259363839     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.157033649464            -0.225936383867    
+          2       2        -0.157033649464            -0.225936383867    
+          3       4        -0.157033649464            -0.225936383867    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979882466E+002  -4.1942511816341E-004
+    2    2   4 1.8661598531239E-003  -1.2423849226860E+005  -5.7620042939480E+004
+    3    4   4 1.8661598531239E-003   1.8478888849129E+005  -2.7445078548582E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    26:  MAGNETIC Z FIELD =   500.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1644808849     CM-1    = -0.2366512940     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.164480884859            -0.236651293955    
+          2       2        -0.164480884859            -0.236651293955    
+          3       4        -0.164480884859            -0.236651293955    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565980011137E+002  -4.1942512521252E-004
+    2    2   4 1.8661598530941E-003  -1.2423865427194E+005  -5.7620043821459E+004
+    3    4   4 1.8661598530941E-003   1.8478863351568E+005  -2.8588008544344E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    27:  MAGNETIC Z FIELD =   520.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1719281203     CM-1    = -0.2473662040     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.171928120253            -0.247366204043    
+          2       2        -0.171928120253            -0.247366204043    
+          3       4        -0.171928120253            -0.247366204043    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979908724E+002  -4.1942511965816E-004
+    2    2   4 1.8661598531239E-003  -1.2423993203557E+005  -5.7620043118223E+004
+    3    4   4 1.8661598531239E-003   1.8479201073270E+005  -3.1758294704637E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    28:  MAGNETIC Z FIELD =   540.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1793753556     CM-1    = -0.2580811141     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.179375355647            -0.258081114131    
+          2       2        -0.179375355647            -0.258081114131    
+          3       4        -0.179375355647            -0.258081114131    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979925284E+002  -4.1942512054236E-004
+    2    2   4 1.8661598530941E-003  -1.2423965679225E+005  -5.7620043232576E+004
+    3    4   4 1.8661598530941E-003   1.8478856856193E+005  -2.8879150484485E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    29:  MAGNETIC Z FIELD =   560.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1868225910     CM-1    = -0.2687960242     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.186822591042            -0.268796024219    
+          2       2        -0.186822591042            -0.268796024219    
+          3       4        -0.186822591042            -0.268796024219    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530941E-003   1.8565979879856E+002  -4.1942511804368E-004
+    2    2   4 1.8661598530941E-003  -1.2424164137396E+005  -5.7620042915356E+004
+    3    4   4 1.8661598530941E-003   1.8479072314170E+005  -3.7529798033773E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    30:  MAGNETIC Z FIELD =   580.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.1942698264     CM-1    = -0.2795109343     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.194269826436            -0.279510934307    
+          2       2        -0.194269826436            -0.279510934307    
+          3       4        -0.194269826436            -0.279510934307    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979916750E+002  -4.1942512003742E-004
+    2    2   4 1.8661598531239E-003  -1.2424090467333E+005  -5.7620043170217E+004
+    3    4   4 1.8661598531239E-003   1.8478833729224E+005  -2.9915716052273E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    31:  MAGNETIC Z FIELD =   600.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2017170618     CM-1    = -0.2902258444     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.201717061830            -0.290225844395    
+          2       2        -0.201717061830            -0.290225844395    
+          3       4        -0.201717061830            -0.290225844395    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979906133E+002  -4.1942512054311E-004
+    2    2   4 1.8661598531239E-003  -1.2427446584265E+005  -5.7620043252144E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    32:  MAGNETIC Z FIELD =   620.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2091642972     CM-1    = -0.3009407545     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.209164297225            -0.300940754483    
+          2       2        -0.209164297225            -0.300940754483    
+          3       4        -0.209164297225            -0.300940754483    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979931063E+002  -4.1942512199324E-004
+    2    2   4 1.8661598531239E-003  -1.2427446562091E+005  -5.7620043435227E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    33:  MAGNETIC Z FIELD =   640.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2166115326     CM-1    = -0.3116556646     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.216611532619            -0.311655664572    
+          2       2        -0.216611532619            -0.311655664572    
+          3       4        -0.216611532619            -0.311655664572    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979906645E+002  -4.1942512058773E-004
+    2    2   4 1.8661598531239E-003  -1.2427446580328E+005  -5.7620043270452E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    34:  MAGNETIC Z FIELD =   660.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2240587680     CM-1    = -0.3223705747     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.224058768013            -0.322370574660    
+          2       2        -0.224058768013            -0.322370574660    
+          3       4        -0.224058768013            -0.322370574660    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979918214E+002  -4.1942512130908E-004
+    2    2   4 1.8661598531239E-003  -1.2427446604356E+005  -5.7620043343684E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    35:  MAGNETIC Z FIELD =   680.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2315060034     CM-1    = -0.3330854847     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.231506003408            -0.333085484748    
+          2       2        -0.231506003408            -0.333085484748    
+          3       4        -0.231506003408            -0.333085484748    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979935885E+002  -4.1942512218659E-004
+    2    2   4 1.8661598531239E-003  -1.2427446551972E+005  -5.7620043453535E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    36:  MAGNETIC Z FIELD =   700.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2389532388     CM-1    = -0.3438003948     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.238953238802            -0.343800394836    
+          2       2        -0.238953238802            -0.343800394836    
+          3       4        -0.238953238802            -0.343800394836    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979918214E+002  -4.1942512130908E-004
+    2    2   4 1.8661598531239E-003  -1.2427446604356E+005  -5.7620043343684E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    37:  MAGNETIC Z FIELD =   720.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2464004742     CM-1    = -0.3545153049     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.246400474196            -0.354515304924    
+          2       2        -0.246400474196            -0.354515304924    
+          3       4        -0.246400474196            -0.354515304924    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979935885E+002  -4.1942512218659E-004
+    2    2   4 1.8661598531239E-003  -1.2427446551972E+005  -5.7620043453535E+004
+    3    4   4 1.8661598531239E-003   1.8475916284481E+005  -3.2516551790438E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    38:  MAGNETIC Z FIELD =   740.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2538477096     CM-1    = -0.3652302150     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.253847709591            -0.365230215012    
+          2       2        -0.253847709591            -0.365230215012    
+          3       4        -0.253847709591            -0.365230215012    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979928549E+002  -4.1942512182964E-004
+    2    2   4 1.8661598531239E-003  -1.2426575709822E+005  -5.7620043406552E+004
+    3    4   4 1.8661598531239E-003   1.8476560993730E+005  -4.0239207090049E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    39:  MAGNETIC Z FIELD =   760.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2612949450     CM-1    = -0.3759451251     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.261294944985            -0.375945125100    
+          2       2        -0.261294944985            -0.375945125100    
+          3       4        -0.261294944985            -0.375945125100    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979951340E+002  -4.1942512305517E-004
+    2    2   4 1.8661598530644E-003  -1.2426576090222E+005  -5.7620043560354E+004
+    3    4   4 1.8661598530644E-003   1.8476561096520E+005  -4.0234705916812E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    40:  MAGNETIC Z FIELD =   780.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2687421804     CM-1    = -0.3866600352     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.268742180379            -0.386660035188    
+          2       2        -0.268742180379            -0.386660035188    
+          3       4        -0.268742180379            -0.386660035188    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979941501E+002  -4.1942512244537E-004
+    2    2   4 1.8661598530644E-003  -1.2426576061525E+005  -5.7620043487122E+004
+    3    4   4 1.8661598530644E-003   1.8476561096520E+005  -4.0234705916812E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    41:  MAGNETIC Z FIELD =   800.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2761894158     CM-1    = -0.3973749453     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.276189415774            -0.397374945276    
+          2       2        -0.276189415774            -0.397374945276    
+          3       4        -0.276189415774            -0.397374945276    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979955696E+002  -4.1942512327083E-004
+    2    2   4 1.8661598530644E-003  -1.2427446395638E+005  -5.7620043607353E+004
+    3    4   4 1.8661598530644E-003   1.8475916418279E+005  -3.2510661079995E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    42:  MAGNETIC Z FIELD =   820.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2836366512     CM-1    = -0.4080898554     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.283636651168            -0.408089855364    
+          2       2        -0.283636651168            -0.408089855364    
+          3       4        -0.283636651168            -0.408089855364    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979941501E+002  -4.1942512244537E-004
+    2    2   4 1.8661598530644E-003  -1.2426576061525E+005  -5.7620043487122E+004
+    3    4   4 1.8661598530644E-003   1.8476561096520E+005  -4.0234705916812E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    43:  MAGNETIC Z FIELD =   840.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2910838866     CM-1    = -0.4188047655     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.291083886562            -0.418804765452    
+          2       2        -0.291083886562            -0.418804765452    
+          3       4        -0.291083886562            -0.418804765452    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979955696E+002  -4.1942512327083E-004
+    2    2   4 1.8661598530644E-003  -1.2427446395638E+005  -5.7620043607353E+004
+    3    4   4 1.8661598530644E-003   1.8475916418279E+005  -3.2510661079995E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    44:  MAGNETIC Z FIELD =   860.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.2985311220     CM-1    = -0.4295196755     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.298531121957            -0.429519675540    
+          2       2        -0.298531121957            -0.429519675540    
+          3       4        -0.298531121957            -0.429519675540    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979941501E+002  -4.1942512244537E-004
+    2    2   4 1.8661598530644E-003  -1.2426576061525E+005  -5.7620043487122E+004
+    3    4   4 1.8661598530644E-003   1.8476561096520E+005  -4.0234705916812E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    45:  MAGNETIC Z FIELD =   880.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3059783574     CM-1    = -0.4402345856     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.305978357351            -0.440234585628    
+          2       2        -0.305978357351            -0.440234585628    
+          3       4        -0.305978357351            -0.440234585628    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979848475E+002  -4.1942511732902E-004
+    2    2   4 1.8661598530644E-003  -1.2427068025020E+005  -5.7620042868123E+004
+    3    4   4 1.8661598530644E-003   1.8475677673712E+005  -2.4901958998048E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    46:  MAGNETIC Z FIELD =   900.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3134255927     CM-1    = -0.4509494957     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.313425592745            -0.450949495716    
+          2       2        -0.313425592745            -0.450949495716    
+          3       4        -0.313425592745            -0.450949495716    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979922727E+002  -4.1942512144143E-004
+    2    2   4 1.8661598530644E-003  -1.2426884878195E+005  -5.7620043349656E+004
+    3    4   4 1.8661598530644E-003   1.8476308802368E+005  -3.3233626056758E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    47:  MAGNETIC Z FIELD =   920.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3208728281     CM-1    = -0.4616644058     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.320872828140            -0.461664405804    
+          2       2        -0.320872828140            -0.461664405804    
+          3       4        -0.320872828140            -0.461664405804    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979914704E+002  -4.1942512095062E-004
+    2    2   4 1.8661598530644E-003  -1.2426569638454E+005  -5.7620043304234E+004
+    3    4   4 1.8661598530644E-003   1.8476126371416E+005  -4.1409552138637E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    48:  MAGNETIC Z FIELD =   940.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3283200635     CM-1    = -0.4723793159     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.328320063534            -0.472379315892    
+          2       2        -0.328320063534            -0.472379315892    
+          3       4        -0.328320063534            -0.472379315892    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979877411E+002  -4.1942511893531E-004
+    2    2   4 1.8661598530644E-003  -1.2427029898480E+005  -5.7620043052354E+004
+    3    4   4 1.8661598530644E-003   1.8475731590112E+005  -4.0793845658683E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    49:  MAGNETIC Z FIELD =   960.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3357672989     CM-1    = -0.4830942260     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.335767298929            -0.483094225980    
+          2       2        -0.335767298929            -0.483094225980    
+          3       4        -0.335767298929            -0.483094225980    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979912412E+002  -4.1942512086288E-004
+    2    2   4 1.8661598531239E-003  -1.2426986907103E+005  -5.7620043284309E+004
+    3    4   4 1.8661598531239E-003   1.8476381544073E+005  -2.9973465608159E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    50:  MAGNETIC Z FIELD =   980.0000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3432145343     CM-1    = -0.4938091361     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.343214534323            -0.493809136068    
+          2       2        -0.343214534323            -0.493809136068    
+          3       4        -0.343214534323            -0.493809136068    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979896452E+002  -4.1942512002849E-004
+    2    2   4 1.8661598530644E-003  -1.2427173309317E+005  -5.7620043194497E+004
+    3    4   4 1.8661598530644E-003   1.8475988292338E+005  -2.9289559909574E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    51:  MAGNETIC Z FIELD =   1000.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3506617697     CM-1    = -0.5045240462     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.350661769717            -0.504524046156    
+          2       2        -0.350661769717            -0.504524046156    
+          3       4        -0.350661769717            -0.504524046156    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979927580E+002  -4.1942512160504E-004
+    2    2   4 1.8661598530644E-003  -1.2426711294730E+005  -5.7620043391505E+004
+    3    4   4 1.8661598530644E-003   1.8476287311646E+005  -3.4196770297717E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    52:  MAGNETIC Z FIELD =   1020.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3581090051     CM-1    = -0.5152389562     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.358109005112            -0.515238956244    
+          2       2        -0.358109005112            -0.515238956244    
+          3       4        -0.358109005112            -0.515238956244    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979884812E+002  -4.1942511937407E-004
+    2    2   4 1.8661598530644E-003  -1.2427004527903E+005  -5.7620043108043E+004
+    3    4   4 1.8661598530644E-003   1.8476437256634E+005  -2.7476700437035E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    53:  MAGNETIC Z FIELD =   1040.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3655562405     CM-1    = -0.5259538663     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.365556240506            -0.525953866332    
+          2       2        -0.365556240506            -0.525953866332    
+          3       4        -0.365556240506            -0.525953866332    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979871336E+002  -4.1942511872115E-004
+    2    2   4 1.8661598531239E-003  -1.2427120717420E+005  -5.7620043023960E+004
+    3    4   4 1.8661598531239E-003   1.8475750092570E+005  -3.9964545086816E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    54:  MAGNETIC Z FIELD =   1060.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3730034759     CM-1    = -0.5366687764     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.373003475900            -0.536668776420    
+          2       2        -0.373003475900            -0.536668776420    
+          3       4        -0.373003475900            -0.536668776420    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979957637E+002  -4.1942512341362E-004
+    2    2   4 1.8661598531239E-003  -1.2426472660684E+005  -5.7620043592741E+004
+    3    4   4 1.8661598531239E-003   1.8476276784262E+005  -3.4668467405533E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    55:  MAGNETIC Z FIELD =   1080.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3804507113     CM-1    = -0.5473836865     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.380450711295            -0.547383686508    
+          2       2        -0.380450711295            -0.547383686508    
+          3       4        -0.380450711295            -0.547383686508    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979971152E+002  -4.1942512401448E-004
+    2    2   4 1.8661598530644E-003  -1.2426748213917E+005  -5.7620043683323E+004
+    3    4   4 1.8661598530644E-003   1.8475962077670E+005  -3.0464395502950E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    56:  MAGNETIC Z FIELD =   1100.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3878979467     CM-1    = -0.5580985966     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.387897946689            -0.558098596596    
+          2       2        -0.387897946689            -0.558098596596    
+          3       4        -0.387897946689            -0.558098596596    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979894573E+002  -4.1942511984257E-004
+    2    2   4 1.8661598530644E-003  -1.2427028236350E+005  -5.7620043162253E+004
+    3    4   4 1.8661598530644E-003   1.8476037924670E+005  -2.7065234589894E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    57:  MAGNETIC Z FIELD =   1120.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.3953451821     CM-1    = -0.5688135067     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.395345182083            -0.568813506684    
+          2       2        -0.395345182083            -0.568813506684    
+          3       4        -0.395345182083            -0.568813506684    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530644E-003   1.8565979931752E+002  -4.1942512194712E-004
+    2    2   4 1.8661598530644E-003  -1.2427165718942E+005  -5.7620043432732E+004
+    3    4   4 1.8661598530644E-003   1.8475718082434E+005  -4.1399197046787E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    58:  MAGNETIC Z FIELD =   1140.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4027924175     CM-1    = -0.5795284168     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.402792417478            -0.579528416773    
+          2       2        -0.402792417478            -0.579528416773    
+          3       4        -0.402792417478            -0.579528416773    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979971176E+002  -4.1942512378245E-004
+    2    2   4 1.8661598530049E-003  -1.2427289164953E+005  -5.7620043656057E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    59:  MAGNETIC Z FIELD =   1160.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4102396529     CM-1    = -0.5902433269     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.410239652872            -0.590243326861    
+          2       2        -0.410239652872            -0.590243326861    
+          3       4        -0.410239652872            -0.590243326861    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979935011E+002  -4.1942512194862E-004
+    2    2   4 1.8661598531239E-003  -1.2427289673727E+005  -5.7620043403340E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    60:  MAGNETIC Z FIELD =   1180.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4176868883     CM-1    = -0.6009582369     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.417686888266            -0.600958236949    
+          2       2        -0.417686888266            -0.600958236949    
+          3       4        -0.417686888266            -0.600958236949    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979898547E+002  -4.1942511996306E-004
+    2    2   4 1.8661598531239E-003  -1.2427289695967E+005  -5.7620043165332E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    61:  MAGNETIC Z FIELD =   1200.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4251341237     CM-1    = -0.6116731470     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.425134123661            -0.611673147037    
+          2       2        -0.425134123661            -0.611673147037    
+          3       4        -0.425134123661            -0.611673147037    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979960467E+002  -4.1942512322027E-004
+    2    2   4 1.8661598531239E-003  -1.2427131790999E+005  -5.7620043572872E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    62:  MAGNETIC Z FIELD =   1220.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4325813591     CM-1    = -0.6223880571     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.432581359055            -0.622388057125    
+          2       2        -0.432581359055            -0.622388057125    
+          3       4        -0.432581359055            -0.622388057125    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979897409E+002  -4.1942511979202E-004
+    2    2   4 1.8661598531239E-003  -1.2427289697928E+005  -5.7620043165332E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    63:  MAGNETIC Z FIELD =   1240.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4400285944     CM-1    = -0.6331029672     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.440028594449            -0.633102967213    
+          2       2        -0.440028594449            -0.633102967213    
+          3       4        -0.440028594449            -0.633102967213    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979960467E+002  -4.1942512322027E-004
+    2    2   4 1.8661598531239E-003  -1.2427131790999E+005  -5.7620043572872E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    64:  MAGNETIC Z FIELD =   1260.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4474758298     CM-1    = -0.6438178773     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.447475829844            -0.643817877301    
+          2       2        -0.447475829844            -0.643817877301    
+          3       4        -0.447475829844            -0.643817877301    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979975755E+002  -4.1942512402042E-004
+    2    2   4 1.8661598530049E-003  -1.2427289190408E+005  -5.7620043692672E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    65:  MAGNETIC Z FIELD =   1280.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4549230652     CM-1    = -0.6545327874     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.454923065238            -0.654532787389    
+          2       2        -0.454923065238            -0.654532787389    
+          3       4        -0.454923065238            -0.654532787389    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979913323E+002  -4.1942512048061E-004
+    2    2   4 1.8661598530049E-003  -1.2427133004905E+005  -5.7620043257984E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    66:  MAGNETIC Z FIELD =   1300.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4623703006     CM-1    = -0.6652476975     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.462370300632            -0.665247697477    
+          2       2        -0.462370300632            -0.665247697477    
+          3       4        -0.462370300632            -0.665247697477    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979940045E+002  -4.1942512221634E-004
+    2    2   4 1.8661598531239E-003  -1.2427289668795E+005  -5.7620043439956E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    67:  MAGNETIC Z FIELD =   1320.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4698175360     CM-1    = -0.6759626076     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.469817536027            -0.675962607565    
+          2       2        -0.469817536027            -0.675962607565    
+          3       4        -0.469817536027            -0.675962607565    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979962333E+002  -4.1942512331695E-004
+    2    2   4 1.8661598531239E-003  -1.2427131846281E+005  -5.7620043591179E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    68:  MAGNETIC Z FIELD =   1340.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4772647714     CM-1    = -0.6866775177     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.477264771421            -0.686677517653    
+          2       2        -0.477264771421            -0.686677517653    
+          3       4        -0.477264771421            -0.686677517653    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979940045E+002  -4.1942512221634E-004
+    2    2   4 1.8661598531239E-003  -1.2427289668795E+005  -5.7620043439956E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    69:  MAGNETIC Z FIELD =   1360.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4847120068     CM-1    = -0.6973924277     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.484712006815            -0.697392427741    
+          2       2        -0.484712006815            -0.697392427741    
+          3       4        -0.484712006815            -0.697392427741    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979869007E+002  -4.1942511808604E-004
+    2    2   4 1.8661598530049E-003  -1.2427133034293E+005  -5.7620042928435E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    70:  MAGNETIC Z FIELD =   1380.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4921592422     CM-1    = -0.7081073378     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.492159242210            -0.708107337829    
+          2       2        -0.492159242210            -0.708107337829    
+          3       4        -0.492159242210            -0.708107337829    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979899100E+002  -4.1942511982620E-004
+    2    2   4 1.8661598530049E-003  -1.2427289195372E+005  -5.7620043161735E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    71:  MAGNETIC Z FIELD =   1400.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.4996064776     CM-1    = -0.7188222479     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.499606477604            -0.718822247917    
+          2       2        -0.499606477604            -0.718822247917    
+          3       4        -0.499606477604            -0.718822247917    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979942764E+002  -4.1942512215684E-004
+    2    2   4 1.8661598531239E-003  -1.2427131885361E+005  -5.7620043463020E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    72:  MAGNETIC Z FIELD =   1420.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5070537130     CM-1    = -0.7295371580     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.507053712998            -0.729537158005    
+          2       2        -0.507053712998            -0.729537158005    
+          3       4        -0.507053712998            -0.729537158005    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979994787E+002  -4.1942512494255E-004
+    2    2   4 1.8661598530049E-003  -1.2427132854504E+005  -5.7620043807234E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    73:  MAGNETIC Z FIELD =   1440.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5145009484     CM-1    = -0.7402520681     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.514500948393            -0.740252068093    
+          2       2        -0.514500948393            -0.740252068093    
+          3       4        -0.514500948393            -0.740252068093    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979913323E+002  -4.1942512048061E-004
+    2    2   4 1.8661598530049E-003  -1.2427133004905E+005  -5.7620043257984E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    74:  MAGNETIC Z FIELD =   1460.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5219481838     CM-1    = -0.7509669782     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.521948183787            -0.750966978181    
+          2       2        -0.521948183787            -0.750966978181    
+          3       4        -0.521948183787            -0.750966978181    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979899100E+002  -4.1942511982620E-004
+    2    2   4 1.8661598530049E-003  -1.2427289195372E+005  -5.7620043161735E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    75:  MAGNETIC Z FIELD =   1480.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5293954192     CM-1    = -0.7616818883     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.529395419181            -0.761681888269    
+          2       2        -0.529395419181            -0.761681888269    
+          3       4        -0.529395419181            -0.761681888269    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979918726E+002  -4.1942512097443E-004
+    2    2   4 1.8661598531239E-003  -1.2427289701836E+005  -5.7620043311798E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    76:  MAGNETIC Z FIELD =   1500.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5368426546     CM-1    = -0.7723967984     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.536842654576            -0.772396798357    
+          2       2        -0.536842654576            -0.772396798357    
+          3       4        -0.536842654576            -0.772396798357    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979923642E+002  -4.1942512128677E-004
+    2    2   4 1.8661598531239E-003  -1.2427289708126E+005  -5.7620043330106E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    77:  MAGNETIC Z FIELD =   1520.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5442898900     CM-1    = -0.7831117084     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.544289889970            -0.783111708445    
+          2       2        -0.544289889970            -0.783111708445    
+          3       4        -0.544289889970            -0.783111708445    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979918726E+002  -4.1942512097443E-004
+    2    2   4 1.8661598531239E-003  -1.2427289701836E+005  -5.7620043311798E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    78:  MAGNETIC Z FIELD =   1540.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5517371254     CM-1    = -0.7938266185     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.551737125364            -0.793826618533    
+          2       2        -0.551737125364            -0.793826618533    
+          3       4        -0.551737125364            -0.793826618533    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979937836E+002  -4.1942512198580E-004
+    2    2   4 1.8661598531239E-003  -1.2427289655764E+005  -5.7620043421648E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    79:  MAGNETIC Z FIELD =   1560.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5591843608     CM-1    = -0.8045415286     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.559184360759            -0.804541528621    
+          2       2        -0.559184360759            -0.804541528621    
+          3       4        -0.559184360759            -0.804541528621    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979860855E+002  -4.1942511779158E-004
+    2    2   4 1.8661598531239E-003  -1.2427289741884E+005  -5.7620042909016E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    80:  MAGNETIC Z FIELD =   1580.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5666315962     CM-1    = -0.8152564387     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.566631596153            -0.815256438709    
+          2       2        -0.566631596153            -0.815256438709    
+          3       4        -0.566631596153            -0.815256438709    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979966695E+002  -4.1942512357723E-004
+    2    2   4 1.8661598531239E-003  -1.2427131792789E+005  -5.7620043627797E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    81:  MAGNETIC Z FIELD =   1600.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5740788315     CM-1    = -0.8259713488     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.574078831548            -0.825971348797    
+          2       2        -0.574078831548            -0.825971348797    
+          3       4        -0.574078831548            -0.825971348797    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979911663E+002  -4.1942512057286E-004
+    2    2   4 1.8661598531239E-003  -1.2427131913363E+005  -5.7620043225013E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    82:  MAGNETIC Z FIELD =   1620.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5815260669     CM-1    = -0.8366862589     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.581526066942            -0.836686258885    
+          2       2        -0.581526066942            -0.836686258885    
+          3       4        -0.581526066942            -0.836686258885    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979926035E+002  -4.1942512114990E-004
+    2    2   4 1.8661598530049E-003  -1.2427132943352E+005  -5.7620043331218E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    83:  MAGNETIC Z FIELD =   1640.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5889733023     CM-1    = -0.8474011690     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.588973302336            -0.847401168973    
+          2       2        -0.588973302336            -0.847401168973    
+          3       4        -0.588973302336            -0.847401168973    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979894574E+002  -4.1942511963285E-004
+    2    2   4 1.8661598530049E-003  -1.2427289196497E+005  -5.7620043125118E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    84:  MAGNETIC Z FIELD =   1660.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.5964205377     CM-1    = -0.8581160791     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.596420537731            -0.858116079062    
+          2       2        -0.596420537731            -0.858116079062    
+          3       4        -0.596420537731            -0.858116079062    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979883678E+002  -4.1942511883713E-004
+    2    2   4 1.8661598530049E-003  -1.2427132966391E+005  -5.7620043038287E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    85:  MAGNETIC Z FIELD =   1680.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6038677731     CM-1    = -0.8688309891     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.603867773125            -0.868830989150    
+          2       2        -0.603867773125            -0.868830989150    
+          3       4        -0.603867773125            -0.868830989150    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979984709E+002  -4.1942512435506E-004
+    2    2   4 1.8661598530049E-003  -1.2427132944005E+005  -5.7620043733999E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    86:  MAGNETIC Z FIELD =   1700.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6113150085     CM-1    = -0.8795458992     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.611315008519            -0.879545899238    
+          2       2        -0.611315008519            -0.879545899238    
+          3       4        -0.611315008519            -0.879545899238    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979967083E+002  -4.1942512360697E-004
+    2    2   4 1.8661598531239E-003  -1.2427131833118E+005  -5.7620043627796E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    87:  MAGNETIC Z FIELD =   1720.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6187622439     CM-1    = -0.8902608093     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.618762243914            -0.890260809326    
+          2       2        -0.618762243914            -0.890260809326    
+          3       4        -0.618762243914            -0.890260809326    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979960502E+002  -4.1942512327233E-004
+    2    2   4 1.8661598531239E-003  -1.2427289597775E+005  -5.7620043586424E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    88:  MAGNETIC Z FIELD =   1740.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6262094793     CM-1    = -0.9009757194     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.626209479308            -0.900975719414    
+          2       2        -0.626209479308            -0.900975719414    
+          3       4        -0.626209479308            -0.900975719414    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979971305E+002  -4.1942512381520E-004
+    2    2   4 1.8661598531239E-003  -1.2427131829814E+005  -5.7620043646104E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    89:  MAGNETIC Z FIELD =   1760.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6336567147     CM-1    = -0.9116906295     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.633656714702            -0.911690629502    
+          2       2        -0.633656714702            -0.911690629502    
+          3       4        -0.633656714702            -0.911690629502    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979907766E+002  -4.1942512015341E-004
+    2    2   4 1.8661598530049E-003  -1.2427132980355E+005  -5.7620043203060E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    90:  MAGNETIC Z FIELD =   1780.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6411039501     CM-1    = -0.9224055396     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.641103950097            -0.922405539590    
+          2       2        -0.641103950097            -0.922405539590    
+          3       4        -0.641103950097            -0.922405539590    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979956815E+002  -4.1942512312360E-004
+    2    2   4 1.8661598531239E-003  -1.2427289602386E+005  -5.7620043568115E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    91:  MAGNETIC Z FIELD =   1800.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6485511855     CM-1    = -0.9331204497     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.648551185491            -0.933120449678    
+          2       2        -0.648551185491            -0.933120449678    
+          3       4        -0.648551185491            -0.933120449678    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979894574E+002  -4.1942511963285E-004
+    2    2   4 1.8661598530049E-003  -1.2427289196497E+005  -5.7620043125118E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    92:  MAGNETIC Z FIELD =   1820.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6559984209     CM-1    = -0.9438353598     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.655998420885            -0.943835359766    
+          2       2        -0.655998420885            -0.943835359766    
+          3       4        -0.655998420885            -0.943835359766    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979926035E+002  -4.1942512114990E-004
+    2    2   4 1.8661598530049E-003  -1.2427132943352E+005  -5.7620043331218E+004
+    3    4   4 1.8661598530049E-003   1.8476099061692E+005  -2.4325411785824E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    93:  MAGNETIC Z FIELD =   1840.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6634456563     CM-1    = -0.9545502699     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.663445656280            -0.954550269854    
+          2       2        -0.663445656280            -0.954550269854    
+          3       4        -0.663445656280            -0.954550269854    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979895751E+002  -4.1942511961054E-004
+    2    2   4 1.8661598530049E-003  -1.2427289189689E+005  -5.7620043143427E+004
+    3    4   4 1.8661598530049E-003   1.8476887903783E+005  -2.5588035249978E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    94:  MAGNETIC Z FIELD =   1860.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6708928917     CM-1    = -0.9652651799     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.670892891674            -0.965265179942    
+          2       2        -0.670892891674            -0.965265179942    
+          3       4        -0.670892891674            -0.965265179942    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979848321E+002  -4.1942511710742E-004
+    2    2   4 1.8661598531239E-003  -1.2427289789472E+005  -5.7620042817474E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    95:  MAGNETIC Z FIELD =   1880.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6783401271     CM-1    = -0.9759800900     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.678340127068            -0.975980090030    
+          2       2        -0.678340127068            -0.975980090030    
+          3       4        -0.678340127068            -0.975980090030    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979960490E+002  -4.1942512322771E-004
+    2    2   4 1.8661598531239E-003  -1.2427131842786E+005  -5.7620043572871E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    96:  MAGNETIC Z FIELD =   1900.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6857873625     CM-1    = -0.9866950001     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.685787362463            -0.986695000118    
+          2       2        -0.685787362463            -0.986695000118    
+          3       4        -0.685787362463            -0.986695000118    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979962218E+002  -4.1942512328720E-004
+    2    2   4 1.8661598531239E-003  -1.2427131851053E+005  -5.7620043591179E+004
+    3    4   4 1.8661598531239E-003   1.8476099047060E+005  -2.4325856361079E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    97:  MAGNETIC Z FIELD =   1920.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.6932345979     CM-1    = -0.9974099102     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.693234597857            -0.997409910206    
+          2       2        -0.693234597857            -0.997409910206    
+          3       4        -0.693234597857            -0.997409910206    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979918726E+002  -4.1942512097443E-004
+    2    2   4 1.8661598531239E-003  -1.2427289701836E+005  -5.7620043311798E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    98:  MAGNETIC Z FIELD =   1940.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.7006818333     CM-1    =  -1.008124820     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.700681833251             -1.00812482029    
+          2       2        -0.700681833251             -1.00812482029    
+          3       4        -0.700681833251             -1.00812482029    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979941319E+002  -4.1942512225352E-004
+    2    2   4 1.8661598531239E-003  -1.2427289654026E+005  -5.7620043458265E+004
+    3    4   4 1.8661598531239E-003   1.8476887619850E+005  -2.5600549431609E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET    99:  MAGNETIC Z FIELD =   1960.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.7081290686     CM-1    =  -1.018839730     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.708129068646             -1.01883973038    
+          2       2        -0.708129068646             -1.01883973038    
+          3       4        -0.708129068646             -1.01883973038    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979869066E+002  -4.1942511823034E-004
+    2    2   4 1.8661598531239E-003  -1.2426471165340E+005  -5.7620042951999E+004
+    3    4   4 1.8661598531239E-003   1.8476581400914E+005  -3.9324609996286E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET   100:  MAGNETIC Z FIELD =   1980.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.7155763040     CM-1    =  -1.029554640     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.715576304040             -1.02955464047    
+          2       2        -0.715576304040             -1.02955464047    
+          3       4        -0.715576304040             -1.02955464047    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598530049E-003   1.8565979911790E+002  -4.1942512051036E-004
+    2    2   4 1.8661598530049E-003  -1.2427022620788E+005  -5.7620043261311E+004
+    3    4   4 1.8661598530049E-003   1.8476271253454E+005  -3.4916551075339E-005
+
+  ----------------------------------------------------------------------------------------------------------------------
+
+  EFV SET   101:  MAGNETIC Z FIELD =   2000.000000     GAUSS
+  REFERENCE ENERGY IS                          -0.7230235394     CM-1    =  -1.040269551     K       
+
+  THRESHOLDS CALCULATED FROM ASYMPTOTIC HAMILTONIAN:
+
+  THRESHOLD       L           ENERGY/CM-1                ENERGY/K
+          1       0        -0.723023539434             -1.04026955056    
+          2       2        -0.723023539434             -1.04026955056    
+          3       4        -0.723023539434             -1.04026955056    
+
+  K-DEPENDENT SCATTERING LENGTHS/VOLUMES/HYPERVOLUMES FOR CHANNELS WITH LOW KINETIC ENERGY
+  CHAN   L POW     WVEC*ANGSTROM         RE(A)/ANGSTROM        IM(A)/ANGSTROM  
+    1    0   1 1.8661598531239E-003   1.8565979975651E+002  -4.1942512417959E-004
+    2    2   4 1.8661598531239E-003  -1.2427036326416E+005  -5.7620043703907E+004
+    3    4   4 1.8661598531239E-003   1.8476069805855E+005  -2.5636336869001E-005
+
+
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
+ |                                                                            |
+ |                Non-reactive quantum scattering calculations                |
+ |                     on atomic and molecular collisions                     |
+ |                                                                            |
+ |              Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur              |
+ |                                                                            |
+ |                               Version 2025.0                               |
+ |                                                                            |
+ |                      This run used       2.97 cpu secs                     |
+ |                                                                            |
+  ---- MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ------ MOLSCAT ---
