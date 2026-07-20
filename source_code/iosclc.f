@@ -1,0 +1,491 @@
+      SUBROUTINE IOSCLC(NNRG,ENERGY,JTOTL,JTOTU,JSTEP,IPRINT,ISU,
+     1                  ITYPX,RMIN,RMAX,IRMSET,IRXSET,RVFAC,
+     2                  NCAC,TEST,RUNIT,NVC,LMAX,NGPT,NQL,
+     3                  NIXQL,MXXXXL,LAMBDA,MXLAM,NHAM,VLI,
+     4                  PWGHT,LM,IXQL,
+     8                  IREF,IFLS,LINE,LTYPE,IPOT,MONQN,IBOUND,WAVE,
+     9                  ERED,EP2RU,CM2RU,RSCALE,DRMAX,NSTAB,ILDSVU)
+C  Copyright (C) 2025 J. M. Hutson & C. R. Le Sueur
+C  Distributed under the GNU General Public License, version 3
+C
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      SAVE
+C  >>SG MODIFIED MAY 92 - ITYPE=3 / ADD JSTEP TO IOSOUT PARMS / ISAVEU
+C  >>SG MODIFIED FEB 92 FOR SOME CLOSED-CHANNEL HANDLING
+C  *** 14 JULY 86 FIX ISCRU BUG
+      INTEGER IPRINT
+      LOGICAL WAVE,LSKIP,LTYP8
+      DIMENSION ENERGY(NNRG),TEST(2),LAMBDA(MXLAM),MONQN(*)
+      DIMENSION PWGHT(NGPT,LMAX),VLI(NGPT,MXXXXL),LM(3,LMAX)
+      DIMENSION IXQL(NIXQL,NQL)
+      DIMENSION LINE(*),LTYPE(*)
+      DOUBLE PRECISION KMTRIX
+      ALLOCATABLE SLR(:,:,:),SLI(:,:,:),SIGTH(:,:,:),SIGAV(:,:),
+     1            QLS(:,:),QLT(:,:,:),SLLR(:,:,:),SLLI(:,:,:),IEC(:)
+      ALLOCATABLE SR(:,:),SI(:,:),KMTRIX(:,:),VL(:),IVV(:),EINT(:),
+     2            CENT(:),JSINDX(:),LORB(:),WVEC(:),NB(:)
+C
+C  N.B. SREAL,SIMAG ARE DIM (NVC,NVC), BUT SCATTERING ROUTINE
+C       REDUCES THIS TO (NOPEN,NOPEN).  HANDLED HERE AS 1-D VECTOR.
+C  N.B. V IS CORRECTION FOR 'VOLUME' IN ANGULAR INTEGRAL
+C       FOR ITYPE=1,2 V=1.
+C       FOR ITYPE=3,5,6 V=1/(4*PI)
+C  CALCULATION OF QLS(0) AND SIGAV DEPENDS ON FACT THAT 1ST SYMMETRY
+C       IN PWGHT IS SPHERICAL, CORRECTED BY V.
+C
+C  COMMON BLOCK FOR CONTROL OF USE OF PROPAGATION SCRATCH FILE
+      LOGICAL IREAD,IWRITE,IREADR,IWRITR
+      COMMON /PRPSCR/ ESHIFT,ISCRU,ISCRUR,IREAD,IWRITE,IREADR,IWRITR
+C
+C  COMMON BLOCK FOR CONTROL OF PROPAGATION SEGMENTS
+      COMMON /RADIAL/ RMNINT,RMXINT,RMID,RMATCH,DRS,DRL,STEPS,STEPL,
+     1                POWRS,POWRL,TOLHIS,TOLHIL,CAYS,CAYL,unset,
+     2                IPROPS,IPROPL,NSEG
+
+C
+      CHARACTER(4) LEFT
+      DATA LEFT/'SIG('/
+
+C  NJLQN ARRAY CONTAINS NUMBER OF QUANTUM NUMBER NEEDED TO IDENTIFY A
+C  LEVEL CONTAINED IN JLEVEL. (VALUE FOR ITYP=9 IS A DUMMY VALUE)
+      DIMENSION NJLQN(9)
+      DATA NJLQN/1,2,2,3,3,2,2,2,1/
+C
+      RMINSV=RMNINT
+      RMTMP=RMID
+C  INITIALIZE VARIOUS PARAMETERS
+      PI=ACOS(-1.D0)
+      ITYPE=ITYPX-10*(ITYPX/10)
+      LTYP8=ITYPE.EQ.8
+C  NOPEN MUST BE SET INITIALLY TO HANDLE 'NVC' COUNTING
+      NOPEN=1
+C  V IS A (NORMALIZATION) FACTOR FOR CALCULATING QLT() FROM S*S
+C  AVGFCT FOR SPHERICAL AVG IN TERMS OF LOWEST SYMMETRY PWGHT
+C  >>SG N.B. ITYPE=3 VALUES DIFFER FROM GOLDFLAM-KOURI AND AGG-CLARY
+C        ITYPE     V      AVGFCT
+C         1,2      1.      1.
+C         3        1/4*PI  1./SQRT(4*PI)
+C         5,6      1/4*PI  1./SQRT(4*PI)
+      V=1.D0
+      IF (ITYPE.EQ.5 .OR. ITYPE.EQ.6 .OR. ITYPE.EQ.3) V=1.D0/(4.D0*PI)
+      AVGFCT=SQRT(V)
+C  INITIALIZE RSTART, IN CASE IRMSET.LE.0 AND FINDRM NOT CALLED
+      RMINSV=RMIN
+      RMNINT=RMIN
+      CALL GCLOCK(TITIME)
+C
+C  PRINT LEVEL FOR SCATTERING CAN BE LESS THAN FOR IOS1
+C
+      IOSPR=MAX(0,IPRINT-10)
+
+C
+C
+C  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+C
+C  LOOP OVER ENERGIES.
+C
+      EMX=-1.D30
+      DO IE=1,NNRG
+        EMX=MAX(EMX,ENERGY(IE))
+      ENDDO
+      EMX=EMX*CM2RU
+
+      ALLOCATE (SLR(NVC,NVC,NGPT),SLI(NVC,NVC,NGPT),SIGTH(NVC,NVC,NGPT),
+     1          SIGAV(NVC,NVC),QLS(NVC,NVC),QLT(NVC,NVC,NQL),
+     2          SLLR(NVC,NVC,LMAX),SLLI(NVC,NVC,LMAX),IEC(NQL),
+     3          WVEC(NVC),NB(NVC))
+      NV=NVC*(NVC+1)*NHAM/2
+      ALLOCATE (SR(NVC,NVC),SI(NVC,NVC),KMTRIX(NVC,NVC),VL(NV),IVV(NV),
+     1          EINT(NVC),CENT(NVC),JSINDX(NVC),LORB(NVC))
+      IF (ISCRU.GE.0) THEN
+        E4RMIN=EMX+EREF*CM2RU
+        CALL GTWVEC(WVEC,WMAX,E4RMIN,EINT,NOPEN,NVC)
+      ENDIF
+!  Start of long DO loop #1
+      DO IE=1,NNRG
+        ICODE=1
+        IF (IE.GT.1 .AND. ISCRU.GT.0) ICODE=2
+        IWRITE=(ISCRU.GT.0 .AND. ICODE.EQ.1)
+        IREAD=(ISCRU.GT.0 .AND. ICODE.EQ.2)
+        IF (ISCRU.GT.0) REWIND ISCRU
+        WRITE(6,622) IE,ENERGY(IE)
+  622   FORMAT(' IOSCLC (MAY 92).  ENERGY(',I3,') =',F12.4,' CM-1.')
+        ERED=(ENERGY(IE)+EREF)*CM2RU
+        IF (IE.EQ.1) EFIRST=ERED
+        ESHIFT=ERED-EFIRST
+C  A MORE SOPHISTICATED WAY OF SAVING RTURN IS PROBABLY WANTED,
+C  BUT BELOW SHOULD WORK AS A TEMPORARY MEASURE
+        RTURN=RMINSV
+C  ZERO STORAGE
+        DO I=1,NQL
+          IEC(I)=0
+        ENDDO
+        DO IV=1,NVC
+        DO IVP=1,NVC
+          QLS(IV,IVP)=0.D0
+          SIGAV(IV,IVP)=0.D0
+          DO I=1,NQL
+            QLT(IV,IVP,I)=0.D0
+          ENDDO
+          DO I=1,NGPT
+            SIGTH(IV,IVP,I)=0.D0
+          ENDDO
+        ENDDO
+        ENDDO
+C
+C  LOOP OVER PARTIAL WAVES
+C
+!  Start of long DO loop #2
+        DO JTOT=JTOTL,JTOTU,JSTEP
+          CALL IOSB0(JTOT,LORB,JSINDX,NB,CENT,EINT,
+     1               CM2RU,NVC)
+          IF (IREF.NE.0 .OR. MONQN(1).NE.-99999) THEN
+            CALL THRESH(EINT,NVC,CM2RU,MONQN,NQN,NJLQN(ITYPE),
+     1                  EREF,JSINDX,IPRINT)
+          ENDIF
+          IF (IPRINT.GE.2) WRITE(6,626) JTOT,IE,ENERGY(IE)
+  626     FORMAT(/'  ***** PARTIAL WAVE =',I5,'    FOR ENERGY(',I3,
+     1           ') = ',F12.4,'    *****')
+C
+          IF (JTOTU.LT.99999) GOTO 3001
+
+C  CHECK FOR CONVERGENCE
+C  ONLY CHECK FOR QLT WHERE IXQL(NIXQL,IL).EQ.0
+          DO IL=1,LMAX
+            IF (IXQL(NIXQL,IL).NE.0) CYCLE
+            IF (IEC(IL).LT.NCAC) GOTO 3001
+
+          ENDDO
+          CALL GCLOCK(TJTIME)
+          TIME=TJTIME-TITIME
+          TITIME=TJTIME
+          JTO=JTOT-JSTEP
+          WRITE(6,620) IE,ENERGY(IE),LMAX,NCAC,TEST,JTOTL,JTO,JSTEP
+  620     FORMAT('  ***** ***** ***** CALCULATION AT ENERGY(',I3,') =',
+     1           F10.2,' CM-1',
+     2           ' TERMINATED DUE TO CONVERGENCE FOR',I4,'  Q(L).'/
+     3           22X,'NCAC, TEST =',I4,2E12.4/
+     4           22X,'PARTIAL WAVES FROM ',I4,' TO ',I5,
+     5           ' (IN STEPS OF ',I4,')')
+          WRITE(6,641) TIME
+  641     FORMAT(/'  ***** ***** ***** TIME WAS',F9.2,'  SEC.'/' ')
+          GOTO 3009
+ 3001     FACTL=(2*JTOT+1)*PI
+C
+C  GET ANGLE-DEPENDENT SCATTERING / LOOP OVER GAUSS POINTS.
+!  Start of long DO loop #3
+          DO IP=1,NGPT
+C
+C  INITIALIZE SCAT VARIABLES VL, LORB, EINT, ETC.
+            CALL IOSB2(WVEC,VL,IVV,IP,NVC,NHAM,MXLAM,LAMBDA,
+     1                 VLI,NGPT,MXXXXL)
+C
+            CONV=0.D0
+            RTURN=RMNINT
+            IF (ICODE.NE.1) GOTO 3005
+
+            CALL FINDRX(ENERGY(IE),EINT,CENT,1,NVC,CM2RU,
+     1                  RMAX,RMXINT,EREF,NOPMAX,IRXSET,IOSPR)
+C
+            IF (IRMSET.LE.0) GOTO 3005
+
+            E4RMIN=ERED
+            IF (ISCRU.EQ.0) E4RMIN=ERED
+            CALL FINDRM(NVC,RMNINT,RTURN,VL,IVV,E4RMIN,EINT,CENT,
+     1                  MXLAM,NHAM,EP2RU,CM2RU,RSCALE,IRMSET,
+     2                  LTYP8,IOSPR)
+C
+C  NOW READY TO SOLVE 'COUPLED' EQUATIONS; DONE AS CALL TO SCCTRL.
+C
+ 3005       CONTINUE
+            IF (NSEG.EQ.2 .AND. RVFAC.GT.0.D0) THEN
+              RMID=RTURN*RVFAC
+              IF (IPRINT.GE.9) WRITE(6,1800) RMID,RVFAC
+ 1800         FORMAT(/'  RMID =',F9.4,' OBTAINED FROM RVFAC =',F6.3)
+            ENDIF
+            IF (RMNINT.GT.RMXINT) THEN
+              IF (IPRINT.GE.4) WRITE(6,*) ' SKIPPING POINT ',IP,
+     1                                     ' BECAUSE RMIN > RMAX'
+              CYCLE
+            ENDIF
+            IF (ICODE.EQ.1 .OR. ISCRU.EQ.0) THEN
+              E4RMIN=ERED
+              IF (ISCRU.NE.0) E4RMIN=EMX+EREF*CM2RU
+              CAYS=CALCK(EPS*CM2RU,E4RMIN,EINT,NVC)
+              CAYL=CALCK(EPL*CM2RU,E4RMIN,EINT,NVC)
+            ENDIF
+            CALL SCCTRL(NVC,MXLAM,NHAM,
+     1                  JSINDX,SR,SI,KMTRIX,VL,
+     2                  IVV,EINT,CENT,WVEC,
+     3                  LORB,NB,ERED,EP2RU,CM2RU,
+     4                  RSCALE,DEGTOL,DRMAX,NSTAB,NOPEN,IOSPR,
+     5                  IBOUND,1,WAVE,ILDSVU)
+C
+C  INITIALIZE TO UNIT S-MATRIX TO CLEAR 'NON-CLASSICAL' CHANNELS.
+C
+ 4000       DO IV=1,NVC
+            DO IVC=1,NVC
+              DELVVP=0.D0
+              IF (IV.EQ.IVC) DELVVP=1.D0
+              SLR(IV,IVC,IP)=DELVVP
+              SLI(IV,IVC,IP)=0.D0
+            ENDDO
+            ENDDO
+            IF (NOPEN.GT.0) GOTO 4009
+
+            WRITE(6,699) IP,NOPEN
+  699       FORMAT('  * * * NOTE.  FOR ORIENTATION',I6,'  NOPEN =',I3)
+            CYCLE
+
+ 4009       IF (NOPEN.LE.NVC) GOTO 4008
+
+            WRITE(6,698) IP,NOPEN,NVC
+  698       FORMAT('  * * * ERROR. FOR ORIENTATION',I6,
+     1             '  NOPEN.GT.NVC',2I6)
+            CYCLE
+ 4008       IF (CONV.GE.0.D0) GOTO 4007
+
+            WRITE(6,696) JTOT,IP
+  696       FORMAT(/'  * * * WARNING.  SLR,SLI,SIGTH NOT SET DUE TO ',
+     1             'LACK OF CONVERGENCE FOR PART. WAVE',I4,
+     2             '  ORIENTATION',I5)
+            CYCLE
+C
+ 4007       IF (IPRINT.GE.15) WRITE(6,601)
+  601       FORMAT(' ')
+            NNP=0
+            DO N=1,NOPEN
+              IV=NB(N)
+              WV=RUNIT/WVEC(IV)
+C  SET WVEC(IV) TO WAVENUMBER IN 1/ANGSTROMS FOR ISAVEU OUTPUT
+              WVEC(IV)=1.D0/WV
+              WV=WV*WV*FACTL
+            DO NP=1,NOPEN
+              IVP=NB(NP)
+              NNP=NNP+1
+              DELVVP=0.D0
+              IF (IV.EQ.IVP) DELVVP=1.D0
+C  BELOW CHANGED APR 86 SINCE ONLY INDICES FOR SREAL,SIMAG ARE HERE
+              SLR(IV,IVP,IP)=SR(NP,N)
+              SLI(IV,IVP,IP)=SI(NP,N)
+C  ACCUMULATE ANGLE-DEPENDENT TOTAL CROSS SECTION.
+              ADD=DELVVP-SLR(IV,IVP,IP)
+              ADD=(ADD*ADD+SLI(IV,IVP,IP)*SLI(IV,IVP,IP) )*WV
+              SIGTH(IV,IVP,IP)=SIGTH(IV,IVP,IP)+ADD
+              IF (IPRINT.LT.15) CYCLE
+
+              WRITE(6,627) IP,IV,IVP,SLR(IV,IVP,IP),SLI(IV,IVP,IP),
+     &                     ADD,SIGTH(IV,IVP,IP)
+  627         FORMAT('  FOR ORIENTATION',I6,'  VIB LEVEL =',I2,' TO',I2,
+     &               ',  SREAL, SIMAG =',2E14.6,'   SIGTH ADD',E12.4,
+     &               ' = ',E12.4)
+            ENDDO
+            ENDDO
+          ENDDO
+!  End of long DO loop #3
+C  END OF LOOP OVER ORIENTATIONS
+C
+C  INTEGRATE OVER ORIENTATIONS TO GET SLLR/SLLI
+C  ** N.B. THESE ARE T-MATRIX COMPONENTS **
+          IF (IPRINT.GE.20) WRITE(6,'(/,2X,A)') 'T-MATRIX COMPONENTS'
+          DO IV=1,NVC
+          DO IVP=1,NVC
+            DELVVP=0.D0
+            IF (IV.EQ.IVP) DELVVP=1.D0
+          DO L=1,LMAX
+            SLLI(IV,IVP,L)=0.D0
+            SLLR(IV,IVP,L)=0.D0
+            DO NX=1,NGPT
+              SLLR(IV,IVP,L)=SLLR(IV,IVP,L)+(DELVVP-SLR(IV,IVP,NX))*
+     1                                      PWGHT(NX,L)
+              SLLI(IV,IVP,L)=SLLI(IV,IVP,L)-SLI(IV,IVP,NX)*PWGHT(NX,L)
+            ENDDO
+            IF (IPRINT.GE.20)
+     &        WRITE(6,648) IV,IVP,L,SLLR(IV,IVP,L),SLLI(IV,IVP,L)
+  648         FORMAT(5X,3I5, 2E16.8)
+          ENDDO
+          ENDDO
+          ENDDO
+C
+C  COMPUTE QLS (QLOLD PREVIOUSLY) FOR 1ST (TOTALLY SYMMETRIC) CASE
+ 3230     IF (IPRINT.GE.10) WRITE(6,601)
+          DO IV=1,NVC
+C  SET WVEC(IV) TO (2*L+1)*PI/K**2 FOR USE IN GETTING QL'S
+C  >>SG TRAP CLOSED CHANNELS (NEGATIVE WVEC) TO PREVENT ROUND-OFF PROBLEMS
+            IF (WVEC(IV).LE.0.D0) CYCLE
+
+            WVEC(IV)=FACTL/(WVEC(IV)*WVEC(IV))
+            DO IVP=1,NVC
+              DELVVP=0.D0
+              IF (IV.EQ.IVP) DELVVP=1.D0
+              SUMR=0.D0
+              SUMI=0.D0
+              DO NX=1,NGPT
+                SUMR=SUMR+PWGHT(NX,1)*SLR(IV,IVP,NX)
+                SUMI=SUMI+PWGHT(NX,1)*SLI(IV,IVP,NX)
+              ENDDO
+C  >>SG BELOW SUFFERS FROM ROUND-OFF ERROR FOR IV=IVP CLOSED
+C  >>SG TEST CASES GIVE V*(SUMR**2+SUMI**2)-DELVVP ABOUT 2.D-13
+C  >>SG BEST WAY TO FIX THIS IS PROBABLY TO TRAP *CLOSED* CHANNELS
+              SUM2=(V*(SUMR*SUMR+SUMI*SUMI)-DELVVP)*WVEC(IV)
+              QLS  (IV,IVP)=QLS  (IV,IVP)+SUM2
+              IF (IPRINT.GE.10) WRITE(6,638) IV,IVP,SUM2,QLS(IV,IVP)
+  638         FORMAT('  FOR QLS(  0) VIB LEV =',I3,' TO',I3,15X,
+     &               'ADD',E12.4,' =',E12.4)
+            ENDDO
+          ENDDO
+C
+C  *** IN ACCUMULATING QL DIVERGENT CODE FOR ITYPE=1,2 AND ITYPE=5,6
+C
+          IF (ITYPE.EQ.1 .OR. ITYPE.EQ.2) GOTO 8881
+
+          IF (ITYPE.EQ.3) GOTO 8883
+
+          IF (ITYPE.EQ.5 .OR. ITYPE.EQ.6) GOTO 8885
+
+          STOP
+C
+C  ACCUMULATE QL'S / TEST FOR CONVERGENCE
+ 8881     CONTINUE
+          BIGL=-1.D0
+          DO L=1,NQL
+            LMP=L-1
+            BIGL=BIGL+2.D0
+            ITEST=0
+            IF (IPRINT.GE.10 .AND. NVC.GT.1) WRITE(6,601)
+            DO IV=1,NVC
+            DO IVP=1,NVC
+              TLLR=SLLR(IV,IVP,L)
+              TLLI=SLLI(IV,IVP,L)
+              TLLSQ=(TLLR*TLLR+TLLI*TLLI)*V*WVEC(IV)/BIGL
+              QLT(IV,IVP,L)=QLT(IV,IVP,L)+TLLSQ
+              XTEST=TEST(1)
+              IF (L.GT.1 .OR. IV.NE.IVP) XTEST=TEST(2)
+              IF (TLLSQ.GT.XTEST) ITEST=1
+              IF (IPRINT.LT.10) CYCLE
+              WRITE(6,628) LMP,IV,IVP,TLLSQ,QLT(IV,IVP,L)
+  628         FORMAT('  FOR QLT(',I3,') VIB LEV =',I3,' TO',I3,
+     &               '  IOS T-MATRIX ADD',E12.4,' =',E12.4)
+            ENDDO
+            ENDDO
+C  >>SG 5/12/92 STATEMENT BELOW SHOULD BE UNNECESSARY
+            IF (JTOTU.LT.99999) CYCLE
+
+C  SUPPRESS CONVERGENCE CHECK FOR LOW PARTIAL WAVES.
+            IF (JTOT.LE.3*JSTEP*NCAC) CYCLE
+            IF (IXQL(NIXQL,L).NE.0) CYCLE
+
+            IEC(L)=IEC(L)+1
+            IF (ITEST.GT.0) IEC(L)=0
+          ENDDO
+          GOTO 3000
+C
+ 8883     DO IL=1,NQL
+            BIGL=(2*LM(3,IL)+1)
+C  N.B. NVC=1 FOR ITYPE=3
+            TLLR=SLLR(1,1,IL)
+            TLLI=SLLI(1,1,IL)
+            TLLSQ=(TLLR*TLLR+TLLI*TLLI)*V*WVEC(1) * BIGL
+            QLT(1,1,IL)=QLT(1,1,IL)+TLLSQ
+            IF (IPRINT.GE.10) WRITE(6,652) IL,LM(1,IL),LM(2,IL),LM(3,IL)
+     2                                     ,TLLSQ,QLT(1,1,IL)
+  652       FORMAT('  FOR QLT(',I3,'), L1,L2,L =',3I3,'  ADD',
+     1             E12.4,' =',E12.4)
+            XTEST=TEST(MIN(2,IL))
+            IF (JTOT.LE.3*JSTEP*NCAC) CYCLE
+
+            IEC(IL)=IEC(IL)+1
+            IF (TLLSQ.GT.XTEST) IEC(IL)=0
+          ENDDO
+          GOTO 3000
+C
+ 8885     DO IL=1,NQL
+C  N.B. NVC=1 FOR ITYPE=5,6
+            TLLR=SLLR(1,1,IXQL(1,IL))
+            TLLI=SLLI(1,1,IXQL(1,IL))
+            TLLR1=SLLR(1,1,IXQL(2,IL))
+            TLLI1=SLLI(1,1,IXQL(2,IL))
+            IF (IXQL(3,IL).EQ.2) GOTO 8865
+
+C  BELOW FOR REAL PART / ALSO FOR DIAGONAL CASES
+            TLLSQ=(TLLR*TLLR1+TLLI*TLLI1)*V*WVEC(1)
+            GOTO 8855
+
+C  BELOW FOR IMAGINARY PART
+ 8865       TLLSQ=(TLLI*TLLR1-TLLR*TLLI1)*V*WVEC(1)
+ 8855       QLT(1,1,IL)=QLT(1,1,IL)+TLLSQ
+            IF (IPRINT.GE.10)
+     1        WRITE(6,651) IL,LM(1,IXQL(1,IL)),LM(2,IXQL(1,IL)),
+     2                     LM(2,IXQL(2,IL)),IXQL(3,IL),TLLSQ,QLT(1,1,IL)
+  651       FORMAT('  FOR QLT(',I3,'), L,M,M1 =',3I4,', CODE =',I2,
+     1             '  ADD',E12.4,' =',E12.4)
+            XTEST=TEST(MIN(2,IL))
+            IF (JTOT.LE.3*JSTEP*NCAC) CYCLE
+            IF (IXQL(3,IL).NE.0) CYCLE
+
+            IEC(IL)=IEC(IL)+1
+            IF (TLLSQ.GT.XTEST) IEC(IL)=0
+          ENDDO
+          GOTO 3000
+C
+ 3000     CALL ISUTP(ISU,ENERGY(IE),JTOTL,JSTEP,JTOT,NVC,NQL,QLS,QLT)
+        ENDDO
+!  End of long DO loop #2
+C  END OF LOOP OVER PARTIAL WAVES
+C
+        CALL GCLOCK(TJTIME)
+        TIME=TJTIME-TITIME
+        TITIME=TJTIME
+        WRITE(6,631) ENERGY(IE),JTOTL,JTOTU,JSTEP
+  631   FORMAT('  ***** ***** ***** END OF CALCULATION FOR ENERGY =',
+     1         F12.4,' CM-1 ***** ***** *****'/,/,
+     2         22X,'PARTIAL WAVES FROM ',I4,' TO ',I5,
+     3         ' (IN STEPS OF ',I4,')')
+        WRITE(6,641) TIME
+C
+C  END OF CALCULATION FOR THIS ENERGY  /  OUTPUT CROSS SECTIONS
+C  >>SG
+C  >>SG N.B. NVC SHOULD BE LOWERED TO NOUT=NOPEN (AS IN IOSOUT)
+C  >>SG
+ 3009   DO NX=1,NGPT
+          IV=1
+          WRITE(6,632) NX,(LEFT,IV,IVP,SIGTH(IV,IVP,NX),IVP=1,NVC)
+  632     FORMAT(/'  FOR ORIENTATION',I6,3(5X,A4    ,I2,',',I2,') =',
+     1           1PE12.4)/(23X,3(5X,A4,I2,',',I2,') =',1PE12.4)))
+          IF (NVC.LE.1) EXIT
+
+          DO IV=2,NVC
+            WRITE(6,642) (LEFT,IV,IVP,SIGTH(IV,IVP,NX),IVP=1,NVC)
+  642       FORMAT(23X,3(5X,  A4,  I2,',',I2,') =',1PE12.4)/
+     1             (23X,3(5X,  A4,  I2,',',I2,') =',1PE12.4)))
+          ENDDO
+        ENDDO
+ 3008   DO IV=1,NVC
+        DO IVP=1,NVC
+          SIGAV(IV,IVP)=SIGAV(IV,IVP)+PWGHT(NX,1)*SIGTH(IV,IVP,NX)*
+     1                                AVGFCT
+        ENDDO
+        ENDDO
+        WRITE(6,643)
+  643   FORMAT(/'  AVERAGE OVER ORIENTATIONS')
+        DO IV=1,NVC
+          WRITE(6,642) (LEFT,IV,IVP,SIGAV(IV,IVP),IVP=1,NVC)
+        ENDDO
+C
+C  CALL IOSOUT/IOSPB TO GET STATE TO STATE AND PR. BR. CROSS SECTIONS
+C
+        CALL IOSOUT(ENERGY(IE),QLT,QLS,NVC,ITYPE,LM,IXQL,
+     1              LMAX,NIXQL,NQL,JSTEP)
+        IF (IFLS.GT.0) CALL IOSPB(ENERGY(IE),QLT,QLS,IFLS,LINE,
+     1                            LTYPE,ITYPE,NVC,LM,IXQL,
+     1                            LMAX,NIXQL,NQL)
+C
+      ENDDO
+!  End of long DO loop #1
+      DEALLOCATE (SLR,SLI,SIGTH,SIGAV,QLS,QLT,SLLR,SLLI,IEC)
+      DEALLOCATE (SR,SI,KMTRIX,VL,IVV,EINT,CENT,JSINDX,LORB,WVEC,NB)
+C
+C  END OF LOOP OVER ENERGIES.
+C
+      RETURN
+      END
