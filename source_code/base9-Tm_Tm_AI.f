@@ -10,12 +10,17 @@ C  085007 (2021).  Interaction potential (their Eq. 1):
 C
 C    V(R) = Sum_{k=0,2,4} Sum_i V^(i)_k(R) * Sum_q (-1)^q T^(i)_kq * C_{k,-q}(Rhat)
 C
-C  This first version (rungs 1-3 of the implementation ladder, see
-C  CONTEXT_Tm_CPL9.md section 8) implements only the i=1 family:
-C     k=0 : T^(1)_00 = identity          (isotropic potential V0(R))
-C     k=2 : T^(1)_2q = [j1(x)j1]_2q + [j2(x)j2]_2q   (rank-2 potential V2(R))
-C  Magnetic dipole-dipole (i=2 family, D^(2)_2/R^3) and the five weaker
-C  tensors are NOT YET included -- rung 4 of the ladder, TODO.
+C  This version implements the i=1 family in full, plus the magnetic
+C  dipole-dipole part of the i=2, k=2 term:
+C     k=0, i=1 : T^(1)_00 = identity        (isotropic potential V0(R))
+C     k=2, i=1 : T^(1)_2q = [j1(x)j1]_2q + [j2(x)j2]_2q (rank-2 potential V2(R))
+C     k=2, i=2 : T^(2)_2q = [j1(x)j2]_2q    (magnetic dipole-dipole,
+C                V^(2)_2(R) = D^(2)_2/R^3, Sec 2.3 of the paper).  The
+C                C^(2)_2/R^6 piece of the same V^(2)_2(R) is at least
+C                two orders of magnitude smaller than D^(2)_2/R^3 over
+C                the whole range of interest (paper, Sec 2.3) and is
+C                omitted.  The remaining four spin-tensors (k=0,i=2
+C                spin-exchange; k=0,2,i=3; k=4,i=1) are not included.
 C
 C  Basis set (uncoupled, same architecture as base9-alk_alk_ucpld.f):
 C     |gammaA> |gammaB> |L ML>,   gamma = |j mj>|i mi>
@@ -52,12 +57,7 @@ C  =====================================================================
 C
 C  NAMELIST &BASIS9 for Tm2.  ISA/INUCA are DOUBLED (2j, 2i).
 C  For 169Tm: j=7/2 -> ISA=7 ; i=1/2 -> INUCA=1  (both defaults below).
-C  HFSPLA: hyperfine coupling parameter, see TODO note below -- the
-C  exact conversion from the paper's a_hf = hc*0.0062 cm^-1 to the
-C  "splitting" convention expected here (as in the parent alkali code,
-C  where HFSPLA is the F=j+1/2 <-> F=j-1/2 splitting in GHz) MUST BE
-C  VERIFIED against the primary source ([16] Sukachev et al. PRA 82,
-C  011405 (2010)) before production use.  Provisionally we treat the
+C  HFSPLA: hyperfine coupling parameter. Provisionally we treat the
 C  context value as the coupling constant zeta (Hhf = h*zeta*I.J) and
 C  set HFSPLA = zeta*(j+1/2) in GHz, matching the parent formula's
 C  requirement that ANSA reproduces zeta via ANSA=2*HFSPLA/NSFAC.
@@ -152,9 +152,9 @@ C
      1                            ', MF = ',MFREQ(IREQ),'/2'
         ENDDO
       ENDIF
-      WRITE(6,*) ' TENSOR RANKS INCLUDED: k=0 (isotropic), k=2 ',
-     1           '(rank-2, Table 5).  k=4 and i=2 (mag. dip-dip):',
-     2           ' NOT YET IMPLEMENTED (rung 4 of the ladder).'
+      WRITE(6,*) ' TENSOR TERMS INCLUDED: k=0,i=1 (isotropic), ',
+     1           'k=2,i=1 (rank-2, Table 5), k=2,i=2 (magnetic ',
+     2           'dipole-dipole, D(2)_2/R^3 only).'
 C
       RETURN
 C========================================================== END OF BAS9IN
@@ -283,16 +283,15 @@ C
      1           VL,IV,CENT,DGVL,IBOUND,IEXCH,IPRINT)
 C
 C  ===================================================================
-C  CPL9 -- THE MAIN REWRITE.  Block layout (MXLAM=2 for rungs 1-3):
-C     LL = 1            : isotropic potential, k=0  (V^(1)_0(R))
-C     LL = 2            : rank-2 potential,    k=2  (V^(1)_2(R))
-C     LL = MXLAM+1 = 3  : hyperfine term (unchanged from alkali code,
+C  CPL9 -- THE MAIN REWRITE.  Block layout (MXLAM=3):
+C     LL = 1            : isotropic potential, k=0,i=1  (V^(1)_0(R))
+C     LL = 2            : rank-2 potential,    k=2,i=1  (V^(1)_2(R))
+C     LL = 3            : magnetic dipole-dipole, k=2,i=2 (V^(2)_2(R)
+C                         = D^(2)_2/R^3, via DIPBLK/TENSX below)
+C     LL = MXLAM+1 = 4  : hyperfine term (unchanged from alkali code,
 C                         SDOTI2 is already generic in j,i)
-C     LL = MXLAM+2 = 4  : Zeeman term (unchanged, linear in gJ*mJ)
+C     LL = MXLAM+2 = 5  : Zeeman term (unchanged, linear in gJ*mJ)
 C     LL = MXLAM+NCONST+1,+2 : extra operators (unchanged, mF^2, mF)
-C  TODO (rung 4): add k=2 magnetic dipole-dipole (i=2 family) and k=4
-C  as additional MXLAM blocks; will require MXLAM=3 or 4 and shifting
-C  the NCONST/extra-operator block indices accordingly.
 C  ===================================================================
 C
       DO LL=1,NVLBLK
@@ -319,8 +318,8 @@ C
           IF (IDENTN .AND. MSAC.EQ.MSBC .AND. MIAC.EQ.MIBC)
      1      PREFAC=PREFAC/SQRT(2.D0)
 C
-          IF (LL.LE.MXLAM) THEN
-C  POTENTIAL BLOCKS (k=0 for LL=1, k=2 for LL=2) ========================
+          IF (LL.LE.2) THEN
+C  POTENTIAL BLOCKS, i=1 FAMILY (k=0 for LL=1, k=2 for LL=2) ============
 C  Nuclear-spin projections must be unchanged (potential acts only on
 C  the electronic/orbital parts); tensor rank K=2*(LL-1).
             K=2*(LL-1)
@@ -332,6 +331,30 @@ C  the electronic/orbital parts); tensor rank K=2*(LL-1).
 C  identical-particle exchange term (B<->A swap on the bra)
             IF (IDENTN .AND. MIAR.EQ.MIBC .AND. MIBR.EQ.MIAC) THEN
               FAC2=PREFAC*POTBLK(K,MSBR,MIBR,MSAR,MIAR,LR,MLR,
+     1                           MSAC,MIAC,MSBC,MIBC,LC,MLC,ISA)
+              IF (MOD(IBOSFR+LR,2).NE.0) FAC2=-FAC2
+              VL(I)=VL(I)+FAC2
+            ENDIF
+C
+          ELSEIF (LL.EQ.3 .AND. MXLAM.GE.3) THEN
+C  POTENTIAL BLOCK, i=2 FAMILY, k=2: MAGNETIC DIPOLE-DIPOLE ============
+C  Tˆ(2)_2q = [j1(x)j2]_2q (paper Eq (6)); radial strength V^(2)_2(R)
+C  = D^(2)_2/R^3 supplied as an analytic term via &POTL LAMBDA block 3
+C  (NTERM>0, no VSTAR call -- see POTIN9 below).  Same nuclear-spin and
+C  exchange handling as the i=1 blocks above.
+C  MXLAM.GE.3 GUARD IS LOAD-BEARING: with the OLD MXLAM=2 &POTL (i=1
+C  family only, e.g. tm_resonance_pipeline.py's current template),
+C  MXLAM+1 also equals 3 -- without this guard this branch would win
+C  the ELSEIF race against the HYPERFINE branch below and silently
+C  replace hyperfine coupling with a bogus read of an undeclared 3rd
+C  LAMBDA block.  Only activates for the NEW MXLAM=3 &POTL.
+            IF (MIAR.EQ.MIAC .AND. MIBR.EQ.MIBC) THEN
+              FAC=PREFAC*DIPBLK(2,MSAR,MIAR,MSBR,MIBR,LR,MLR,
+     1                          MSAC,MIAC,MSBC,MIBC,LC,MLC,ISA)
+              VL(I)=FAC
+            ENDIF
+            IF (IDENTN .AND. MIAR.EQ.MIBC .AND. MIBR.EQ.MIAC) THEN
+              FAC2=PREFAC*DIPBLK(2,MSBR,MIBR,MSAR,MIAR,LR,MLR,
      1                           MSAC,MIAC,MSBC,MIBC,LC,MLC,ISA)
               IF (MOD(IBOSFR+LR,2).NE.0) FAC2=-FAC2
               VL(I)=VL(I)+FAC2
@@ -512,10 +535,24 @@ C ======================================================== END OF THRSH9
      2             MXLMB,X,MX,IXFAC)
 C
 C  UNCHANGED IN SPIRIT from the parent file: reuse ITYP=1's generic
-C  machinery purely to read MXLAM simple radial coefficients v_lambda(R)
-C  from VSTAR (pot-Tm2.f).  MXLAM must equal 2 in &POTL (LMAX=1),
-C  ordered lambda=0 -> V^(1)_0(R), lambda=1 -> V^(1)_2(R) -- this
-C  ORDER MUST MATCH the LL=1,2 block numbering used above in CPL9.
+C  machinery to read MXLAM radial coefficients v_lambda(R), each either
+C  from VSTAR (pot-Tm2.f, NTERM<0) or as analytic power/exponential
+C  terms given directly in &POTL (NTERM>0).  MXLAM must equal 3 in
+C  &POTL (LMAX=1), ordered lambda(1) -> V^(1)_0(R) [VSTAR I=1],
+C  lambda(2) -> V^(1)_2(R) [VSTAR I=2], lambda(3) -> V^(2)_2(R) =
+C  D^(2)_2/R^3 [NTERM=1 analytic term, NPOWER=-3, no VSTAR call] --
+C  this ORDER MUST MATCH the LL=1,2,3 block numbering used in CPL9.
+C  For 169Tm2 (R in the units used by pot-Tm2.f, i.e. Angstrom):
+C     D^(2)_2 = -1.38117889454613 cm^-1 Angstrom^3
+C  from D^(2)_2 = -sqrt(6)*alpha^2*(g_j/2)^2*E_h*a0^3 (paper, Sec 2.3,
+C  with g_j=GSA=1.14119), converted a0^3 -> Angstrom^3 via
+C  bohr_to_Angstrom^3, using the SAME physical_constants values linked
+C  by the Makefile (physical_constants_module.f, 2022 CODATA/BIPM:
+C  inverse_fine_structure_constant=137.035999177, hartree_in_inv_cm=
+C  2.1947463136314D5, bohr_in_SI/Angstrom_in_SI=0.529177210544).
+C  Example &POTL entry for this 3rd block:
+C     MXLAM=3, LAMBDA=0,1,2, NTERM=-1,-1,1,
+C     NPOWER(1)=-3, A(1)=-1.38117889454613
       ITYPE=1
 C
       RETURN
@@ -546,6 +583,9 @@ C  tens_ck_funcs.f (or test_tens_ck.f) into the SAME executable as this
 C  file -- that will raise "duplicate symbol" errors at link time.
 C  tens_ck_funcs.f is for the STAGE A standalone unit test ONLY
 C  (test_tens_ck.f); keep the two builds separate.
+C  DIPBLK/TENSX further below are NEW (not in tens_ck_funcs.f/
+C  test_tens_ck.f) -- they implement the i=2 cross-tensor [j1(x)j2]_kq,
+C  reusing VECME/CG3/CKME from the block above.
 C  =====================================================================
       FUNCTION POTBLK(K,MSAR,MIAR,MSBR,MIBR,LR,MLR,
      1                 MSAC,MIAC,MSBC,MIBC,LC,MLC,J2)
@@ -711,3 +751,76 @@ C  CRLS/AI FIX: see note in TENSOR_ME above -- 'Q' must be forced INTEGER.
       RETURN
       END
 C ========================================================== END OF CKME
+      FUNCTION DIPBLK(K,MSAR,MIAR,MSBR,MIBR,LR,MLR,
+     1                 MSAC,MIAC,MSBC,MIBC,LC,MLC,J2)
+C  =====================================================================
+C  DIPBLK -- matrix element of the k-th rank CROSS tensor block (i=2
+C  family: Tˆ(2)_kq = [j1(x)j2]_kq, Eq (6) of Tiesinga et al. NJP 23,
+C  085007 (2021)), for the TWO-ATOM uncoupled pair state, SUMMED OVER q:
+C
+C    <row| V^(2)_k block |col> = Sum_q (-1)^q TENSX(k,q,...) * CKME(k,-q)
+C
+C  Structurally identical to POTBLK above, but calling TENSX (the
+C  cross-atom [j1(x)j2] tensor) instead of TENSOR_ME (the same-atom
+C  [j1(x)j1]+[j2(x)j2] tensor) -- see POTBLK for the argument and unit
+C  conventions, which are identical here.  Unlike POTBLK there is no
+C  K=0 shortcut: Tˆ(2)_00=[j1(x)j2]_00 is the spin-exchange j1.j2 term,
+C  not the identity, but the general Sum_q loop below handles K=0
+C  correctly anyway if it is ever needed (not currently called with
+C  K=0 -- only K=2 is used, for the magnetic dipole-dipole term).
+C  =====================================================================
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+      DIPBLK=0.D0
+      DO IQ=-K,K
+        IF (MSAR+MSBR.NE.MSAC+MSBC+2*IQ) CYCLE
+        TME=TENSX(K,IQ,J2,MSAR,MSAC,J2,MSBR,MSBC)
+        IF (TME.EQ.0.D0) CYCLE
+        CKM=CKME(K,-IQ,LR,MLR/2,LC,MLC/2)
+        IF (CKM.EQ.0.D0) CYCLE
+        SGN=1.D0
+        IF (MOD(ABS(IQ),2).EQ.1) SGN=-1.D0
+        DIPBLK=DIPBLK+SGN*TME*CKM
+      ENDDO
+      RETURN
+      END
+C ========================================================= END OF DIPBLK
+      FUNCTION TENSX(K,Q,J2A,MAR2,MAC2,J2B,MBR2,MBC2)
+C  =====================================================================
+C  Cross-atom rank-K spherical tensor matrix element
+C     <j1A mAR; j2B mBR|[j1(x)j2]_KQ|j1A mAC; j2B mBC>
+C  built exactly like TENS1 (single-atom [j(x)j]_KQ) but with the two
+C  rank-1 vector factors drawn from DIFFERENT atoms:
+C     [j1(x)j2]_KQ = Sum_{q1+q2=Q} <1 q1 1 q2|K Q> J1_q1 J2_q2
+C  Since J1_q1 acts only on atom A and J2_q2 only on atom B (they act
+C  on different tensor factors of the pair Hilbert space and trivially
+C  commute), the matrix element factorises directly -- no intermediate-
+C  state sum over a shared single-particle basis is needed here (unlike
+C  TENS1, which composes two ladder operators on the SAME atom).
+C  Uses the SAME VECME/CG3 primitives as TENS1, so this is automatically
+C  in the identical Racah/Brink&Satchler normalisation used throughout
+C  this file for the i=1 tensor family (paper Eq (5)-(7)) -- required
+C  so that the long-range coefficients D^(2)_2, C^(2)_2 (paper Table 1,
+C  Sec 2.3) can be used directly, with no extra conversion factor
+C  between literature conventions.
+C  All M arguments DOUBLED (2*mR, 2*mC); J2A,J2B=2*j of each atom
+C  (equal, =ISA, for the homonuclear Tm2 case this file is built for);
+C  K,Q undoubled.
+C  =====================================================================
+      IMPLICIT DOUBLE PRECISION (A-H,O-Z)
+C  CRLS/AI FIX: see note in TENSOR_ME above -- 'Q' must be forced INTEGER.
+      INTEGER Q
+      TENSX=0.D0
+      IF (MAR2-MAC2+MBR2-MBC2.NE.2*Q) RETURN
+      DO IQ1=-1,1
+        IQ2=Q-IQ1
+        IF (ABS(IQ2).GT.1) CYCLE
+        VA=VECME(IQ1,J2A,MAR2,MAC2)
+        IF (VA.EQ.0.D0) CYCLE
+        VB=VECME(IQ2,J2B,MBR2,MBC2)
+        IF (VB.EQ.0.D0) CYCLE
+        CG=CG3(2,2*IQ1,2,2*IQ2,2*K,2*Q)
+        TENSX=TENSX+CG*VA*VB
+      ENDDO
+      RETURN
+      END
+C ========================================================== END OF TENSX

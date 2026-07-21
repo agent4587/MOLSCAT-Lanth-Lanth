@@ -79,10 +79,18 @@ class RunMetadata:
       (0,3)=[[j1⊗j1]2⊗[j2⊗j2]2]0;
       (2,3)=[[j1⊗j1]2⊗[j2⊗j2]2]2;
       (4,1)=[[j1⊗j1]2⊗[j2⊗j2]2]4 (ранг-4).
-    В base9-Tm_Tm_AI.f реализованы и верифицированы ТОЛЬКО (0,1) и (2,1)."""
-    tensor_terms: str = "k0i1,k2i1"  # список включённых (k,i)-членов V(R),
-                                       # запятая между ними; текущий базовый
-                                       # прогон = только то, что верифицировано
+    В base9-Tm_Tm_AI.f реализованы и верифицированы (0,1) и (2,1) (VSTAR,
+    pot-Tm2.f), а также D^(2)_2/R^3 часть (2,2) (аналитический член в
+    &POTL, см. DIPBLK/TENSX в base9-Tm_Tm_AI.f) -- ЭТО магнитный
+    диполь-диполь. Слабая дисперсионная добавка C^(2)_2/R^6 к тому же
+    V^(2)_2(R) НЕ включена (на 2+ порядка меньше D^(2)_2/R^3 во всём
+    диапазоне интереса)."""
+    tensor_terms: str = "k0i1,k2i1,k2i2"  # список включённых (k,i)-членов
+                                       # V(R), запятая между ними;
+                                       # k2i2 подразумевает dipdip_scale=1
+                                       # (см. Config.dipdip_scale) -- это
+                                       # ТОЛЬКО метаданные для CSV, саму
+                                       # физику переключает dipdip_scale
     hyperfine_zeeman: bool = True     # одноатомные члены (HFSPLA/GSA в
                                        # BAS9IN) -- НЕ часть разложения V(R),
                                        # отдельная ось; сейчас всегда включены
@@ -91,7 +99,9 @@ class RunMetadata:
     lmax: int = 4                     # LMAX БАЗИСА (число партиальных волн
                                        # в разложении по l), это НЕ тензорный
                                        # ранг k -- не путать при чтении CSV!
-    label: str = "k0i1_k2i1_only"
+    dipdip_scale: float = 1.0         # ДУБЛИРУЕТ Config.dipdip_scale ТОЛЬКО
+                                       # для записи в CSV (см. run_full_pipeline)
+    label: str = "k0i1_k2i1_k2i2"
 
 
 @dataclasses.dataclass
@@ -109,6 +119,15 @@ class Config:
     lmax: int = 4
     ured: float = 84.467109
     lambda_terms: str = "0, 1"       # MXLAM/LAMBDA как в molscat-Tm2_fieldscan_v2
+    dipdip_scale: float = 1.0        # множитель перед D^(2)_2 (магнитный
+                                       # диполь-диполь, k=2,i=2, [j1⊗j2]_2q --
+                                       # см. DIPBLK/TENSX в base9-Tm_Tm_AI.f).
+                                       # 1.0 = реальный физический коэффициент
+                                       # (D2_DIPDIP_CM_ANG3 ниже), 0.0 = член
+                                       # выключен (V^(2)_2(R)=0, как до его
+                                       # добавления), любое другое значение --
+                                       # искусственное масштабирование для
+                                       # сравнительных прогонов.
     ichan_guess: int = 1             # входной канал в базисе (см. "грабли" v4 §4)
     monqn: Optional[str] = None      # "2F1,2mF1,2F2,2mF2" (доубленные, через
                                        # запятую) -- если задано, EREF считается
@@ -124,6 +143,16 @@ class Config:
 # =========================================================================
 # 1. ГЕНЕРАЦИЯ INPUT ДЛЯ ГРУБОГО СКАНА
 # =========================================================================
+
+# D^(2)_2 = -sqrt(6)*alpha^2*(g_j/2)^2*E_h*a0^3 (Tiesinga et al., NJP 23,
+# 085007 (2021), Sec 2.3), g_j=1.14119 (=GSA в base9-Tm_Tm_AI.f), переведено
+# a0^3 -> Angstrom^3 (R в &POTL -- ангстремы, как и в pot-Tm2.f), теми же
+# константами, что реально линкует Makefile (physical_constants_module.f,
+# 2022 CODATA/BIPM: 1/alpha=137.035999177, E_h=2.1947463136314e5 cm^-1,
+# bohr_to_Angstrom=0.529177210544). Умножается на Config.dipdip_scale и
+# подставляется как единственный аналитический член (NPOWER=-3) 3-го блока
+# &POTL -- см. DIPBLK/TENSX и POTIN9 в base9-Tm_Tm_AI.f.
+D2_DIPDIP_CM_ANG3 = -1.38117889454613  # cm^-1 * Angstrom^3, при dipdip_scale=1
 
 COARSE_TEMPLATE = """\
  &INPUT
@@ -150,8 +179,10 @@ COARSE_TEMPLATE = """\
  /
 
  &POTL
-    MXLAM  = 2, LAMBDA =  {lambda_terms},
-                NTERM  = -1, -1,
+    MXLAM  = 3, LAMBDA =  {lambda_terms}, 2,
+                NTERM  = -1, -1,  1,
+                NPOWER =              -3,
+                A      =              {dipdip_a},
  /
 """
 
@@ -180,8 +211,10 @@ IFCONV_TEMPLATE = """\
  /
 
  &POTL
-    MXLAM  = 2, LAMBDA =  {lambda_terms},
-                NTERM  = -1, -1,
+    MXLAM  = 3, LAMBDA =  {lambda_terms}, 2,
+                NTERM  = -1, -1,  1,
+                NPOWER =              -3,
+                A      =              {dipdip_a},
  /
 """
 
@@ -216,6 +249,14 @@ def _fortran_e(x: float) -> str:
     return f"{mantissa}E{exp}"
 
 
+def _dipdip_a(cfg: Config) -> str:
+    """Коэффициент A для 3-го блока &POTL (D^(2)_2/R^3, k=2,i=2), масштабированный
+    Config.dipdip_scale. Фиксированный формат с плавающей точкой (не %e) --
+    Fortran namelist READ одинаково понимает оба, но так удобнее читать
+    сгенерированный .input глазами."""
+    return f"{cfg.dipdip_scale * D2_DIPDIP_CM_ANG3:.14f}"
+
+
 def generate_coarse_scan_input(cfg: Config, fmin: float, fmax: float,
                                  dfield: float, label: str,
                                  out_path: Path) -> Path:
@@ -225,6 +266,7 @@ def generate_coarse_scan_input(cfg: Config, fmin: float, fmax: float,
         jstep=cfg.jstep, energy=_fortran_e(cfg.energy_K), fmin=fmin, fmax=fmax,
         dfield=dfield, ichan=cfg.ichan_guess, lmax=cfg.lmax,
         lambda_terms=cfg.lambda_terms, iref=iref, monqn_clause=monqn_clause,
+        dipdip_a=_dipdip_a(cfg),
     )
     out_path.write_text(text)
     return out_path
@@ -253,7 +295,7 @@ def generate_ifconv_input(cfg: Config, fmin: float, fmax: float,
         jstep=cfg.jstep, energy=_fortran_e(cfg.energy_K), fmin=fmin, fmax=fmax,
         ichan=ichan, ifconv=ifconv, lmax=cfg.lmax,
         lambda_terms=cfg.lambda_terms, iphsum_clause=iphsum_clause,
-        iref=iref, monqn_clause=monqn_clause,
+        iref=iref, monqn_clause=monqn_clause, dipdip_a=_dipdip_a(cfg),
     )
     out_path.write_text(text)
     return out_path
@@ -977,6 +1019,7 @@ def build_summary_table(results: list[dict], meta: RunMetadata) -> pd.DataFrame:
                 "tensor_terms": meta.tensor_terms,
                 "hyperfine_zeeman": meta.hyperfine_zeeman,
                 "lmax": meta.lmax,
+                "dipdip_scale": meta.dipdip_scale,
                 "run_label": meta.label,
             }
             tent = r.get("tentative")
@@ -1005,6 +1048,7 @@ def build_summary_table(results: list[dict], meta: RunMetadata) -> pd.DataFrame:
             "tensor_terms": meta.tensor_terms,
             "hyperfine_zeeman": meta.hyperfine_zeeman,
             "lmax": meta.lmax,
+            "dipdip_scale": meta.dipdip_scale,
             "run_label": meta.label,
         })
     return pd.DataFrame(rows)
@@ -1193,6 +1237,19 @@ def main():
     p_full.add_argument("--jstep", type=int, default=2,
                          help="Дефолт 2 (см. Config.jstep).")
     p_full.add_argument("--label", default="V0V2_run1")
+    p_full.add_argument("--dipdip-scale", type=float, default=1.0,
+                         dest="dipdip_scale",
+                         help="Множитель перед D^(2)_2 (магнитный "
+                              "диполь-диполь, k=2,i=2, [j1⊗j2]_2q -- см. "
+                              "DIPBLK/TENSX в base9-Tm_Tm_AI.f). 1.0 (дефолт) "
+                              "= реальный физический коэффициент, 0.0 = "
+                              "член выключен (V^(2)_2(R)=0), любое другое "
+                              "значение -- искусственное масштабирование "
+                              "для сравнительных прогонов. Требует бинарник, "
+                              "собранный с MXLAM=3 в base9-Tm_Tm_AI.f "
+                              "(POTIN9) -- шаблон &POTL теперь ВСЕГДА пишет "
+                              "3 блока; со старым бинарником под MXLAM=2 "
+                              "molscat завершится с ошибкой чтения &POTL.")
     p_full.add_argument("--l-filter", type=int, default=0,
                          help="Партиальная волна L, по которой ищем кандидатов "
                               "в грубом скане (0 = s-волна, физически стандартная "
@@ -1221,15 +1278,15 @@ def main():
                               "широким, чтобы зацепить соседний резонанс).")
     p_full.add_argument("--csv-out", type=Path, default=None,
                          help="По умолчанию: <output-dir>/<label>_summary.csv")
-    p_full.add_argument("--tensor-terms", default="k0i1,k2i1",
+    p_full.add_argument("--tensor-terms", default="k0i1,k2i1,k2i2",
                          help="Какие (k,i)-члены V(R) реально включены в этот "
                               "прогон (см. Table 1, Tiesinga et al. NJP 23, "
-                              "085007). Через запятую, напр. 'k0i1,k2i1,k2i2' "
-                              "чтобы отметить прогон с добавленным магнитным "
-                              "диполь-диполем (k=2,i=2). Это ТОЛЬКО метаданные "
-                              "для CSV -- какая физика реально считается, "
-                              "определяется компиляцией base9-Tm_Tm_AI.f, "
-                              "флаг это не переключает.")
+                              "085007) -- ТОЛЬКО метаданные для CSV, поставьте "
+                              "в соответствие --dipdip-scale вручную (напр. "
+                              "'k0i1,k2i1' при --dipdip-scale 0, "
+                              "'k0i1,k2i1,k2i2' при --dipdip-scale 1) -- этот "
+                              "флаг физику не переключает, физику переключает "
+                              "--dipdip-scale.")
     p_full.add_argument("--monqn", default=None,
                          help="Задать входной канал через физические "
                               "квантовые числа F,mF обоих атомов вместо "
@@ -1287,6 +1344,9 @@ def main():
     p_char.add_argument("--monqn", default=None,
                          help="См. help в 'run' -- '2F1,2mF1,2F2,2mF2', "
                               "напр. '8,-8,8,-8'.")
+    p_char.add_argument("--dipdip-scale", type=float, default=1.0,
+                         dest="dipdip_scale",
+                         help="См. help в 'run' -- множитель перед D^(2)_2.")
 
     p_find = sub.add_parser("find-channel",
                              help="найти номер ICHAN, соответствующий "
@@ -1315,6 +1375,9 @@ def main():
     p_find.add_argument("--jstep", type=int, default=2)
     p_find.add_argument("--lmax", type=int, default=4)
     p_find.add_argument("--label", default="find_channel")
+    p_find.add_argument("--dipdip-scale", type=float, default=1.0,
+                         dest="dipdip_scale",
+                         help="См. help в 'run' -- множитель перед D^(2)_2.")
     p_find.add_argument("--tol-cm1", type=float, default=1.0e-8, dest="tol_cm1",
                          help="Допуск (см⁻¹) при сравнении EREF с "
                               "энергиями из таблицы THRESHOLDS.")
@@ -1333,6 +1396,7 @@ def main():
             molscat_exe=args.exe, work_dir=args.work_dir, output_dir=output_dir,
             coarse_template=Path(""), lmax=args.lmax, monqn=args.monqn,
             jtot=args.jtot, ibfix=args.ibfix, jstep=args.jstep,
+            dipdip_scale=args.dipdip_scale,
         )
         candidate = {
             "field_lo": args.fmin, "field_hi": args.fmax,
@@ -1366,7 +1430,7 @@ def main():
         cfg = Config(
             molscat_exe=args.exe, work_dir=args.work_dir, output_dir=output_dir,
             coarse_template=Path(""), lmax=args.lmax, jtot=args.jtot,
-            ibfix=args.ibfix, jstep=args.jstep,
+            ibfix=args.ibfix, jstep=args.jstep, dipdip_scale=args.dipdip_scale,
         )
         res = find_channel_for_monqn(cfg, args.monqn, args.field, args.label,
                                       tol_cm1=args.tol_cm1)
@@ -1404,11 +1468,13 @@ def main():
             coarse_template=Path(""),  # не используется, шаблон встроен
             lmax=args.lmax, monqn=args.monqn,
             jtot=args.jtot, ibfix=args.ibfix, jstep=args.jstep,
+            dipdip_scale=args.dipdip_scale,
         )
         meta = RunMetadata(
             tensor_terms=args.tensor_terms,
             hyperfine_zeeman=not args.no_hyperfine_zeeman,
             lmax=args.lmax, label=args.label,
+            dipdip_scale=args.dipdip_scale,
         )
         l_filter = None if args.l_filter < 0 else args.l_filter
         run_full_pipeline(cfg, meta, args.fmin, args.fmax, args.dfield,
