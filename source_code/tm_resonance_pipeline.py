@@ -45,6 +45,7 @@ from __future__ import annotations
 import argparse
 import time
 import dataclasses
+import math
 import re
 import subprocess
 import sys
@@ -101,6 +102,8 @@ class RunMetadata:
                                        # ранг k -- не путать при чтении CSV!
     dipdip_scale: float = 1.0         # ДУБЛИРУЕТ Config.dipdip_scale ТОЛЬКО
                                        # для записи в CSV (см. run_full_pipeline)
+    v2_scale: float = 1.0             # ДУБЛИРУЕТ Config.v2_scale ТОЛЬКО
+                                       # для записи в CSV (см. run_full_pipeline)
     label: str = "k0i1_k2i1_k2i2"
 
 
@@ -128,6 +131,15 @@ class Config:
                                        # добавления), любое другое значение --
                                        # искусственное масштабирование для
                                        # сравнительных прогонов.
+    v2_scale: float = 1.0            # множитель перед всем коэффициентом
+                                       # связи блока k=2,i=1 (анизотропный
+                                       # V^(1)_2(R), Table 5 -- см. V2SCALE
+                                       # в &BASIS9 / base9-Tm_Tm_AI.f). Физически
+                                       # эквивалентно масштабированию V^(1)_2(R)
+                                       # целиком для всех R (коэффициент связи и
+                                       # радиальная функция входят произведением).
+                                       # 1.0 = реальная физика (дефолт), 0.0 =
+                                       # анизотропия k=2,i=1 выключена.
     ichan_guess: int = 1             # входной канал в базисе (см. "грабли" v4 §4)
     monqn: Optional[str] = None      # "2F1,2mF1,2F2,2mF2" (доубленные, через
                                        # запятую) -- если задано, EREF считается
@@ -175,7 +187,7 @@ COARSE_TEMPLATE = """\
  /
 
  &BASIS9
-    LMAX   =  {lmax},
+    LMAX   =  {lmax},   V2SCALE = {v2_scale},
  /
 
  &POTL
@@ -207,11 +219,77 @@ IFCONV_TEMPLATE = """\
  /
 
  &BASIS9
-    LMAX   =  {lmax},
+    LMAX   =  {lmax},   V2SCALE = {v2_scale},
  /
 
  &POTL
     MXLAM  = 3, LAMBDA =  {lambda_terms}, 2,
+                NTERM  = -1, -1,  1,
+                NPOWER =              -3,
+                A      =              {dipdip_a},
+ /
+"""
+
+# =========================================================================
+# 1b. АЛЬТЕРНАТИВНЫЙ МЕТОД: ПОИСК РЕЗОНАНСОВ ЧЕРЕЗ FIELD (не molscat)
+# =========================================================================
+#
+# field.exe (fld.driver.f) решает ОБРАТНУЮ задачу к bound: "при заданной
+# целевой энергии найди ПОЛЕ, при котором связанный уровень её достигает"
+# (см. fld.driver.f:21-22 -- "TO FIND THE APPLIED FIELD WHERE A BOUND
+# STATE HAS A SPECIFIED ENERGY. WHEN ENERGY IS SET TO A THRESHOLD, THIS
+# FINDS RESONANCE POSITIONS"). С ENERGY=0.0 (относительно порога, через
+# тот же механизм MONQN/THRSH9, что и в bound) это даёт B0 НАПРЯМУЮ,
+# бисекцией по полю -- без грубого скана molscat, без эвристик
+# detect_candidates по скачку Re(a)/Im(a), и может найти НЕСКОЛЬКО
+# резонансов в одном окне FLDMIN-FLDMAX за один прогон (программа сама
+# считает разницу числа узлов на FLDMIN/FLDMAX и ищет ровно столько
+# уровней, сколько эта разница подразумевает). Портировано из
+# toy_resonance_pipeline.py (find-resonances) -- см. там же обсуждение
+# про то, что FLDMIN/FLDMAX задают только СТАРТОВОЕ окно для field.exe/
+# LOCPOL, а не жёсткую границу поиска.
+#
+# ВАЖНО: MONQN здесь ОБЯЗАТЕЛЕН (не опционален, как в COARSE/IFCONV
+# TEMPLATE) -- без него не от чего считать "порог", и вся идея метода
+# теряет смысл. IREF всегда 0 (жёстко, не namelist-параметр здесь). Для
+# Tm2 (I=1/2) MONQN -- 4 доубленных числа '2F1,2mF1,2F2,2mF2', напр.
+# '8,-8,8,-8' для полностью растянутого состояния F1=F2=4,mF1=mF2=-4 (см.
+# ABS(2F-ISA)==1 в THRSH9 base9-Tm_Tm_AI.f -- это ДРУГАЯ семантика, чем в
+# toy_resonance_pipeline.py, где I=0 и MONQN(1)=ISA ТОЧНО).
+#
+# RMATCH используется вместо RMID (терминология bound-state программ
+# bound/field, а не молскатовского RMID) -- см. field-Rb2.input,
+# fld.driver.f: "RMATCH IS THE MATCHING POINT" между исходящим и
+# входящим решениями, тогда как RMID -- точка смены МЕТОДА
+# распространения (для field/bound это не то же самое, что для
+# рассеяния, но численно можно использовать те же значения, что и в
+# COARSE_TEMPLATE -- проверено вживую в toy_resonance_pipeline.py).
+FIELD_TEMPLATE = """\
+ &INPUT
+    LABEL  =  '{label}',
+    URED   =  {ured},
+    IPRINT =   6,
+    RMIN   =   3.0,  RMATCH =  21.0,   RMAX   = 15.0E3, IRMSET = 0,
+    IPROPS =   6,    DR     =   0.002,
+    IPROPL =   9,    TOLHIL =   1.E-7,
+    JTOTL  = {jtot},    JTOTU  = {jtot},     IBFIX  =  {ibfix},     JSTEP  = {jstep},
+    EUNITS =   1,    NNRG   =   1,     ENERGY =  0.0,
+                     DTOL   =   1.E-6,
+    FLDMIN =  {fldmin}, FLDMAX = {fldmax},
+    MONQN  =   {monqn_values},
+    LASTIN =   1,
+ /
+
+ &BASIS
+    ITYPE  = 9,
+ /
+
+ &BASIS9
+    LMAX   =  {lmax},   V2SCALE = {v2_scale},
+ /
+
+ &POTL
+    MXLAM  = 3, LAMBDA =  0, 1, 2,
                 NTERM  = -1, -1,  1,
                 NPOWER =              -3,
                 A      =              {dipdip_a},
@@ -266,7 +344,7 @@ def generate_coarse_scan_input(cfg: Config, fmin: float, fmax: float,
         jstep=cfg.jstep, energy=_fortran_e(cfg.energy_K), fmin=fmin, fmax=fmax,
         dfield=dfield, ichan=cfg.ichan_guess, lmax=cfg.lmax,
         lambda_terms=cfg.lambda_terms, iref=iref, monqn_clause=monqn_clause,
-        dipdip_a=_dipdip_a(cfg),
+        dipdip_a=_dipdip_a(cfg), v2_scale=cfg.v2_scale,
     )
     out_path.write_text(text)
     return out_path
@@ -296,6 +374,111 @@ def generate_ifconv_input(cfg: Config, fmin: float, fmax: float,
         ichan=ichan, ifconv=ifconv, lmax=cfg.lmax,
         lambda_terms=cfg.lambda_terms, iphsum_clause=iphsum_clause,
         iref=iref, monqn_clause=monqn_clause, dipdip_a=_dipdip_a(cfg),
+        v2_scale=cfg.v2_scale,
+    )
+    out_path.write_text(text)
+    return out_path
+
+
+def generate_field_scan_input(cfg: Config, fldmin: float, fldmax: float,
+                                monqn: str, label: str, out_path: Path) -> Path:
+    """Input для field.exe (FIELD_TEMPLATE) -- ищет поле(я), где связанный
+    уровень пересекает порог (ENERGY=0 относительно порога по MONQN), внутри
+    [fldmin, fldmax]. См. комментарий перед FIELD_TEMPLATE.
+
+    monqn ОБЯЗАТЕЛЕН здесь (в отличие от cfg.monqn для molscat-шаблонов) --
+    без него не определён порог, относительно которого ищется пересечение."""
+    values = [v.strip() for v in monqn.split(",")]
+    if len(values) != 4:
+        raise ValueError(
+            f"monqn для find-resonances должен содержать РОВНО 4 доубленных "
+            f"числа (2*F1,2*mF1,2*F2,2*mF2), получено {len(values)}: {monqn!r}"
+        )
+    text = FIELD_TEMPLATE.format(
+        label=label, ured=cfg.ured, jtot=cfg.jtot, ibfix=cfg.ibfix,
+        jstep=cfg.jstep, fldmin=fldmin, fldmax=fldmax,
+        monqn_values=", ".join(values), lmax=cfg.lmax, v2_scale=cfg.v2_scale,
+        dipdip_a=_dipdip_a(cfg),
+    )
+    out_path.write_text(text)
+    return out_path
+
+
+# =========================================================================
+# 1c. ПОДСЧЁТ ЧИСЛА РЕЗОНАНСОВ В ОКНЕ (без поиска точных позиций)
+# =========================================================================
+#
+# field.exe САМ считает число узлов волновой функции на FLDMIN (NODLO) и на
+# FLDMAX (NODHI) -- это первое, что он делает, ДО дорогого поиска точных
+# позиций (см. fld.driver.f:743-848, "DO IFLD=1,NFIELD" -- IFLD=1 -> FLD=
+# FLDMIN, IFLD=2 -> FLD=FLDMAX, ровно 2 вычисления). Разница |NODHI-NODLO|
+# -- это и есть число уровней, пересекающих порог между FLDMIN и FLDMAX
+# (= число резонансов в окне), и печатается САМИМ field.exe как
+# "NODE COUNT IN/DECREASES ... SEEK N STATE(S) IN THIS INTERVAL" (или
+# "NO NODES BETWEEN FLDMAX AND FLDMIN", если резонансов нет вообще) --
+# см. fld.driver.f:855-881.
+#
+# ВАЖНО: MXCALC (namelist &INPUT, дефолт 1000) -- максимальное число
+# "тяжёлых" вычислений (распространений уравнений) за прогон; каждое
+# вычисление NODLO/NODHI -- одно такое. Проверка `NCALC.GE.MXCALC` стоит
+# ВНУТРИ цикла IFLD=1,2 (fld.driver.f:845) -- значит MXCALC=2 оборвал бы
+# прогон СРАЗУ ПОСЛЕ второго вычисления (NODHI), но ДО печати нужного нам
+# сообщения (которое печатается ПОСЛЕ конца цикла, fld.driver.f:861-881).
+# MXCALC=3 даёт циклу нормально завершиться (оба NODLO/NODHI посчитаны,
+# сообщение напечатано), и обрывает прогон максимум на ОДНОМ шаге
+# дорогого поиска точных позиций -- вместо полного перебора всех N
+# состояний, как в find-resonances. Проверено эмпирически (см. переписку
+# про lmax=6, 0.1-20 Гс): экономит время именно на широких/густых окнах,
+# где количество резонансов велико.
+NODE_COUNT_TEMPLATE = """\
+ &INPUT
+    LABEL  =  '{label}',
+    URED   =  {ured},
+    IPRINT =   6,
+    RMIN   =   3.0,  RMATCH =  21.0,   RMAX   = 15.0E3, IRMSET = 0,
+    IPROPS =   6,    DR     =   0.002,
+    IPROPL =   9,    TOLHIL =   1.E-7,
+    JTOTL  = {jtot},    JTOTU  = {jtot},     IBFIX  =  {ibfix},     JSTEP  = {jstep},
+    EUNITS =   1,    NNRG   =   1,     ENERGY =  0.0,
+                     DTOL   =   1.E-6,
+    FLDMIN =  {fldmin}, FLDMAX = {fldmax},
+    MONQN  =   {monqn_values},
+    MXCALC =   3,
+    LASTIN =   1,
+ /
+
+ &BASIS
+    ITYPE  = 9,
+ /
+
+ &BASIS9
+    LMAX   =  {lmax},   V2SCALE = {v2_scale},
+ /
+
+ &POTL
+    MXLAM  = 3, LAMBDA =  0, 1, 2,
+                NTERM  = -1, -1,  1,
+                NPOWER =              -3,
+                A      =              {dipdip_a},
+ /
+"""
+
+
+def generate_node_count_input(cfg: Config, fldmin: float, fldmax: float,
+                                monqn: str, label: str, out_path: Path) -> Path:
+    """Input для field.exe с MXCALC=3 -- см. комментарий перед
+    NODE_COUNT_TEMPLATE. monqn ОБЯЗАТЕЛЕН, как и в generate_field_scan_input."""
+    values = [v.strip() for v in monqn.split(",")]
+    if len(values) != 4:
+        raise ValueError(
+            f"monqn для count-resonances должен содержать РОВНО 4 доубленных "
+            f"числа (2*F1,2*mF1,2*F2,2*mF2), получено {len(values)}: {monqn!r}"
+        )
+    text = NODE_COUNT_TEMPLATE.format(
+        label=label, ured=cfg.ured, jtot=cfg.jtot, ibfix=cfg.ibfix,
+        jstep=cfg.jstep, fldmin=fldmin, fldmax=fldmax,
+        monqn_values=", ".join(values), lmax=cfg.lmax, v2_scale=cfg.v2_scale,
+        dipdip_a=_dipdip_a(cfg),
     )
     out_path.write_text(text)
     return out_path
@@ -305,7 +488,7 @@ def generate_ifconv_input(cfg: Config, fmin: float, fmax: float,
 # 2. ЗАПУСК MOLSCAT
 # =========================================================================
 
-def run_molscat(cfg: Config, input_path: Path, timeout: int = 1800) -> tuple[Path, float]:
+def run_molscat(cfg: Config, input_path: Path) -> tuple[Path, float]:
     """Запускает molscat-Tm2.exe < input_path > input_path.with_suffix('.out').
     input_path/output .out живут в cfg.output_dir; сам процесс запускается с
     cwd=cfg.work_dir (там, где бинарник и его зависимости -- НЕ то же самое,
@@ -313,14 +496,19 @@ def run_molscat(cfg: Config, input_path: Path, timeout: int = 1800) -> tuple[Pat
     Возвращает (путь к .out, время выполнения в секундах). Не бросает
     исключение при ненулевом коде возврата — molscat иногда возвращает его
     даже при штатных сообщениях типа NOPEN CHANGED; решение о фатальности
-    принимает вызывающий код по содержимому .out."""
+    принимает вызывающий код по содержимому .out.
+
+    БЕЗ таймаута -- ждёт завершения процесса сколько потребуется (см.
+    переписку про count-resonances: жёсткий timeout=600 обрывал честно
+    считающий field.exe на большом LMAX; вместо подбора "правильного"
+    числа таймаут убран совсем)."""
     out_path = input_path.with_suffix(".out")
     t0 = time.perf_counter()
     with open(input_path, "r") as fin, open(out_path, "w") as fout:
         subprocess.run(
             [str(cfg.molscat_exe)],
             stdin=fin, stdout=fout, stderr=subprocess.STDOUT,
-            cwd=cfg.work_dir, timeout=timeout,
+            cwd=cfg.work_dir,
         )
     elapsed = time.perf_counter() - t0
     return out_path, elapsed
@@ -420,6 +608,160 @@ def parse_coarse_scan(out_path: Path, target_ichan: Optional[int] = None) -> pd.
     if target_ichan is not None:
         df = df[df.channel == target_ichan].reset_index(drop=True)
     return df.sort_values("field_G").reset_index(drop=True)
+
+
+# =========================================================================
+# 3b. ПАРСИНГ FIELD (поиск резонансов напрямую, без грубого скана)
+# =========================================================================
+#
+# Формат взят из ИСХОДНИКА подпрограммы, которая печатает эти строки --
+# source_code/prnsum.f, SUBROUTINE PRCONV, ЧЕТЫРЕ FORMAT-а (100/200/300/400):
+#   100: "CONVERGED ON STATE NUMBER I5 AT A = value unit"            (чисто)
+#   200: та же строка + следующая "  BUT LAST NODE COUNT = I5 NOT AS DESIRED"
+#        (нашли уровень, но число узлов не совпало с ожидаемым -- возможно,
+#        случайное вырождение/пересечение уровней рядом)
+#   300: та же строка + " BUT VARIABLE IS OUTSIDE RANGE" (сошлось за
+#        пределами [FLDMIN,FLDMAX] -- обычно означает, что реального
+#        пересечения в окне НЕТ, есть только около границы)
+#   400: "NOT CONVERGED ON STATE NUMBER I5....) -- не сошлось за NITER
+#        итераций, значение -- текущая грубая оценка, НЕ доверять как B0.
+# Портировано из toy_resonance_pipeline.py, где проверено вживую на
+# field-Toy.exe (2 резонанса в одном окне) -- формат общий для field.exe
+# независимо от base9-модуля (это код prnsum.f, не base9-специфичный).
+_RE_CONVERGED = re.compile(
+    r"CONVERGED ON STATE NUMBER\s+(\d+)\s+AT\s+.+?=\s*"
+    r"([-+]?\d+\.?\d*(?:[DdEe][-+]?\d+)?)\s+(\S+)"
+)
+_RE_NOT_CONVERGED = re.compile(r"NOT CONVERGED ON STATE NUMBER\s+(\d+)")
+_RE_NO_NODES = re.compile(r"NO NODES BETWEEN FLDMAX AND FLDMIN")
+
+
+def parse_field_resonances(out_path: Path) -> pd.DataFrame:
+    """Извлекает найденные field.exe позиции резонансов (поля, где связанный
+    уровень пересекает ENERGY=0 относительно порога) из .out файла.
+    Возвращает DataFrame с колонками state, field_G, status, unit -- пустой
+    (с этими же колонками), если резонансов в окне не было вообще (найдена
+    строка 'NO NODES BETWEEN FLDMAX AND FLDMIN' -- ЭТО НЕ ошибка парсинга,
+    а явный сигнал MOLSCAT "здесь ничего нет", в отличие от detect_candidates,
+    где пустой результат неотличим от `IPRINT<6`/иных проблем без ручной
+    проверки .out)."""
+    lines = out_path.read_text(errors="replace").splitlines()
+    rows: list[dict] = []
+    found_no_nodes = False
+    for i, line in enumerate(lines):
+        if _RE_NO_NODES.search(line):
+            found_no_nodes = True
+            continue
+        m_not = _RE_NOT_CONVERGED.search(line)
+        if m_not:
+            rows.append({"state": int(m_not.group(1)), "field_G": None,
+                         "status": "not_converged", "unit": None})
+            continue
+        m = _RE_CONVERGED.search(line)
+        if not m:
+            continue
+        state, value, unit = m.groups()
+        status = "ok"
+        if "OUTSIDE RANGE" in line:
+            status = "out_of_range"
+        elif i + 1 < len(lines) and "BUT LAST NODE COUNT" in lines[i + 1]:
+            status = "node_mismatch"
+        rows.append({
+            "state": int(state),
+            "field_G": float(value.replace("D", "E").replace("d", "e")),
+            "status": status, "unit": unit,
+        })
+    df = pd.DataFrame(rows, columns=["state", "field_G", "status", "unit"])
+    if df.empty and not found_no_nodes:
+        print(f"[WARN] Ни одной строки CONVERGED/NOT CONVERGED/NO NODES не "
+              f"найдено в {out_path} -- проверьте IPRINT (нужно >=2) и что "
+              f"расчёт вообще завершился (см. конец файла на предмет "
+              f"'*** ERROR'/STOP).", file=sys.stderr)
+    return df
+
+
+# =========================================================================
+# 3c. ПАРСИНГ РЕЗУЛЬТАТА ПОДСЧЁТА УЗЛОВ (count-resonances)
+# =========================================================================
+#
+# Формат -- из ИСХОДНИКА fld.driver.f (FORMAT 2410/2420), см. комментарий
+# перед NODE_COUNT_TEMPLATE:
+#   "  NO NODES BETWEEN FLDMAX AND FLDMIN." -- 0 резонансов в окне.
+#   "  NODE COUNT INCREASES BETWEEN FLDMIN AND FLDMAX\n"
+#   "  PROGRAM WILL ASSUME MONOTONIC BEHAVIOUR AND SEEK   5 STATES IN THIS
+#    INTERVAL" -- 5 резонансов ("INCREASES"/"DECREASES" -- направление
+#   счёта узлов с ростом поля, само число резонансов от направления не
+#   зависит, это |NODHI-NODLO|).
+_RE_NODE_COUNT_CHANGE = re.compile(
+    r"NODE COUNT\s+(IN|DE)CREASES BETWEEN FLDMIN AND FLDMAX\s+"
+    r"PROGRAM WILL ASSUME MONOTONIC\s+BEHAVIOUR AND SEEK\s+(\d+)\s*STATES?",
+    re.IGNORECASE,
+)
+
+
+def parse_node_count(out_path: Path) -> dict:
+    """Возвращает {status:'ok', n_resonances: int, direction: 'increases'|
+    'decreases'|None} по результату count-resonances (field.exe с MXCALC=3).
+    status='no_nodes' (n_resonances=0) для "NO NODES...", status='unknown',
+    если ни одно из двух ожидаемых сообщений не нашлось (см. IPRINT/MXCALC
+    в NODE_COUNT_TEMPLATE -- возможно, MXCALC оборвал прогон РАНЬШЕ, чем
+    успело напечататься сообщение, см. комментарий про порядок операций в
+    fld.driver.f)."""
+    text = out_path.read_text(errors="replace")
+    if _RE_NO_NODES.search(text):
+        return {"status": "ok", "n_resonances": 0, "direction": None}
+    m = _RE_NODE_COUNT_CHANGE.search(text)
+    if m:
+        direction = "increases" if m.group(1).upper() == "IN" else "decreases"
+        return {"status": "ok", "n_resonances": int(m.group(2)),
+                "direction": direction}
+    return {"status": "unknown", "n_resonances": None, "direction": None}
+
+
+def count_resonances_via_field(cfg: Config, fldmin: float, fldmax: float,
+                                 monqn: str, label: str) -> dict:
+    """Один прогон field.exe (MXCALC=3, см. NODE_COUNT_TEMPLATE) -- БЫСТРЫЙ
+    ОТНОСИТЕЛЬНО find_resonances_via_field (2 распространения + максимум 1
+    частичное вместо полного перебора N состояний), но НЕ мгновенный:
+    стоимость каждого распространения растёт с LMAX (больше каналов в
+    сцепленных уравнениях) -- см. переписку: lmax=6 (0.1-20 Гс) уложился в
+    12с, lmax=8 -- уже в 76 CPU-с. run_molscat() БЕЗ таймаута -- ждёт
+    сколько потребуется, независимо от LMAX/RMAX.
+    Возвращает {status, n_resonances, direction, elapsed_sec, out_file}
+    БЕЗ поиска точных позиций резонансов."""
+    cfg.output_dir.mkdir(parents=True, exist_ok=True)
+    count_dir = cfg.output_dir / f"{label}_nodecount"
+    count_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"[1/2] Генерация input (MXCALC=3) для field.exe, окно "
+          f"{fldmin}-{fldmax} Гс, MONQN={monqn}")
+    inp = count_dir / "nodecount.input"
+    generate_node_count_input(cfg, fldmin=fldmin, fldmax=fldmax, monqn=monqn,
+                               label=f"{label} node count", out_path=inp)
+
+    print("[2/2] Запуск field.exe (только подсчёт узлов на FLDMIN/FLDMAX)...")
+    out, elapsed = run_molscat(cfg, inp)
+    print(f"       -> заняло {_fmt_duration(elapsed)}")
+
+    result = parse_node_count(out)
+    result["elapsed_sec"] = round(elapsed, 1)
+    result["out_file"] = str(out)
+
+    if result["status"] == "ok":
+        if result["n_resonances"] == 0:
+            print(f"       -> 0 резонансов в окне {fldmin}-{fldmax} Гс "
+                  f"(NO NODES BETWEEN FLDMAX AND FLDMIN)")
+        else:
+            print(f"       -> {result['n_resonances']} резонанс(ов) в окне "
+                  f"{fldmin}-{fldmax} Гс (число узлов "
+                  f"{result['direction']} с ростом поля)")
+    else:
+        print(f"       -> НЕ УДАЛОСЬ определить число резонансов -- "
+              f"ни 'NO NODES...', ни 'NODE COUNT...SEEK N STATES' не "
+              f"найдены в {out}. Проверьте .out глазами (возможно, "
+              f"MXCALC=3 всё равно оборвал прогон раньше печати -- см. "
+              f"комментарий перед NODE_COUNT_TEMPLATE).", file=sys.stderr)
+    return result
 
 
 # =========================================================================
@@ -735,10 +1077,12 @@ def parse_ifconv_block(out_path: Path, ifconv: int) -> dict:
     elif ifconv == 4:
         # IDECAY=3, Брейт-Вигнер по сумме собственных фаз: та же строка-якорь
         # "3-POINT POLE FORMULA ESTIMATES ..._RES = ...", но следом идут
-        # GAMMA (ширина Брейта-Вигнера, ПОЛНАЯ -- это НЕ то же самое, что
-        # Delta/Gamma_inel из scattering-length методов, единицы совпадают
-        # (Гс), но физический смысл другой -- не путать при сведении в
-        # общую таблицу) и безразмерная EPSUM_BG (фоновая сумма фаз / pi).
+        # GAMMA (ширина Брейта-Вигнера по ПОЛНОЙ сумме собственных фаз --
+        # это ровно Gamma_B из Hutson, NJP 9, 152 (2007), Eq. (6): для
+        # ОДНОГО открытого канала сумма фаз -- это просто сам фазовый сдвиг
+        # delta_0, так что это тот же формализм, что и Eq. (5)-(9) статьи,
+        # НЕ равна Delta_G напрямую без пересчёта) и безразмерная EPSUM_BG
+        # (фоновая сумма фаз / pi, т.е. delta_bg/pi).
         m_pole = _last_match(RE_POLE_LINE1, text)
         if m_pole:
             tail = text[m_pole.end():m_pole.end() + 300]
@@ -750,6 +1094,22 @@ def parse_ifconv_block(out_path: Path, ifconv: int) -> dict:
                 result["EPSUM_bg_over_pi"] = float(m_epsbg.group(1))
         result["a_res_re"] = None
         result["Gamma_inel_G"] = None
+
+        # ПЕРЕСЧЁТ Delta_B из Gamma_B: Hutson NJP 9, 152 (2007), Eq. (2) и
+        # (9) -- a_bg = -tan(delta_bg)/k, Gamma_B = -2*a_bg*k*Delta_B.
+        # Подставляя delta_bg = pi*EPSUM_bg_over_pi (одноканальный случай),
+        # a_bg*k = -tan(pi*EPSUM_bg_over_pi), и k СОКРАЩАЕТСЯ:
+        #   Delta_B = Gamma_B / (2*tan(pi*EPSUM_bg_over_pi))
+        # Проверено эмпирически в toy_resonance_pipeline.py (state 8.93 Гс,
+        # lmax=10): форсированный IFCONV=4 на резонансе с уже известным
+        # Delta_G=0.0112959 (из IFCONV=1) дал Delta_B(пересчёт)=0.011526 --
+        # согласие ~2%. ВАЖНО: формула строго верна только для ОДНОГО
+        # открытого канала (иначе EPSUM_bg_over_pi -- сумма ФАЗ нескольких
+        # каналов, а не delta_bg одного канала).
+        if result.get("Gamma_BW_G") is not None and result.get("EPSUM_bg_over_pi") is not None:
+            tan_bg = math.tan(math.pi * result["EPSUM_bg_over_pi"])
+            if tan_bg != 0:
+                result["Delta_G_from_gamma_bw"] = result["Gamma_BW_G"] / (2 * tan_bg)
     else:
         # IFCONV 1 или 2: FORMAT 130 -- B0/DELTA/A_BG, без a_res/gamma
         m_pole = _last_match(RE_POLE_LINE1, text)
@@ -778,7 +1138,8 @@ def parse_ifconv_block(out_path: Path, ifconv: int) -> dict:
     # заданным полям, чтобы результат всегда был однородным по набору
     # ключей независимо от того, какие строки реально нашлись в .out.
     for _key in ("Delta_G", "a_bg_re", "a_bg_im", "a_res_re", "a_res_im",
-                 "Gamma_inel_G", "Gamma_BW_G", "EPSUM_bg_over_pi"):
+                 "Gamma_inel_G", "Gamma_BW_G", "EPSUM_bg_over_pi",
+                 "Delta_G_from_gamma_bw"):
         result.setdefault(_key, None)
 
     return result
@@ -790,27 +1151,37 @@ def characterize_candidate(cfg: Config, candidate: dict, run_id: str) -> dict:
     Стратегия (см. комментарий над регэкспами выше про асимметрию IPRINT
     между IFCONV=2 и IFCONV=3 в реальном коде locpol.f):
       1. IFCONV=1. Если сходится чисто упруго -- готово.
-      2. Если LOCPOL просит эскалацию -- пробуем СРАЗУ IFCONV=3 (даёт полный
-         набор параметров одним прогоном при IPRINT=6).
+      2. Если LOCPOL сам просит эскалацию явным сообщением -- пробуем СРАЗУ
+         IFCONV=3 (даёт полный набор параметров одним прогоном при IPRINT=6).
       3. NOPEN CHANGED / OSCILLATING / NOT_CONVERGED -- сужаем бракетирующее
          окно вдвое (до 3 раз) и повторяем ТОТ ЖЕ уровень IFCONV.
-      4. Если IFCONV=3 так и не сошёлся после всех сужений -- пробуем
-         IFCONV=4 (Брейт-Вигнер по сумме собственных фаз) на ИСХОДНОМ окне
-         кандидата: это принципиально другая, более устойчивая величина
-         (см. переписку про 440 Гс), может сойтись там, где длина рассеяния
-         не смогла. ВАЖНО: лимит MXLOC=20 итераций общий для всех IFCONV
-         (жёстко зашит в sizes_module.f, не настраивается через &INPUT) --
-         смена метода не даёт "больше попыток", только другую, обычно более
-         стабильную величину для той же 3-точечной экстраполяции.
-      5. Если и это не сошлось -- возвращаем 'failed', но сохраняем ЛУЧШУЮ
-         предварительную (не до конца сошедшуюся) оценку B0 из последней
-         итерации любого из уровней -- это по-прежнему полезная информация
-         (см. 440 Гс: B_RES не сошёлся строго, но стабильно лежал в полосе
-         441-444 Гс).
+      4. Если сужения на текущем уровне исчерпаны, А ОН ТАК И НЕ СОШЁЛСЯ --
+         эскалируем на следующий уровень (1->3->4) на ИСХОДНОМ окне
+         кандидата, даже если LOCPOL не печатал явную просьбу об эскалации
+         (см. ниже -- это ИСПРАВЛЕНИЕ реального бага, портированное из
+         toy_resonance_pipeline.py: раньше эскалация 1->3 срабатывала
+         ТОЛЬКО по явному сообщению LOCPOL, и если на IFCONV=1 после 3
+         сужений статус был not_converged/nopen_changed/oscillating, а не
+         'escalate', конвейер сдавался после ровно 4 вызовов molscat, ни
+         разу не попробовав IFCONV=3/4). IFCONV=4 (Брейт-Вигнер по сумме
+         собственных фаз) -- принципиально другая, более устойчивая
+         величина (см. переписку про 440 Гс), может сойтись там, где длина
+         рассеяния не смогла. ВАЖНО: лимит MXLOC=20 итераций общий для всех
+         IFCONV (жёстко зашит в sizes_module.f, не настраивается через
+         &INPUT) -- смена уровня не даёт "больше попыток" САМОМУ LOCPOL,
+         только другую точку входа/величину для той же 3-точечной
+         экстраполяции.
+      5. Если и IFCONV=4 не сошёлся после всех сужений -- возвращаем
+         'failed', но сохраняем ЛУЧШУЮ предварительную (не до конца
+         сошедшуюся) оценку B0 из последней итерации любого из уровней --
+         это по-прежнему полезная информация (см. 440 Гс: B_RES не сошёлся
+         строго, но стабильно лежал в полосе 441-444 Гс). Максимум попыток
+         теперь до 12 (4 на каждый из 3 уровней) вместо прежних де-факто 4
+         в худшем случае.
 
     Все .input/.out этого кандидата складываются в ОТДЕЛЬНУЮ подпапку
     cfg.output_dir/<run_id>/ (а не вперемешку с другими кандидатами) --
-    у одного резонанса может быть 4-8 файлов (эскалации + сужения окна),
+    у одного резонанса может быть до 12 файлов (эскалации + сужения окна),
     подпапка на кандидата держит это читаемым."""
     cand_dir = cfg.output_dir / run_id
     cand_dir.mkdir(parents=True, exist_ok=True)
@@ -821,7 +1192,7 @@ def characterize_candidate(cfg: Config, candidate: dict, run_id: str) -> dict:
                                    # могут сидеть в разных фиксированных каналах)
     ifconv = 1
     narrow_attempts = 0
-    escalated = False
+    tried_3 = False
     tried_4 = False
     best_tentative = None
     total_elapsed = 0.0
@@ -849,8 +1220,10 @@ def characterize_candidate(cfg: Config, candidate: dict, run_id: str) -> dict:
             result["n_molscat_calls"] = n_calls
             return result
 
-        if result["status"] == "escalate" and not escalated:
-            escalated = True
+        # Явная просьба LOCPOL (только на IFCONV=1) -- эскалируем СРАЗУ,
+        # без исчерпания сужений на IFCONV=1.
+        if result["status"] == "escalate" and not tried_3:
+            tried_3 = True
             ifconv = 3
             narrow_attempts = 0
             continue
@@ -865,7 +1238,17 @@ def characterize_candidate(cfg: Config, candidate: dict, run_id: str) -> dict:
             fmax = candidate["field_center"] + span / 2
             continue
 
-        if ifconv == 3 and not tried_4:
+        # Сужения на ТЕКУЩЕМ уровне исчерпаны (или статус вообще не входит
+        # в список выше, напр. 'unknown') -- эскалируем на следующий
+        # уровень 1->3->4 на исходном окне кандидата, ВМЕСТО немедленной
+        # сдачи (см. докстринг выше -- это исправление реального бага).
+        if not tried_3:
+            tried_3 = True
+            ifconv = 3
+            fmin, fmax = candidate["field_lo"], candidate["field_hi"]
+            narrow_attempts = 0
+            continue
+        if not tried_4:
             tried_4 = True
             ifconv = 4
             fmin, fmax = candidate["field_lo"], candidate["field_hi"]
@@ -941,18 +1324,45 @@ def parse_threshold_table(out_path: Path) -> dict:
 
 
 def find_channel_for_monqn(cfg: Config, monqn: str, field: float,
-                            label: str, tol_cm1: float = 1.0e-8) -> dict:
+                            label: str, tol_cm1: float = 1.0e-8,
+                            l_filter: Optional[int] = 0,
+                            out_dir: Optional[Path] = None) -> dict:
     """Гоняет ОДНОТОЧЕЧНЫЙ диагностический прогон (FLDMIN=FLDMAX=field) с
     заданным MONQN (через cfg.monqn) и находит номер канала (строку в
     таблице THRESHOLDS), чья энергия совпадает с EREF, посчитанным
     THRSH9 по этим F,mF. ВАЖНО: как обсуждали -- при B=0 разные (F,mF)
     комбинации могут быть точно вырождены (несколько строк с одинаковой
     энергией), поэтому по умолчанию используйте НЕНУЛЕВОЕ поле (см.
-    field). Возвращает:
+    field).
+
+    ВАЖНО #2 (портировано из toy_resonance_pipeline.py -- ambiguous при
+    LMAX>=2 на ЛЮБОМ поле, не только вблизи вырождения уровней): энергия
+    порога в THRSH9/THRESHOLDS зависит ТОЛЬКО от внутреннего (F,mF)-
+    состояния, не от партциальной волны L -- значит для одного и того же
+    MONQN таблица THRESHOLDS всегда содержит ПО ОДНОЙ строке на каждый
+    открытый L (L=0,2,4,...) с ОДИНАКОВОЙ energy_cm1, даже вдали от любых
+    реальных пересечений уровней. l_filter (дефолт 0, s-волна -- см. тот
+    же дефолт в detect_candidates/l_filter) разрешает эту неоднозначность:
+    если среди совпавших по энергии строк ровно одна имеет L==l_filter,
+    она возвращается как единственный результат (без статуса 'ambiguous').
+    Если l_filter=None или после фильтра всё ещё >1 строки -- ведёт себя
+    как раньше (см. ниже), сохраняя ВСЕ совпавшие строки в 'candidates'
+    для ручной диагностики (это уже настоящая неоднозначность, обычно
+    из-за близости к точке пересечения уровней).
+
+    out_dir (по умолчанию cfg.output_dir) -- куда писать .input/.out;
+    вызывающий код (characterize_field_resonances) передаёт СВОЮ подпапку
+    на резонанс, чтобы *_chan.input/.out не мусорили верхний уровень
+    output_dir (см. переписку про toy_1_50000G_4/6 -- сотни файлов
+    *_chan.* напрямую в molscat_runs).
+
+    Возвращает:
       status='ok': {channel, L, energy_cm1, diff_cm1, ...}
-      status='ambiguous': несколько строк совпали в пределах tol_cm1 --
-        обычно значит, что field слишком близко к точке вырождения;
-        candidates перечисляет все совпавшие строки.
+      status='ambiguous': несколько строк совпали в пределах tol_cm1 (после
+        применения l_filter, если он задан) -- обычно значит, что field
+        слишком близко к точке вырождения (НЕ обычная L-деградация, см.
+        выше -- та уже разрешена); candidates перечисляет все совпавшие
+        строки.
       status='not_found': ни одна строка не совпала -- см. all_thresholds
         для ручной диагностики (например, если MONQN задан некорректно,
         или IPRINT<6 в шаблоне, или ANSA=0 (INUCA=0) -- любой из этих
@@ -960,7 +1370,9 @@ def find_channel_for_monqn(cfg: Config, monqn: str, field: float,
     if not monqn:
         raise ValueError("find_channel_for_monqn: monqn не задан")
     cfg_local = dataclasses.replace(cfg, monqn=monqn)
-    inp = cfg.output_dir / f"{label}.input"
+    target_dir = out_dir if out_dir is not None else cfg.output_dir
+    target_dir.mkdir(parents=True, exist_ok=True)
+    inp = target_dir / f"{label}.input"
     generate_coarse_scan_input(
         cfg_local, fmin=field, fmax=field, dfield=1.0, label=label, out_path=inp,
     )
@@ -976,6 +1388,11 @@ def find_channel_for_monqn(cfg: Config, monqn: str, field: float,
     thresholds = parsed["thresholds"]
     matches = [t for t in thresholds if abs(t["energy_cm1"] - eref) < tol_cm1]
 
+    if len(matches) > 1 and l_filter is not None:
+        l_matches = [t for t in matches if t["L"] == l_filter]
+        if len(l_matches) == 1:
+            matches = l_matches  # неоднозначность разрешена фильтром по L
+
     if len(matches) == 1:
         t = matches[0]
         return {"status": "ok", "channel": t["index"], "L": t["L"],
@@ -986,10 +1403,9 @@ def find_channel_for_monqn(cfg: Config, monqn: str, field: float,
     if len(matches) > 1:
         return {"status": "ambiguous", "candidates": matches,
                 "reference_energy_cm1": eref, "field_G": field,
-                "reason": f"{len(matches)} строк с той же энергией -- "
-                "похоже на вырождение (часто бывает у B, близких к 0 "
-                "или к точке пересечения уровней); попробуйте другое "
-                "поле.", "out_file": str(out)}
+                "reason": f"{len(matches)} строк с той же энергией "
+                f"(после фильтра L={l_filter}) -- похоже на вырождение "
+                "уровней; попробуйте другое поле.", "out_file": str(out)}
     return {"status": "not_found", "all_thresholds": thresholds,
             "reference_energy_cm1": eref, "field_G": field,
             "reason": "ни одна строка THRESHOLDS не совпала с EREF в "
@@ -1020,6 +1436,7 @@ def build_summary_table(results: list[dict], meta: RunMetadata) -> pd.DataFrame:
                 "hyperfine_zeeman": meta.hyperfine_zeeman,
                 "lmax": meta.lmax,
                 "dipdip_scale": meta.dipdip_scale,
+                "v2_scale": meta.v2_scale,
                 "run_label": meta.label,
             }
             tent = r.get("tentative")
@@ -1037,6 +1454,7 @@ def build_summary_table(results: list[dict], meta: RunMetadata) -> pd.DataFrame:
             "Gamma_inel_G": r.get("Gamma_inel_G"),
             "Gamma_BW_G": r.get("Gamma_BW_G"),
             "EPSUM_bg_over_pi": r.get("EPSUM_bg_over_pi"),
+            "Delta_G_from_gamma_bw": r.get("Delta_G_from_gamma_bw"),
             "ifconv_used": r.get("ifconv_used"),
             "predicted_step_G": r.get("predicted_step"),
             "channel": r["candidate"].get("channel"),
@@ -1049,6 +1467,7 @@ def build_summary_table(results: list[dict], meta: RunMetadata) -> pd.DataFrame:
             "hyperfine_zeeman": meta.hyperfine_zeeman,
             "lmax": meta.lmax,
             "dipdip_scale": meta.dipdip_scale,
+            "v2_scale": meta.v2_scale,
             "run_label": meta.label,
         })
     return pd.DataFrame(rows)
@@ -1106,6 +1525,267 @@ def dedupe_by_B0(df: pd.DataFrame, tol_G: float = 2.0) -> pd.DataFrame:
 
 
 # =========================================================================
+# 6b. ПОИСК РЕЗОНАНСОВ ЧЕРЕЗ FIELD (альтернатива Этапам 1-5 для
+#     одноканальной ситуации -- см. FIELD_TEMPLATE выше)
+# =========================================================================
+
+def find_resonances_via_field(cfg: Config, fldmin: float, fldmax: float,
+                                monqn: str, label: str,
+                                csv_out: Path) -> pd.DataFrame:
+    """Один прогон field.exe: ищет ВСЕ поля в [fldmin, fldmax], где связанный
+    уровень пересекает порог (ENERGY=0 по MONQN) -- т.е. позиции резонансов
+    B0 НАПРЯМУЮ, без грубого скана/detect_candidates/IFCONV. cfg.molscat_exe
+    должен указывать на field-Tm2.exe (НЕ molscat-Tm2.exe -- это другая
+    программа, см. Makefile: BASE9-TM-TM используется и там, и там, но
+    драйверы разные: fld.driver.f против mol.driver.f)."""
+    cfg.output_dir.mkdir(parents=True, exist_ok=True)
+    field_dir = cfg.output_dir / f"{label}_field"
+    field_dir.mkdir(parents=True, exist_ok=True)
+
+    print(f"[1/3] Генерация input для field.exe, окно {fldmin}-{fldmax} Гс, "
+          f"MONQN={monqn}")
+    field_input = field_dir / "field.input"
+    generate_field_scan_input(cfg, fldmin=fldmin, fldmax=fldmax, monqn=monqn,
+                               label=f"{label} field search", out_path=field_input)
+
+    print("[2/3] Запуск field.exe...")
+    field_out, elapsed = run_molscat(cfg, field_input)
+    print(f"       -> заняло {_fmt_duration(elapsed)}")
+
+    print("[3/3] Парсинг результатов...")
+    df = parse_field_resonances(field_out)
+    df.to_csv(csv_out, index=False)
+
+    n_ok = (df.status == "ok").sum() if not df.empty else 0
+    n_other = len(df) - n_ok
+    if df.empty:
+        print(f"       -> резонансов в окне {fldmin}-{fldmax} Гс нет "
+              f"(NO NODES BETWEEN FLDMAX AND FLDMIN -- т.е. число связанных "
+              f"состояний ниже порога ОДИНАКОВО на обеих границах окна)")
+    else:
+        print(f"       -> найдено {len(df)} записей ({n_ok} чистых, "
+              f"{n_other} с оговоркой -- см. колонку status)")
+        for _, r in df.iterrows():
+            if r.status == "not_converged":
+                print(f"          state {r.state}: НЕ СОШЛОСЬ")
+            else:
+                print(f"          state {r.state}: B0 = {r.field_G:.6f} "
+                      f"{r.unit}  [{r.status}]")
+    print(f"       -> записано в {csv_out}")
+    return df
+
+
+# =========================================================================
+# 6c. МОСТ FIELD -> LOCPOL/IFCONV (эластичная процедура Frye & Hutson)
+# =========================================================================
+#
+# find_resonances_via_field() даёт точные B0 (позиции резонансов), но САМ
+# field.exe не считает ни ширину, ни a_bg -- это отдельная задача (энергия
+# связанного состояния относительно порога, не длина рассеяния). Frye & Hutson,
+# PRA 96, 042705 (2017), Sec. II ("elastic procedure") описывают ИМЕННО эту
+# ситуацию: FIELD даёт стартовое приближение B0 ("we usually use the program
+# FIELD..."), а Δ (ширина по полю) и a_bg получаются из 3-точечной
+# экстраполяции полюса длины рассеяния, Eq. (2)-(5). Мы это НЕ реализуем
+# заново в Python -- она уже есть в locpol.f (см. RE_POLE_LINE1/RE_POLE_DELTA/
+# RE_POLE_ABG выше, FORMAT 130 -- буквально B_RES/DELTA/A_BG из статьи) и уже
+# вызывается через characterize_candidate() (IFCONV=1 = IDECAY=0 = чисто
+# упругий случай статьи; эскалация на IFCONV=3/4 -- их же "regularized"/
+# "fully complex" процедуры для случаев с неупругостью, см. комментарии над
+# characterize_candidate). Здесь только МОСТ: B0 из field.exe -> ICHAN (через
+# find_channel_for_monqn) -> candidate-словарь -> characterize_candidate().
+# Портировано из toy_resonance_pipeline.py, вместе со всеми доработками,
+# найденными при её обкатке (l_filter в find_channel_for_monqn, подпапка на
+# резонанс, эскалация в characterize_candidate, проверка field_match,
+# пересчёт Delta_G_from_gamma_bw).
+
+def characterize_field_resonances(cfg_scatter: Config, field_df: pd.DataFrame,
+                                    monqn: str, bracket_g: float,
+                                    run_prefix: str,
+                                    l_filter: Optional[int] = 0) -> list[dict]:
+    """Для каждой строки field_df со status=='ok' (надёжный B0 от field.exe):
+      1. Определяет ICHAN на этом B0 через find_channel_for_monqn (THRSH9
+         сам номер канала не знает, только EREF -- см. секцию 5b).
+      2. Собирает candidate-словарь с УЗКИМ бракетирующим окном
+         B0 +/- bracket_g (в отличие от кандидатов грубого скана, B0 здесь
+         уже точен -- окно нужно только чтобы дать LOCPOL стартовые точки,
+         см. Sec. II статьи про δB=0.2 Гс между начальными точками; ЕСЛИ
+         окно всё же не подойдёт -- characterize_candidate САМ его сузит,
+         см. narrow_attempts в этой функции).
+      3. Прогоняет через characterize_candidate() (тот же IFCONV-конвейер
+         с эскалацией 1->3->4, что и для кандидатов грубого скана).
+
+    cfg_scatter.molscat_exe ДОЛЖЕН быть molscat-Tm2.exe (характеризация --
+    это обычный рассеятельный расчёт с IFCONV, параметром mol.driver.f, а
+    не fld.driver.f). Строки со status != 'ok' (not_converged/out_of_range)
+    пропускаются с предупреждением -- их B0 недостаточно надёжен, чтобы
+    от него стартовать 3-точечную экстраполюцию.
+
+    Возвращает список результатов в формате characterize_candidate() (плюс
+    ключи 'state' и 'field_G_field_driver' для прослеживаемости), включая
+    отдельный статус 'channel_not_found', если find_channel_for_monqn не
+    смог сопоставить канал (само по себе диагностически полезно -- скорее
+    всего JTOT/IBFIX сектор не тот, где искал field.exe)."""
+    results: list[dict] = []
+    n_total = len(field_df)
+    for i, row in enumerate(field_df.itertuples(index=False)):
+        if row.status != "ok":
+            print(f"[WARN] state {row.state}: status={row.status!r} -- "
+                  f"пропускаю характеризацию (ненадёжный B0)", file=sys.stderr)
+            continue
+
+        b0_guess = row.field_G
+        # Общая подпапка на этот резонанс (та же, что чуть ниже использует
+        # characterize_candidate) -- сюда же кладём файлы поиска ICHAN,
+        # чтобы верхний уровень output_dir не засорялся сотнями *_chan.*.
+        run_id = f"{run_prefix}_state{row.state}"
+        state_dir = cfg_scatter.output_dir / run_id
+        print(f"       -> резонанс {i+1}/{n_total}: state {row.state} @ "
+              f"{b0_guess:.6f} Гс -- ищу ICHAN...")
+        chan_res = find_channel_for_monqn(cfg_scatter, monqn, b0_guess, "chan",
+                                          l_filter=l_filter, out_dir=state_dir)
+
+        if chan_res["status"] != "ok":
+            print(f"          ICHAN не определён ({chan_res['status']}: "
+                  f"{chan_res.get('reason')}) -- характеризация пропущена",
+                  file=sys.stderr)
+            results.append({
+                "status": "channel_not_found",
+                "candidate": {
+                    "field_center": b0_guess, "channel": None, "L": None,
+                    "reason": f"field.exe state {row.state}: ICHAN lookup "
+                              f"failed ({chan_res['status']})",
+                },
+                "out_file": chan_res.get("out_file"),
+                "elapsed_sec": chan_res.get("elapsed_sec"),
+                "n_molscat_calls": 1,
+                "state": row.state, "field_G_field_driver": b0_guess,
+            })
+            continue
+
+        candidate = {
+            "field_center": b0_guess,
+            "field_lo": b0_guess - bracket_g, "field_hi": b0_guess + bracket_g,
+            "channel": chan_res["channel"], "L": chan_res["L"],
+            "reason": f"field.exe state {row.state}, B0={b0_guess:.6f} Гс",
+        }
+        print(f"          ICHAN={chan_res['channel']} (L={chan_res['L']}) -- "
+              f"характеризация (IFCONV/LOCPOL)...")
+        res = characterize_candidate(cfg_scatter, candidate, run_id)
+        res["state"] = row.state
+        res["field_G_field_driver"] = b0_guess
+        if res.get("status") == "ok":
+            # ВАЖНО (портировано из toy_resonance_pipeline.py, найдено на
+            # реальном прогоне): FLDMIN/FLDMAX в IFCONV -- это ТОЛЬКО
+            # стартовые точки 3-точечной экстраполяции (Eq. 2-5 статьи), НЕ
+            # жёсткая граница поиска -- если рядом с b0_guess нет НАСТОЯЩЕГО
+            # полюса длины рассеяния (напр. этот уровень слабо/не связан с
+            # открытым каналом -- field.exe находит ЛЮБОЕ пересечение
+            # связанного уровня с порогом, независимо от силы связи, а
+            # LOCPOL видит только то, что реально проявляется как
+            # особенность a(B)), экстраполяция может "убежать" сколь угодно
+            # далеко (видели даже отрицательное поле как промежуточную
+            # оценку) и сойтись на СОВСЕМ ДРУГОМ, не связанном с этим state,
+            # резонансе. Проверяем это явно, вместо того чтобы молча
+            # доверять B0_G/Delta_G/a_bg -- иначе такая ошибочная
+            # характеризация выглядит неотличимо от честной.
+            res["field_match"] = abs(res["B0_G"] - b0_guess) <= bracket_g
+            if res["field_match"]:
+                delta_note = ""
+                if res.get("Delta_G") is None and res.get("Delta_G_from_gamma_bw") is not None:
+                    delta_note = (f" (Delta_G не измерена напрямую -- "
+                                   f"пересчитана из Gamma_BW/EPSUM_bg, "
+                                   f"см. Delta_G_from_gamma_bw)")
+                print(f"          -> B0={res['B0_G']:.6f} Гс, "
+                      f"Delta={res.get('Delta_G')}, a_bg={res.get('a_bg_re')}"
+                      f"{delta_note}")
+                if res.get("Delta_G_from_gamma_bw") is not None:
+                    print(f"          -> Delta_G_from_gamma_bw="
+                          f"{res['Delta_G_from_gamma_bw']:.6g} Гс "
+                          f"(Hutson NJP 9,152(2007) Eq.9, из "
+                          f"Gamma_BW_G={res.get('Gamma_BW_G')})")
+            else:
+                print(f"          [WARNING] LOCPOL сошёлся на B0="
+                      f"{res['B0_G']:.6f} Гс -- это ВНЕ исходного окна "
+                      f"{b0_guess - bracket_g:.3f}-{b0_guess + bracket_g:.3f} Гс "
+                      f"вокруг field.exe-оценки для state {row.state}. Похоже, "
+                      f"экстраполяция 'убежала' на ДРУГОЙ резонанс (возможно, "
+                      f"этот bound-уровень слабо связан с открытым каналом и "
+                      f"не даёт наблюдаемого полюса рядом с {b0_guess:.6f} Гс) "
+                      f"-- НЕ используйте Delta_G/a_bg этой строки как "
+                      f"характеристику резонанса при {b0_guess:.6f} Гс, "
+                      f"см. колонку field_match=False", file=sys.stderr)
+        else:
+            print(f"          -> НЕ охарактеризован (status={res.get('status')})")
+        results.append(res)
+    return results
+
+
+def build_field_char_summary(results: list[dict], meta: RunMetadata) -> pd.DataFrame:
+    """Как build_summary_table(), но для результатов
+    characterize_field_resonances() -- добавляет колонки:
+      state -- номер состояния из field.exe;
+      field_G_field_driver -- B0 ДО уточнения через LOCPOL/IFCONV;
+      field_match -- False означает, что LOCPOL сошёлся ВНЕ окна
+        b0_guess +/- bracket_g (экстраполяция "убежала" на другой резонанс,
+        см. предупреждение в characterize_field_resonances) -- ПРОВЕРЯЙТЕ
+        эту колонку перед тем, как использовать Delta_G/a_bg строки: при
+        field_match=False они относятся к СЛУЧАЙНО найденному резонансу,
+        а не к тому, что предполагал field.exe для этого state (None -- для
+        status != 'ok', сравнивать было не с чем)."""
+    base = build_summary_table(results, meta)
+    base.insert(0, "field_match", [r.get("field_match") for r in results])
+    base.insert(0, "field_G_field_driver",
+                [r.get("field_G_field_driver") for r in results])
+    base.insert(0, "state", [r.get("state") for r in results])
+    return base
+
+
+def characterize_field_pipeline(cfg_field: Config, cfg_scatter: Config,
+                                  fldmin: float, fldmax: float, monqn: str,
+                                  bracket_g: float, label: str, meta: RunMetadata,
+                                  csv_out: Path,
+                                  l_filter: Optional[int] = 0) -> pd.DataFrame:
+    """Полный мост field.exe -> LOCPOL/IFCONV: находит все B0 в [fldmin,fldmax]
+    (Шаг 1, field.exe), затем характеризует КАЖДЫЙ (Шаг 2, molscat + IFCONV),
+    получая Delta_G (=dB, ширина резонанса по полю) и a_bg. Пишет итоговый
+    CSV и возвращает DataFrame."""
+    output_dir = cfg_field.output_dir
+    field_csv = output_dir / f"{label}_field_resonances.csv"
+
+    print("=== Шаг 1/2: поиск точных B0 через field.exe ===")
+    field_df = find_resonances_via_field(cfg_field, fldmin, fldmax, monqn,
+                                          label, field_csv)
+
+    if field_df.empty:
+        print("\n[Шаг 2/2 пропущен] Характеризовать нечего -- field.exe не "
+              "нашёл ни одного резонанса в этом окне.")
+        summary = pd.DataFrame(columns=[
+            "state", "field_G_field_driver", "field_match", "B0_G", "Delta_G",
+            "a_bg_re", "a_bg_im", "a_res_re", "a_res_im", "Gamma_inel_G",
+            "Gamma_BW_G", "EPSUM_bg_over_pi", "Delta_G_from_gamma_bw",
+            "ifconv_used", "predicted_step_G",
+            "channel", "L", "field_center_guess", "elapsed_sec",
+            "n_molscat_calls", "status", "tensor_terms", "hyperfine_zeeman",
+            "lmax", "dipdip_scale", "v2_scale", "run_label",
+        ])
+        summary.to_csv(csv_out, index=False)
+        return summary
+
+    print(f"\n=== Шаг 2/2: характеризация {len(field_df)} найденных "
+          f"состояний (ICHAN + LOCPOL/IFCONV) ===")
+    results = characterize_field_resonances(cfg_scatter, field_df, monqn,
+                                             bracket_g, label, l_filter=l_filter)
+
+    summary = build_field_char_summary(results, meta)
+    summary.to_csv(csv_out, index=False)
+
+    n_ok = (summary.status == "ok").sum()
+    print(f"\n=== ГОТОВО: {n_ok}/{len(summary)} резонансов охарактеризовано, "
+          f"записано в {csv_out} ===")
+    return summary
+
+
+# =========================================================================
 # 7. ВЕРХНЕУРОВНЕВЫЙ ПАЙПЛАЙН
 # =========================================================================
 
@@ -1125,7 +1805,7 @@ def run_full_pipeline(cfg: Config, meta: RunMetadata, fmin: float, fmax: float,
     )
 
     print("[2/6] Запуск molscat (грубый скан)...")
-    coarse_out, coarse_elapsed = run_molscat(cfg, coarse_input, timeout=3600)
+    coarse_out, coarse_elapsed = run_molscat(cfg, coarse_input)
     print(f"       -> заняло {_fmt_duration(coarse_elapsed)}")
 
     print("[2/6] Парсинг вывода (ВСЕ каналы, без фильтра по ICHAN)...")
@@ -1140,6 +1820,29 @@ def run_full_pipeline(cfg: Config, meta: RunMetadata, fmin: float, fmax: float,
                                     window_mult=window_mult)
     print(f"       -> найдено {len(candidates)} кандидатов: "
           f"{[(round(c['field_center'],1), 'chan='+str(c['channel'])) for c in candidates]}")
+
+    if not candidates:
+        print("       -> кандидатов не найдено -- характеризация и сборка "
+              "таблицы пропущены (это НЕ обязательно ошибка: возможно, в "
+              "этом диапазоне поля действительно нет резонансов -- либо "
+              "--min-separation-g/--window-mult/--l-filter настроены не под "
+              "этот скан, см. docstring detect_candidates(); проверьте "
+              f"{coarse_out} глазами, прежде чем сужать диапазон дальше)")
+        summary = pd.DataFrame(columns=[
+            "B0_G", "Delta_G", "a_bg_re", "a_bg_im", "a_res_re", "a_res_im",
+            "Gamma_inel_G", "Gamma_BW_G", "EPSUM_bg_over_pi", "ifconv_used",
+            "predicted_step_G", "channel", "L", "field_center_guess",
+            "elapsed_sec", "n_molscat_calls", "status", "tensor_terms",
+            "hyperfine_zeeman", "lmax", "dipdip_scale", "v2_scale",
+            "run_label",
+        ])
+        summary.to_csv(csv_out, index=False)
+        print(f"       -> записан пустой CSV (0 кандидатов) в {csv_out}")
+        total_elapsed = time.perf_counter() - t_start
+        print(f"\n=== ГОТОВО за {_fmt_duration(total_elapsed)} "
+              f"(скан: {_fmt_duration(coarse_elapsed)}, кандидатов не "
+              f"найдено, характеризация не запускалась) ===")
+        return summary
 
     print("[4-5/6] Характеризация каждого кандидата (IFCONV с эскалацией)...")
     results = []
@@ -1250,6 +1953,20 @@ def main():
                               "(POTIN9) -- шаблон &POTL теперь ВСЕГДА пишет "
                               "3 блока; со старым бинарником под MXLAM=2 "
                               "molscat завершится с ошибкой чтения &POTL.")
+    p_full.add_argument("--v2-scale", type=float, default=1.0,
+                         dest="v2_scale",
+                         help="Множитель перед коэффициентом связи блока "
+                              "k=2,i=1 (анизотропный V^(1)_2(R), Table 5 -- "
+                              "см. V2SCALE в &BASIS9 / base9-Tm_Tm_AI.f). "
+                              "Физически эквивалентно масштабированию "
+                              "V^(1)_2(R) целиком для всех R. 1.0 (дефолт) "
+                              "= реальная физика, 0.0 = анизотропия k=2,i=1 "
+                              "выключена, любое другое значение -- "
+                              "искусственное масштабирование для "
+                              "сравнительных прогонов. Требует бинарник, "
+                              "собранный с V2SCALE в NAMELIST /BASIS9/ "
+                              "base9-Tm_Tm_AI.f -- со старым бинарником "
+                              "molscat завершится с ошибкой чтения &BASIS9.")
     p_full.add_argument("--l-filter", type=int, default=0,
                          help="Партиальная волна L, по которой ищем кандидатов "
                               "в грубом скане (0 = s-волна, физически стандартная "
@@ -1347,6 +2064,9 @@ def main():
     p_char.add_argument("--dipdip-scale", type=float, default=1.0,
                          dest="dipdip_scale",
                          help="См. help в 'run' -- множитель перед D^(2)_2.")
+    p_char.add_argument("--v2-scale", type=float, default=1.0,
+                         dest="v2_scale",
+                         help="См. help в 'run' -- множитель перед V^(1)_2(R).")
 
     p_find = sub.add_parser("find-channel",
                              help="найти номер ICHAN, соответствующий "
@@ -1378,9 +2098,163 @@ def main():
     p_find.add_argument("--dipdip-scale", type=float, default=1.0,
                          dest="dipdip_scale",
                          help="См. help в 'run' -- множитель перед D^(2)_2.")
+    p_find.add_argument("--v2-scale", type=float, default=1.0,
+                         dest="v2_scale",
+                         help="См. help в 'run' -- множитель перед V^(1)_2(R).")
     p_find.add_argument("--tol-cm1", type=float, default=1.0e-8, dest="tol_cm1",
                          help="Допуск (см⁻¹) при сравнении EREF с "
                               "энергиями из таблицы THRESHOLDS.")
+    p_find.add_argument("--l-filter", type=int, default=0, dest="l_filter",
+                         help="Партциальная волна L для разрешения "
+                              "неоднозначности ICHAN (см. find_channel_for_monqn: "
+                              "при LMAX>=2 в таблице THRESHOLDS ВСЕГДА несколько "
+                              "строк с одинаковой энергией порога -- по одной на "
+                              "каждый L, т.к. энергия порога от L не зависит; "
+                              "это не 'настоящее' вырождение уровней). Дефолт "
+                              "0 (s-волна, стандартный выбор). -1 отключает "
+                              "фильтр (вернуться к старому поведению -- "
+                              "'ambiguous' при LMAX>=2 почти всегда).")
+
+    p_field = sub.add_parser("find-resonances",
+                              help="найти позиции резонансов НАПРЯМУЮ через "
+                                   "field.exe (без грубого скана molscat) -- "
+                                   "ищет поле(я) в [--fmin,--fmax], где "
+                                   "связанный уровень пересекает порог. "
+                                   "ЛУЧШЕ подходит для ситуации с одним "
+                                   "открытым каналом, чем 'run'.")
+    p_field.add_argument("--exe", required=True, type=Path,
+                          help="путь к field-Tm2.exe (НЕ molscat-Tm2.exe!)")
+    p_field.add_argument("--work-dir", required=True, type=Path)
+    p_field.add_argument("--output-dir", type=Path, default=None)
+    p_field.add_argument("--fmin", type=float, required=True, dest="fldmin",
+                          help="Нижняя граница окна поиска, Гс")
+    p_field.add_argument("--fmax", type=float, required=True, dest="fldmax",
+                          help="Верхняя граница окна поиска, Гс")
+    p_field.add_argument("--monqn", required=True,
+                          help="ОБЯЗАТЕЛЕН (в отличие от 'run'/'characterize') "
+                               "-- '2F1,2mF1,2F2,2mF2', напр. '8,-8,8,-8' "
+                               "(F1=F2=4,mF1=mF2=-4, полностью растянутый "
+                               "входной канал для Tm2, I=1/2 -- см. "
+                               "ABS(2F-ISA)==1 в THRSH9 base9-Tm_Tm_AI.f). "
+                               "Без него не определён порог, относительно "
+                               "которого ищется пересечение.")
+    p_field.add_argument("--jtot", type=int, default=-12)
+    p_field.add_argument("--ibfix", type=int, default=2)
+    p_field.add_argument("--jstep", type=int, default=2)
+    p_field.add_argument("--lmax", type=int, default=4)
+    p_field.add_argument("--ured", type=float, default=84.467109,
+                          help="Приведённая масса пары (а.е.м.). Дефолт -- "
+                               "физическая масса пары 169Tm.")
+    p_field.add_argument("--label", default="field_search")
+    p_field.add_argument("--dipdip-scale", type=float, default=1.0,
+                          dest="dipdip_scale",
+                          help="См. help в 'run' -- множитель перед D^(2)_2.")
+    p_field.add_argument("--v2-scale", type=float, default=1.0,
+                          dest="v2_scale",
+                          help="См. help в 'run' -- множитель перед V^(1)_2(R).")
+    p_field.add_argument("--csv-out", type=Path, default=None,
+                          help="По умолчанию: <output-dir>/<label>_resonances.csv")
+
+    p_charfield = sub.add_parser(
+        "characterize-field",
+        help="полная эластичная процедура Frye&Hutson (PRA 96, 042705, Sec. II): "
+             "field.exe находит точные B0, затем для каждого автоматически "
+             "определяется ICHAN и запускается LOCPOL/IFCONV -- даёт B0, "
+             "Delta_G (=dB, ширина резонанса по полю) и a_bg одним прогоном "
+             "на резонанс, без ручного подбора окон/каналов.")
+    p_charfield.add_argument("--field-exe", required=True, type=Path,
+                              dest="field_exe",
+                              help="путь к field-Tm2.exe (Шаг 1: поиск B0)")
+    p_charfield.add_argument("--molscat-exe", required=True, type=Path,
+                              dest="molscat_exe",
+                              help="путь к molscat-Tm2.exe (Шаг 2: "
+                                   "характеризация через IFCONV/LOCPOL)")
+    p_charfield.add_argument("--work-dir", required=True, type=Path)
+    p_charfield.add_argument("--output-dir", type=Path, default=None)
+    p_charfield.add_argument("--fmin", type=float, required=True, dest="fldmin",
+                              help="Нижняя граница окна поиска B0, Гс")
+    p_charfield.add_argument("--fmax", type=float, required=True, dest="fldmax",
+                              help="Верхняя граница окна поиска B0, Гс")
+    p_charfield.add_argument("--monqn", required=True,
+                              help="'2F1,2mF1,2F2,2mF2', напр. '8,-8,8,-8' "
+                                   "(F1=F2=4,mF1=mF2=-4, полностью растянутый "
+                                   "входной канал для Tm2, I=1/2) -- "
+                                   "используется И для field.exe, И для "
+                                   "последующего определения ICHAN/IFCONV "
+                                   "(должен быть ОДИН и тот же канал на "
+                                   "обоих шагах).")
+    p_charfield.add_argument("--bracket-g", type=float, default=0.5,
+                              dest="bracket_g",
+                              help="Начальная полуширина бракетирующего окна "
+                                   "(Гс) вокруг каждого B0 от field.exe для "
+                                   "старта LOCPOL/IFCONV -- см. Sec. II "
+                                   "статьи (δB=0.2 Гс между начальными "
+                                   "точками). B0 здесь уже точен (в отличие "
+                                   "от кандидатов грубого скана), так что "
+                                   "окно нужно только чтобы дать LOCPOL "
+                                   "стартовые точки; если не подойдёт -- "
+                                   "characterize_candidate сам его сузит. "
+                                   "Дефолт 0.5 Гс; уменьшайте, если "
+                                   "резонансы расположены ближе друг к "
+                                   "другу, чем 1 Гс.")
+    p_charfield.add_argument("--jtot", type=int, default=-12)
+    p_charfield.add_argument("--ibfix", type=int, default=2)
+    p_charfield.add_argument("--jstep", type=int, default=2)
+    p_charfield.add_argument("--lmax", type=int, default=4)
+    p_charfield.add_argument("--ured", type=float, default=84.467109,
+                              help="Приведённая масса пары (а.е.м.). Дефолт "
+                                   "-- физическая масса пары 169Tm.")
+    p_charfield.add_argument("--label", default="charfield")
+    p_charfield.add_argument("--dipdip-scale", type=float, default=1.0,
+                              dest="dipdip_scale",
+                              help="См. help в 'run' -- множитель перед D^(2)_2.")
+    p_charfield.add_argument("--v2-scale", type=float, default=1.0,
+                              dest="v2_scale",
+                              help="См. help в 'run' -- множитель перед V^(1)_2(R).")
+    p_charfield.add_argument("--tensor-terms", default="k0i1,k2i1,k2i2",
+                              help="См. help в 'run' -- только метаданные CSV.")
+    p_charfield.add_argument("--no-hyperfine-zeeman", action="store_true",
+                              help="См. help в 'run' -- только метаданные CSV.")
+    p_charfield.add_argument("--l-filter", type=int, default=0, dest="l_filter",
+                              help="См. find-channel --l-filter -- разрешает "
+                                   "неизбежную L-неоднозначность ICHAN при "
+                                   "LMAX>=2. Дефолт 0 (s-волна). -1 отключает "
+                                   "фильтр.")
+    p_charfield.add_argument("--csv-out", type=Path, default=None,
+                              help="По умолчанию: <output-dir>/<label>_char_summary.csv")
+
+    p_count = sub.add_parser("count-resonances",
+                              help="БЫСТРО посчитать ЧИСЛО резонансов в окне "
+                                   "[--fmin,--fmax] через разницу счёта узлов "
+                                   "на FLDMIN/FLDMAX (то же, что field.exe сам "
+                                   "печатает как 'SEEK N STATES', но с "
+                                   "MXCALC=3 -- без дорогого поиска точных "
+                                   "позиций, см. find-resonances для этого).")
+    p_count.add_argument("--exe", required=True, type=Path,
+                          help="путь к field-Tm2.exe (НЕ molscat-Tm2.exe!)")
+    p_count.add_argument("--work-dir", required=True, type=Path)
+    p_count.add_argument("--output-dir", type=Path, default=None)
+    p_count.add_argument("--fmin", type=float, required=True, dest="fldmin",
+                          help="Нижняя граница окна, Гс")
+    p_count.add_argument("--fmax", type=float, required=True, dest="fldmax",
+                          help="Верхняя граница окна, Гс")
+    p_count.add_argument("--monqn", required=True,
+                          help="ОБЯЗАТЕЛЕН -- '2F1,2mF1,2F2,2mF2', напр. "
+                               "'8,-8,8,-8'. См. help в 'find-resonances'.")
+    p_count.add_argument("--jtot", type=int, default=-12)
+    p_count.add_argument("--ibfix", type=int, default=2)
+    p_count.add_argument("--jstep", type=int, default=2)
+    p_count.add_argument("--lmax", type=int, default=4)
+    p_count.add_argument("--ured", type=float, default=84.467109,
+                          help="Приведённая масса пары (а.е.м.). Дефолт -- "
+                               "физическая масса пары 169Tm.")
+    p_count.add_argument("--label", default="node_count")
+    p_count.add_argument("--dipdip-scale", type=float, default=1.0,
+                          dest="dipdip_scale",
+                          help="См. help в 'run' -- множитель перед D^(2)_2.")
+    p_count.add_argument("--v2-scale", type=float, default=1.0,
+                          dest="v2_scale",
+                          help="См. help в 'run' -- множитель перед V^(1)_2(R).")
 
     args = ap.parse_args()
 
@@ -1396,7 +2270,7 @@ def main():
             molscat_exe=args.exe, work_dir=args.work_dir, output_dir=output_dir,
             coarse_template=Path(""), lmax=args.lmax, monqn=args.monqn,
             jtot=args.jtot, ibfix=args.ibfix, jstep=args.jstep,
-            dipdip_scale=args.dipdip_scale,
+            dipdip_scale=args.dipdip_scale, v2_scale=args.v2_scale,
         )
         candidate = {
             "field_lo": args.fmin, "field_hi": args.fmax,
@@ -1431,9 +2305,11 @@ def main():
             molscat_exe=args.exe, work_dir=args.work_dir, output_dir=output_dir,
             coarse_template=Path(""), lmax=args.lmax, jtot=args.jtot,
             ibfix=args.ibfix, jstep=args.jstep, dipdip_scale=args.dipdip_scale,
+            v2_scale=args.v2_scale,
         )
+        l_filter = None if args.l_filter < 0 else args.l_filter
         res = find_channel_for_monqn(cfg, args.monqn, args.field, args.label,
-                                      tol_cm1=args.tol_cm1)
+                                      tol_cm1=args.tol_cm1, l_filter=l_filter)
         print(f"\nMONQN = {args.monqn}, поле = {args.field} Гс")
         if res["status"] == "ok":
             print(f"=== НАЙДЕН КАНАЛ: ICHAN = {res['channel']} "
@@ -1457,6 +2333,66 @@ def main():
         print(f"  файл: {res.get('out_file')}")
         return
 
+    if args.cmd == "find-resonances":
+        args.work_dir.mkdir(parents=True, exist_ok=True)
+        output_dir = args.output_dir or (args.work_dir / "molscat_runs")
+        output_dir.mkdir(parents=True, exist_ok=True)
+        csv_out = args.csv_out or (output_dir / f"{args.label}_resonances.csv")
+        cfg = Config(
+            molscat_exe=args.exe, work_dir=args.work_dir, output_dir=output_dir,
+            coarse_template=Path(""), lmax=args.lmax, jtot=args.jtot,
+            ibfix=args.ibfix, jstep=args.jstep, dipdip_scale=args.dipdip_scale,
+            v2_scale=args.v2_scale, ured=args.ured,
+        )
+        find_resonances_via_field(cfg, args.fldmin, args.fldmax, args.monqn,
+                                   args.label, csv_out)
+        return
+
+    if args.cmd == "characterize-field":
+        args.work_dir.mkdir(parents=True, exist_ok=True)
+        output_dir = args.output_dir or (args.work_dir / "molscat_runs")
+        output_dir.mkdir(parents=True, exist_ok=True)
+        csv_out = args.csv_out or (output_dir / f"{args.label}_char_summary.csv")
+
+        cfg_field = Config(
+            molscat_exe=args.field_exe, work_dir=args.work_dir,
+            output_dir=output_dir, coarse_template=Path(""), lmax=args.lmax,
+            jtot=args.jtot, ibfix=args.ibfix, jstep=args.jstep,
+            dipdip_scale=args.dipdip_scale, v2_scale=args.v2_scale,
+            ured=args.ured,
+        )
+        cfg_scatter = dataclasses.replace(
+            cfg_field, molscat_exe=args.molscat_exe, monqn=args.monqn,
+        )
+        meta = RunMetadata(
+            tensor_terms=args.tensor_terms,
+            hyperfine_zeeman=not args.no_hyperfine_zeeman,
+            lmax=args.lmax, label=args.label,
+            dipdip_scale=args.dipdip_scale, v2_scale=args.v2_scale,
+        )
+        l_filter = None if args.l_filter < 0 else args.l_filter
+        characterize_field_pipeline(
+            cfg_field, cfg_scatter, args.fldmin, args.fldmax, args.monqn,
+            args.bracket_g, args.label, meta, csv_out, l_filter=l_filter,
+        )
+        return
+
+    if args.cmd == "count-resonances":
+        args.work_dir.mkdir(parents=True, exist_ok=True)
+        output_dir = args.output_dir or (args.work_dir / "molscat_runs")
+        output_dir.mkdir(parents=True, exist_ok=True)
+        cfg = Config(
+            molscat_exe=args.exe, work_dir=args.work_dir, output_dir=output_dir,
+            coarse_template=Path(""), lmax=args.lmax, jtot=args.jtot,
+            ibfix=args.ibfix, jstep=args.jstep, dipdip_scale=args.dipdip_scale,
+            v2_scale=args.v2_scale, ured=args.ured,
+        )
+        res = count_resonances_via_field(cfg, args.fldmin, args.fldmax,
+                                          args.monqn, args.label)
+        print(f"\n=== N резонансов в [{args.fldmin},{args.fldmax}] Гс: "
+              f"{res.get('n_resonances')} (status={res.get('status')}) ===")
+        return
+
     if args.cmd == "run":
         args.work_dir.mkdir(parents=True, exist_ok=True)
         output_dir = args.output_dir or (args.work_dir / "molscat_runs")
@@ -1468,13 +2404,13 @@ def main():
             coarse_template=Path(""),  # не используется, шаблон встроен
             lmax=args.lmax, monqn=args.monqn,
             jtot=args.jtot, ibfix=args.ibfix, jstep=args.jstep,
-            dipdip_scale=args.dipdip_scale,
+            dipdip_scale=args.dipdip_scale, v2_scale=args.v2_scale,
         )
         meta = RunMetadata(
             tensor_terms=args.tensor_terms,
             hyperfine_zeeman=not args.no_hyperfine_zeeman,
             lmax=args.lmax, label=args.label,
-            dipdip_scale=args.dipdip_scale,
+            dipdip_scale=args.dipdip_scale, v2_scale=args.v2_scale,
         )
         l_filter = None if args.l_filter < 0 else args.l_filter
         run_full_pipeline(cfg, meta, args.fmin, args.fmax, args.dfield,
