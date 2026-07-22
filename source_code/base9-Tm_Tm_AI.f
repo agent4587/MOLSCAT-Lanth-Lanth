@@ -61,9 +61,16 @@ C  HFSPLA: hyperfine coupling parameter. Provisionally we treat the
 C  context value as the coupling constant zeta (Hhf = h*zeta*I.J) and
 C  set HFSPLA = zeta*(j+1/2) in GHz, matching the parent formula's
 C  requirement that ANSA reproduces zeta via ANSA=2*HFSPLA/NSFAC.
+C  V2SCALE: multiplier on the ENTIRE k=2,i=1 coupling coefficient (LL=2
+C  block below), i.e. on V^(1)_2(R) uniformly for all R (coupling
+C  coefficient and radial strength enter as a product, so scaling
+C  either is equivalent).  1.0 = real physics (default), 0.0 = rank-2
+C  anisotropy switched off, any other value = artificial scaling for
+C  sensitivity studies -- mirrors dipdip_scale in
+C  tm_resonance_pipeline.py for the k=2,i=2 term.
       NAMELIST /BASIS9/ ISA,ISB,GSA,GSB,INUCA,INUCB,
      1                  HFSPLA,HFSPLB,GA,GB,LMAX,NREQ,LREQ,MFREQ,
-     2                  NEXTRA
+     2                  NEXTRA,V2SCALE
 C
       GS=-g_e
       ALPINV=inverse_fine_structure_constant
@@ -102,6 +109,7 @@ C  HFSPLA = A*(j+1/2), j=7/2 -> factor 4
       INUCB=INUCA
       GB=GA
       HFSPLB=HFSPLA
+      V2SCALE=1.D0
       IDENTN=.TRUE.
       JHALF=0
       NREQ=0
@@ -155,6 +163,10 @@ C
       WRITE(6,*) ' TENSOR TERMS INCLUDED: k=0,i=1 (isotropic), ',
      1           'k=2,i=1 (rank-2, Table 5), k=2,i=2 (magnetic ',
      2           'dipole-dipole, D(2)_2/R^3 only).'
+      IF (V2SCALE.NE.1.D0) WRITE(6,604) V2SCALE
+  604 FORMAT('  *** V2SCALE =',F10.6,' -- k=2,i=1 (anisotropic V^(1)_2',
+     1       '(R)) coupling coefficient SCALED from its real physical',
+     2       ' value ***')
 C
       RETURN
 C========================================================== END OF BAS9IN
@@ -321,16 +333,20 @@ C
           IF (LL.LE.2) THEN
 C  POTENTIAL BLOCKS, i=1 FAMILY (k=0 for LL=1, k=2 for LL=2) ============
 C  Nuclear-spin projections must be unchanged (potential acts only on
-C  the electronic/orbital parts); tensor rank K=2*(LL-1).
+C  the electronic/orbital parts); tensor rank K=2*(LL-1).  SCL applies
+C  V2SCALE only to the LL=2 (k=2, anisotropic) block, leaving LL=1
+C  (isotropic) untouched.
             K=2*(LL-1)
+            SCL=1.D0
+            IF (LL.EQ.2) SCL=V2SCALE
             IF (MIAR.EQ.MIAC .AND. MIBR.EQ.MIBC) THEN
-              FAC=PREFAC*POTBLK(K,MSAR,MIAR,MSBR,MIBR,LR,MLR,
+              FAC=PREFAC*SCL*POTBLK(K,MSAR,MIAR,MSBR,MIBR,LR,MLR,
      1                          MSAC,MIAC,MSBC,MIBC,LC,MLC,ISA)
               VL(I)=FAC
             ENDIF
 C  identical-particle exchange term (B<->A swap on the bra)
             IF (IDENTN .AND. MIAR.EQ.MIBC .AND. MIBR.EQ.MIAC) THEN
-              FAC2=PREFAC*POTBLK(K,MSBR,MIBR,MSAR,MIAR,LR,MLR,
+              FAC2=PREFAC*SCL*POTBLK(K,MSBR,MIBR,MSAR,MIAR,LR,MLR,
      1                           MSAC,MIAC,MSBC,MIBC,LC,MLC,ISA)
               IF (MOD(IBOSFR+LR,2).NE.0) FAC2=-FAC2
               VL(I)=VL(I)+FAC2
